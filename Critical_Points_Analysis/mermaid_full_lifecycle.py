@@ -34,42 +34,42 @@ def full_lifecycle_sequence_diagram():
     InternalSystem-->>-DocPlanner: Confirm Appointment
     DocPlanner-->>-Patient: Confirm Appointment
 
-    %% Touchpoint 2: Check-in (Online or Offline)
+    %% Touchpoint 2: Make Payment (Online or at Reception)
+    alt Make Payment Online
+        Patient->>+DocPlanner: 2. Make Payment Online
+        DocPlanner->>+InternalSystem: Record Payment
+        InternalSystem-->>-Reception: Confirm Payment
+    else Make Payment at Reception
+        Patient->>+Reception: 3. Make Payment at Reception
+        Reception->>+InternalSystem: Record Payment
+        InternalSystem-->>-DocPlanner: Confirm Payment
+    end
+
+    %% Touchpoint 4: Check-in (Online or Offline)
     alt Check-in Online
-        Patient->>+DocPlanner: 2. Check-in Online
+        Patient->>+DocPlanner: 4. Check-in Online
         DocPlanner->>+InternalSystem: Update Check-in Data
         InternalSystem-->>+Doctor: Notify Doctor of Check-in
     else Check-in at Reception
-        Patient->>+Reception: 3. Check-in at Reception
+        Patient->>+Reception: 5. Check-in at Reception
         Reception->>+InternalSystem: Update Patient Arrival
         InternalSystem-->>+Doctor: Notify Doctor of Patient Arrival
     end
 
-    %% Touchpoint 4: Access Platform for Online Consultation
-    Patient->>+DocPlanner: 4. Access Platform for Online Consultation
+    %% Touchpoint 6: Access Platform for Online Consultation
+    Patient->>+DocPlanner: 6. Access Platform for Online Consultation
     DocPlanner->>+Doctor: Connect Doctor and Patient
 
-    %% Touchpoint 5: Attend Consultation (Online or Offline)
+    %% Touchpoint 7: Attend Consultation (Online or Offline)
     alt Online Consultation
-        Doctor-->>-Patient: 5. Attend Online Consultation
+        Doctor-->>-Patient: 7. Attend Online Consultation
         Doctor->>+DocPlanner: Add Notes to Patient Record
         DocPlanner-->>-Patient: Provide Notes and Prescriptions
     else Offline Consultation
-        Patient->>+Doctor: 6. Attend Offline Consultation
+        Patient->>+Doctor: 8. Attend Offline Consultation
         Doctor-->>-Patient: Conduct In-person Consultation
         Doctor->>+InternalSystem: Add Notes to Patient Record
         InternalSystem-->>-Reception: Provide Notes and Prescriptions
-    end
-
-    %% Touchpoint 7: Make Payment (Online or at Reception)
-    alt Make Payment Online
-        Patient->>+DocPlanner: 7. Make Payment Online
-        DocPlanner->>+InternalSystem: Record Payment
-        InternalSystem-->>-Reception: Confirm Payment
-    else Make Payment at Reception
-        Patient->>+Reception: 8. Make Payment at Reception
-        Reception->>+InternalSystem: Record Payment
-        InternalSystem-->>-DocPlanner: Confirm Payment
     end
 
     %% Touchpoint 9: Follow-up Procedures (e.g., Exams, Surgery)
@@ -84,7 +84,6 @@ def full_lifecycle_sequence_diagram():
     %% Displaying Reviews and Generating Reports and KPIs (not a touchpoint)
     DocPlanner-->>-OtherPatients: Display Reviews to Help Choose Doctors (independent of medical review)
     DocPlanner->>+Doctor: Generate Reports on Visibility, Reputation, and KPIs
-
 
     """
 

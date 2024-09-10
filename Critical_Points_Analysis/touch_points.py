@@ -17,8 +17,8 @@ def get_patient_lifecycle():
     **Identified touchpoints in the process:**
 
     1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
-    2. **Attend Consultation**: The patient attends the consultation, either online through the platform or in person at the clinic.
-    3. **Make Payment**: The patient makes the payment for the consultation, either online through the platform or in person at the reception.
+    2. **Make Payment**: The patient makes the payment for the consultation, either online through the platform or in person at the reception.
+    3. **Attend Consultation**: The patient attends the consultation, either online through the platform or in person at the clinic.
     4. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
 
     The diagram below illustrates the compact version, highlighting these key touchpoints. This simplified view helps introduce the patient lifecycle concept, emphasizing the importance of each interaction in shaping the overall experience.
@@ -30,13 +30,13 @@ def get_patient_lifecycle():
     **Identified touchpoints in the process:**
 
     1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
-    2. **Check-in Online**: The patient completes an online check-in before the appointment.
-    3. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
-    4. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
-    5. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
-    6. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
-    7. **Make Payment (Online or at Reception)**: The patient makes the payment for the consultation, either online through the platform or in person at the reception.
-    8. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
+    2. **Make Payment Online**: The patient makes the payment for the consultation online through the platform.
+    3. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
+    4. **Check-in Online**: The patient completes an online check-in before the appointment.
+    5. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
+    6. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
+    7. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
+    8. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
     9. **Follow-up Procedures (e.g., Exams, Surgery)**: The patient follows up with any additional procedures, such as exams or surgeries, as prescribed by the doctor.
     10. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
 

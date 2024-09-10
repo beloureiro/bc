@@ -32,21 +32,22 @@ def compact_lifecycle_sequence_diagram():
     DocPlanner->>+Doctor: Notify Doctor of New Appointment
     DocPlanner-->>-Patient: Confirm Appointment
 
-    %% Touchpoint 2: Attend Consultation
-    Patient->>+DocPlanner: 2. Attend Consultation
+    %% Touchpoint 2: Make Payment
+    Patient->>+DocPlanner: 2. Make Payment
+    DocPlanner-->>-Patient: Confirm Payment
+
+    %% Touchpoint 3: Attend Consultation
+    Patient->>+DocPlanner: 3. Attend Consultation
     DocPlanner->>+Doctor: Connect Doctor and Patient (Online) / Notify Doctor of Arrival (Offline)
     Doctor-->>-Patient: Conduct Consultation
     Doctor->>+DocPlanner: Add Notes to Patient Record
     DocPlanner-->>-Patient: Provide Notes and Prescriptions
 
-    %% Touchpoint 3: Make Payment
-    Patient->>+DocPlanner: 3. Make Payment
-    DocPlanner-->>-Patient: Confirm Payment
-
     %% Touchpoint 4: Leave Review and Feedback
     Patient->>+DocPlanner: 4. Leave Review and Feedback
     DocPlanner->>+Doctor: Share Feedback
     DocPlanner-->>-OtherPatients: Display Reviews to Help Choose Doctors
+
 
 
     """
