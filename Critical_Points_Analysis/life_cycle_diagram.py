@@ -1,23 +1,21 @@
-import streamlit as st  # Certifique-se de que esta linha esteja presente
-import streamlit.components.v1 as components  # Importando o componente
+import streamlit as st
 
+def display_diagram():
+    # Adicione o título e o texto antes da imagem
+    st.header("Data Categorization and Analysis Tree")  # Título H2
+    st.markdown("""
+    --
+    Disclaimer: The numbers presented in this conceptual diagram are not real and are used solely for a feasibility study. They are intended to illustrate potential outcomes and should not be interpreted as actual data or predictions.
+    """)  # Texto abaixo do título
 
-def render_sequence_diagram():
-    # Código Mermaid
-    mermaid_code = """
-    %%{init: {
-        'theme': 'dark',
-        'themeVariables': {
-            'actorTextColor': '#FFFFFF',
-            'actorLineColor': '#00c3a5',
-            'signalColor': '#00c3a5',
-            'signalTextColor': '#FFFFFF',
-            'labelTextColor': '#FFFFFF',
-            'noteBkgColor': '#262730',
-            'noteTextColor': '#FFFFFF'
-        }
-    }}%%
-    %%height 100%
+    # Exibir a imagem
+    st.image("Data_Categorization/Data-Categorization-and-Analysis-Tree.png")  # Caminho da imagem
+
+    # Adicionar o diagrama de sequência
+    st.header("Patient Lifecycle in the Care Process - Sequence Diagram")  # Título H2 para o diagrama de sequência
+   
+    st.markdown("""
+    ```mermaid
     sequenceDiagram
         participant Patient
         participant DocPlanner
@@ -56,28 +54,12 @@ def render_sequence_diagram():
         %% Displaying Reviews and Generating Reports and KPIs (not a touchpoint)
         DocPlanner-->>-OtherPatients: Display Reviews to Help Choose Doctors (independent of medical review)
         DocPlanner->>+Doctor: Generate Reports on Visibility, Reputation, and KPIs
-    """
+    ```
+    """)  # Diagrama de sequência em formato Mermaid
+    st.markdown("![](mermaid.py)")  # Inclui o diagrama Mermaid
 
-    # HTML com o script Mermaid e o diagrama
-    html = f"""
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-        mermaid.initialize({{
-            startOnLoad: true,
-            theme: 'dark',
-            securityLevel: 'loose',
-            fontFamily: 'Arial',
-        }});
-    </script>
-    <div class="mermaid" style="height:100vh;">
-    {mermaid_code}
-    </div>
-    """
+# Adicione esta linha no final do arquivo
+__all__ = ['display_diagram']
 
-    # Renderiza o HTML
-    components.html(html, height=1000, scrolling=False)
-
-    # Exibe o código Mermaid
-    # st.code(mermaid_code, language="mermaid")
-
-# Chame a função onde você precisar renderizar o diagrama
+if __name__ == "__main__":
+    display_diagram()
