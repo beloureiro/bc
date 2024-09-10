@@ -20,6 +20,7 @@ import numpy as np
 import pandas as pd
 
 from Critical_Points_Analysis.Diagram import display_diagram  # Importar a função
+from Data_Categorization.python_based_algorithms import Python_Algorithms  # Add this import
 
 warnings.filterwarnings("ignore")
 
@@ -38,7 +39,7 @@ def count_words(text):
 # Função para gerar a nuvem de palavras com fundo escuro
 
 
-def generate_wordcloud(word_freq, title):
+def generate_wordcloud(word_freq, title, filtered_df):
     wordcloud = WordCloud(width=800, height=400, background_color='#262730',
                           colormap='viridis').generate_from_frequencies(word_freq)
 
@@ -77,33 +78,62 @@ def audit_data(word_freq, common_words_df):
 
 
 def run_data_categorization():
-    # Get the current file's directory
+    # Load data (keep your existing code for loading data)
     current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the paths to the new CSV files
     file_path_part1 = os.path.join(current_dir, 'processed_data_part1.csv')
     file_path_part2 = os.path.join(current_dir, 'processed_data_part2.csv')
-
-    # Check if both files exist
+    
     if not os.path.exists(file_path_part1) or not os.path.exists(file_path_part2):
         st.error(f"One or both of the required files are missing: {file_path_part1}, {file_path_part2}")
         st.stop()
-
-    # Load and concatenate the CSV files
+    
     df_part1 = pd.read_csv(file_path_part1, encoding='utf-8')
     df_part2 = pd.read_csv(file_path_part2, encoding='utf-8')
     df = pd.concat([df_part1, df_part2], ignore_index=True)
-
-    # Convert 'created_at' to datetime
+    
     df['created_at'] = pd.to_datetime(df['created_at'])
     df['year_week'] = df['created_at'].dt.to_period('W')
-
+    
+    # Add sidebar filters
+    st.sidebar.header('Filters')
+    
+    # Country filter
+    country_mapping = {
+        'br': 'Brazil',
+        'de': 'Germany',
+        'es': 'Spain',
+    }
+    available_countries = ['All'] + list(country_mapping.keys())
+    selected_country = st.sidebar.selectbox(
+        'Select Country', available_countries, format_func=lambda x: country_mapping.get(x, x))
+    
+    # Feedback type filter
+    available_types = ['All'] + list(df['type'].unique())
+    selected_type = st.sidebar.selectbox('Select Feedback Type', available_types)
+    
+    # Week filter
+    available_weeks = ['All'] + list(df['year_week'].dt.strftime('%Y-W%W').unique())
+    selected_week = st.sidebar.selectbox('Select Week', available_weeks)
+    
+    # Apply filters
+    filtered_df = df.copy()
+    if selected_country != 'All':
+        filtered_df = filtered_df[filtered_df['country_code'] == selected_country]
+    if selected_type != 'All':
+        filtered_df = filtered_df[filtered_df['type'] == selected_type]
+    if selected_week != 'All':
+        filtered_df = filtered_df[filtered_df['year_week'].dt.strftime('%Y-W%W') == selected_week]
+    
     # Título principal
     st.title('Data Processing and Analysis')
 
     # Título e subtítulo
     st.header('1. ETL Process - Text Analysis and Sentiment Evaluation')
     st.markdown("<h3 style='color: #00c3a5;'>This section covers the ETL process for text analysis and sentiment evaluation.</h3>", unsafe_allow_html=True)
+    
+    # Add the Python_Algorithms content here
+    Python_Algorithms()
+
     st.write('Integrated Analysis Dashboard for User Feedback Processing')
     st.write(
         "Note: The table above displays only the first 5 rows from the full dataset.")
@@ -126,36 +156,6 @@ def run_data_categorization():
 
     # Definir country_options
     country_options = ['All'] + list(country_mapping.values())
-
-    # Filtros em cascata
-    st.sidebar.header('Filters')
-
-    # Filtro de país
-    available_countries = ['All'] + list(country_mapping.keys())
-    selected_country = st.sidebar.selectbox(
-        'Select Country', available_countries, format_func=lambda x: country_mapping.get(x, x))
-
-    if selected_country != 'All':
-        filtered_df = df[df['country_code'] == selected_country]
-    else:
-        filtered_df = df
-
-    # Filtro de tipo de feedback
-    available_types = ['All'] + list(filtered_df['type'].unique())
-    selected_type = st.sidebar.selectbox(
-        'Select Feedback Type', available_types)
-
-    if selected_type != 'All':
-        filtered_df = filtered_df[filtered_df['type'] == selected_type]
-
-    # Filtro de semana
-    available_weeks = [
-        'All'] + list(filtered_df['year_week'].dt.strftime('%Y-W%W').unique())
-    selected_week = st.sidebar.selectbox('Select Week', available_weeks)
-
-    if selected_week != 'All':
-        filtered_df = filtered_df[filtered_df['year_week'].dt.strftime(
-            '%Y-W%W') == selected_week]
 
     # Display the first few rows of the filtered dataframe
     st.write(filtered_df.head())
@@ -442,7 +442,7 @@ def run_data_categorization():
 
     with row2_col1:
         # Total Distribution by Country
-        country_distribution = df['country_code'].value_counts()
+        country_distribution = filtered_df['country_code'].value_counts()
         fig3, ax3 = plt.subplots(figsize=(12, 6))
         fig3.patch.set_facecolor('#0e1117')  # Cor de fundo da figura
         ax3.set_facecolor('#262730')  # Cor de fundo do eixo
@@ -521,11 +521,11 @@ def run_data_categorization():
                 unsafe_allow_html=True)
 
     # Contar palavras
-    all_text = ' '.join(df['cleaned_content'].fillna(''))
+    all_text = ' '.join(filtered_df['cleaned_content'].fillna(''))
     word_freq = count_words(all_text)
 
     # Gerar nuvem de palavras
-    wordcloud_image = generate_wordcloud(word_freq, 'Cleaned Text Word Cloud')
+    wordcloud_image = generate_wordcloud(word_freq, 'Cleaned Text Word Cloud', filtered_df)
 
     # Criar DataFrame com as palavras mais comuns
     most_common_words = pd.DataFrame(
@@ -554,7 +554,7 @@ def run_data_categorization():
         original_text = ' '.join(filtered_df_original['content_en'].fillna(''))
         original_word_freq = count_words(original_text)
         original_wordcloud_image = generate_wordcloud(
-            original_word_freq, 'Original Text Word Cloud')
+            original_word_freq, 'Original Text Word Cloud', filtered_df_original)
 
         st.image(f"data:image/png;base64,{original_wordcloud_image}",
                  caption='Original Text Word Cloud', use_column_width=True)
@@ -625,7 +625,7 @@ def run_data_categorization():
         word_freq_cleaned = count_words(all_text_cleaned)
 
         wordcloud_image_cleaned = generate_wordcloud(
-            word_freq_cleaned, 'Cleaned Text Word Cloud')
+            word_freq_cleaned, 'Cleaned Text Word Cloud', filtered_df_cleaned)
 
         st.image(f"data:image/png;base64,{wordcloud_image_cleaned}",
                  caption='Cleaned Text Word Cloud', use_column_width=True)
