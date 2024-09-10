@@ -1,6 +1,8 @@
+import streamlit as st
+
 def get_patient_lifecycle():
-    return """
-    ## Patient Lifecycle within the Care Process: The Journey of Interactions and Experiences Throughout Care
+    content = """
+    <h2 style="color: #00c3a5;">Patient Lifecycle within the Care Process: The Journey of Interactions and Experiences Throughout Care</h2>
 
     ### **Touchpoints**
 
@@ -15,11 +17,11 @@ def get_patient_lifecycle():
     5. **Review and Feedback**: The patient leaves a review and feedback about the consultation.
 
     The diagram below illustrates the patient lifecycle within the care process throughout the care journey, highlighting these key touchpoints. Each touchpoint represents a critical opportunity to influence the patient’s experience. While monitoring and optimizing these touchpoints are crucial, they do not necessarily guarantee complete patient satisfaction, as other factors, such as the quality of medical care, also play a crucial role.
-
-    <hr style="border: 1px solid gray;"/>
-
-    **Note**: Since there was no opportunity to validate the process steps, there may be some margin for error in modeling this process.
     """
+    
+    st.markdown(content, unsafe_allow_html=True)
+    st.markdown("<hr style='border: 1px solid #00c3a5;'>", unsafe_allow_html=True)
+    
 
 # Adicione esta linha no final do arquivo
 __all__ = ['get_patient_lifecycle']
