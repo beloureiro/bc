@@ -1,15 +1,24 @@
 def critical_points_function():
     import streamlit as st
     import pandas as pd
+    import os
+
+    # Get the current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    data_dir = os.path.join(parent_dir, 'Data_Categorization')
+
+    # Construct the paths to the new CSV files
+    file_path_part1 = os.path.join(data_dir, 'processed_data_part1.csv')
+    file_path_part2 = os.path.join(data_dir, 'processed_data_part2.csv')
 
     # Load the data
-    # D:\OneDrive - InMotion - Consulting\DocPlanner\BusinessCase-Light\Data_Categorization
     try:
-        df = pd.read_csv(
-            'D:/OneDrive - InMotion - Consulting/DocPlanner/BusinessCase-Light/Data_Categorization/processed_data_categorized.csv')
+        df_part1 = pd.read_csv(file_path_part1, encoding='utf-8')
+        df_part2 = pd.read_csv(file_path_part2, encoding='utf-8')
+        df = pd.concat([df_part1, df_part2], ignore_index=True)
     except FileNotFoundError:
-        st.error(
-            "The file 'processed_data_categorized.csv' was not found. Please verify the path and try again.")
+        st.error("One or both of the files 'processed_data_part1.csv' and 'processed_data_part2.csv' were not found. Please verify the path and try again.")
         return
 
     # Dicionário para mapear países
@@ -26,8 +35,7 @@ def critical_points_function():
     country_options = ['All'] + list(df['country_name'].unique())
 
     # Country selection usando os nomes dos países, com "All" como padrão
-    selected_country_name = st.selectbox(
-        "Select a country", country_options, index=0)
+    selected_country_name = st.selectbox("Select a country", country_options, index=0)
 
     # Filtrar dados com base na seleção
     if selected_country_name == 'All':
@@ -35,8 +43,7 @@ def critical_points_function():
         selected_country = "All Countries"
     else:
         # Obter o código do país selecionado
-        selected_country = df[df['country_name'] ==
-                              selected_country_name]['country_code'].iloc[0]
+        selected_country = df[df['country_name'] == selected_country_name]['country_code'].iloc[0]
         country_data = df[df['country_code'] == selected_country]
         selected_country = selected_country_name  # Usar o nome do país para exibição
 
@@ -50,18 +57,13 @@ def critical_points_function():
             return 'Positive'
 
     # Aplicar a classificação de sentimento
-    country_data['sentiment_classification'] = country_data['cleaned_sentiment'].apply(
-        classify_sentiment)
+    country_data['sentiment_classification'] = country_data['cleaned_sentiment'].apply(classify_sentiment)
 
     # Calculate metrics
     total_reviews = int(country_data.shape[0])
     average_sentiment = float(country_data['cleaned_sentiment'].mean())
-    # Changed from 'category' to 'category_bert'
     dominant_category = country_data['category_bert'].mode()[0]
-    urgency_level = float(
-        (country_data['issue_type'] == 'Critical').mean() * 100)
-    doctors_mentioned = int(country_data['doctor_name'].nunique())
-    hospitals_mentioned = int(country_data['hospital_name'].nunique())
+    urgency_level = float((country_data['issue_type'] == 'Critical').mean() * 100)
 
     # Display KPIs at the top
     st.title(f"Country Analysis: {selected_country}")
@@ -70,10 +72,8 @@ def critical_points_function():
     kpi2.metric("Average Sentiment", f"{average_sentiment:.2f}")
     kpi3.metric("Dominant Category", dominant_category)
 
-    kpi4, kpi5, kpi6 = st.columns(3)
+    kpi4, kpi5 = st.columns(2)
     kpi4.metric("Urgency Level", f"{urgency_level:.1f}%")
-    kpi5.metric("Doctors Mentioned", doctors_mentioned)
-    kpi6.metric("Hospitals Mentioned", hospitals_mentioned)
 
     # Function to create a progress column
     def create_progress_column(dataframe, column_name):

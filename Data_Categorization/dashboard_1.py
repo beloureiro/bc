@@ -5,6 +5,7 @@ import io
 import sys
 import warnings
 from collections import Counter
+import os  # Adicionando a importação do módulo os
 
 import matplotlib.colors as mcolors
 import matplotlib.dates as mdates
@@ -76,6 +77,27 @@ def audit_data(word_freq, common_words_df):
 
 
 def run_data_categorization():
+    # Get the current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the paths to the new CSV files
+    file_path_part1 = os.path.join(current_dir, 'processed_data_part1.csv')
+    file_path_part2 = os.path.join(current_dir, 'processed_data_part2.csv')
+
+    # Check if both files exist
+    if not os.path.exists(file_path_part1) or not os.path.exists(file_path_part2):
+        st.error(f"One or both of the required files are missing: {file_path_part1}, {file_path_part2}")
+        st.stop()
+
+    # Load and concatenate the CSV files
+    df_part1 = pd.read_csv(file_path_part1, encoding='utf-8')
+    df_part2 = pd.read_csv(file_path_part2, encoding='utf-8')
+    df = pd.concat([df_part1, df_part2], ignore_index=True)
+
+    # Convert 'created_at' to datetime
+    df['created_at'] = pd.to_datetime(df['created_at'])
+    df['year_week'] = df['created_at'].dt.to_period('W')
+
     # Título principal
     st.title('Data Processing and Analysis')
 
@@ -85,25 +107,6 @@ def run_data_categorization():
     st.write('Integrated Analysis Dashboard for User Feedback Processing')
     st.write(
         "Note: The table above displays only the first 5 rows from the full dataset.")
-
-    # Carregar dados
-    import os
-
-    # Get the current file's directory
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the path to the processed_data.csv file
-    file_path = os.path.join(current_dir, 'processed_data_categorized.csv')
-
-    # Check if the file exists
-    if not os.path.exists(file_path):
-        st.error(f"File not found: {file_path}")
-        st.stop()
-
-    # Load the CSV file
-    df = pd.read_csv(file_path, encoding='utf-8')
-    df['created_at'] = pd.to_datetime(df['created_at'])
-    df['year_week'] = df['created_at'].dt.to_period('W')
 
     # Dicionário para mapear tipos
     type_mapping = {
