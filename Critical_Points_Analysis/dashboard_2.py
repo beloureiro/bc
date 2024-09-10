@@ -8,13 +8,12 @@ def run_critical_points_analysis():
     import streamlit as st
     st.title("Critical Points Analysis")
     
-
     # Chama a função para obter o ciclo de vida do paciente
-    get_patient_lifecycle()  # Removemos o st.markdown() aqui
-
+    get_patient_lifecycle()
+    
     # Chama a função para alternar entre os diagramas completo e compacto
     toggle_diagram()
-
+    
     # Chama a função que foi definida no 'critical_points.py'
     critical_points_function()
 

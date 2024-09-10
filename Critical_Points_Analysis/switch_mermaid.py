@@ -7,11 +7,11 @@ def toggle_diagram():
         st.session_state.show_full_version = False  # Default to the compact version
 
     if st.session_state.show_full_version:
-        if st.button("Show Compact Version"):
+        if st.button("Show Compact Version", key="toggle_compact"):
             st.session_state.show_full_version = False
             st.rerun()
     else:
-        if st.button("Show Full Version"):
+        if st.button("Show Full Version", key="toggle_full"):
             st.session_state.show_full_version = True
             st.rerun()
 
@@ -20,5 +20,5 @@ def toggle_diagram():
     else:
         compact_lifecycle_sequence_diagram()
 
-# Call the toggle_diagram function to render the appropriate version
-toggle_diagram()
+# Remove this line
+# toggle_diagram()

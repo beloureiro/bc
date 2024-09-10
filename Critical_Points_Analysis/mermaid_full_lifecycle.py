@@ -20,7 +20,6 @@ def full_lifecycle_sequence_diagram():
             'noteTextColor': '#FFFFFF'
         }
     }}%%
-    %%height 100%
     sequenceDiagram
     participant Patient
     participant DocPlanner
@@ -46,43 +45,46 @@ def full_lifecycle_sequence_diagram():
         InternalSystem-->>+Doctor: Notify Doctor of Patient Arrival
     end
 
-    %% Touchpoint 3: Consultation (Online or Offline)
+    %% Touchpoint 4: Access Platform for Online Consultation
+    Patient->>+DocPlanner: 4. Access Platform for Online Consultation
+    DocPlanner->>+Doctor: Connect Doctor and Patient
+
+    %% Touchpoint 5: Attend Consultation (Online or Offline)
     alt Online Consultation
-        Patient->>+DocPlanner: 4. Access Platform for Online Consultation
-        DocPlanner->>+Doctor: Connect Doctor and Patient
-        Doctor-->>-Patient: Conduct Online Consultation
+        Doctor-->>-Patient: 5. Attend Online Consultation
         Doctor->>+DocPlanner: Add Notes to Patient Record
         DocPlanner-->>-Patient: Provide Notes and Prescriptions
     else Offline Consultation
-        Patient->>+Doctor: 5. Attend Offline Consultation
+        Patient->>+Doctor: 6. Attend Offline Consultation
         Doctor-->>-Patient: Conduct In-person Consultation
         Doctor->>+InternalSystem: Add Notes to Patient Record
         InternalSystem-->>-Reception: Provide Notes and Prescriptions
     end
 
-    %% Touchpoint 4: Payment (Online or Offline)
+    %% Touchpoint 7: Make Payment (Online or at Reception)
     alt Make Payment Online
-        Patient->>+DocPlanner: 6. Make Payment Online
+        Patient->>+DocPlanner: 7. Make Payment Online
         DocPlanner->>+InternalSystem: Record Payment
         InternalSystem-->>-Reception: Confirm Payment
     else Make Payment at Reception
-        Patient->>+Reception: 7. Make Payment at Reception
+        Patient->>+Reception: 8. Make Payment at Reception
         Reception->>+InternalSystem: Record Payment
         InternalSystem-->>-DocPlanner: Confirm Payment
     end
 
-    %% Touchpoint 5: Follow-up Procedures (e.g., Exams, Surgery)
-    Patient->>+Doctor: 8. Follow-up Procedures (Doctor Prescribes)
+    %% Touchpoint 9: Follow-up Procedures (e.g., Exams, Surgery)
+    Patient->>+Doctor: 9. Follow-up Procedures (Doctor Prescribes)
     Doctor-->>+External Providers: Refer Patient for Further Procedures
     External Providers-->>-Patient: Perform Procedures
 
-    %% Touchpoint 6: Leave Review and Feedback
-    Patient->>+DocPlanner: 9. Leave Review and Feedback
+    %% Touchpoint 10: Leave Review and Feedback
+    Patient->>+DocPlanner: 10. Leave Review and Feedback
     DocPlanner->>+DocPlanner: Analyze Patient Feedback
 
     %% Displaying Reviews and Generating Reports and KPIs (not a touchpoint)
     DocPlanner-->>-OtherPatients: Display Reviews to Help Choose Doctors (independent of medical review)
     DocPlanner->>+Doctor: Generate Reports on Visibility, Reputation, and KPIs
+
 
     """
 
