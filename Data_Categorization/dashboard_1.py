@@ -165,7 +165,7 @@ def run_data_categorization():
     st.markdown("<hr style='border: 1px solid #00c3a5;'>",
                 unsafe_allow_html=True)
     st.write("""
-    This section presents a temporal analysis based on the dataset spanning from April 1st, 2024 to June 30th, 2024, covering a total duration of 90 days. The dataset is organized into 12 weeks, equivalent to 2 months. Within this period, the analysis includes data from three countries: Spain (es), Germany (de), and Brazil (br), with a total of 43,251 records.
+    This section presents a temporal analysis based on the dataset spanning from April 1st, 2024, to June 30th, 2024, covering a total duration of 91 days. The dataset is organized into 13 weeks. Within this period, the analysis includes data from three countries: Spain (es), Germany (de), and Brazil (br), with a total of 44,851 records.
     """)
 
     # Preparar dados
