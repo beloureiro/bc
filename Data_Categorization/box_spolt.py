@@ -1,67 +1,102 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import numpy as np
 
 def display_text_length_comparison(df):
     st.header('Text Length Comparison')
+    st.markdown("<hr style='border: 1px solid #00c3a5;'>",
+            unsafe_allow_html=True)
     col1, col2 = st.columns(2)
 
+    # Add country filter
+    country_mapping = {
+        'br': 'Brazil',
+        'de': 'Germany',
+        'es': 'Spain',
+    }
+    available_countries = ['All'] + list(country_mapping.keys())
+
     with col1:
+        selected_country_1 = st.selectbox(
+            'Select Country for Original Length',
+            available_countries,
+            format_func=lambda x: country_mapping.get(x, x)
+        )
+
+        # Filter data based on selected country
+        filtered_df_1 = df if selected_country_1 == 'All' else df[df['country_code'] == selected_country_1]
+
         fig1, ax1 = plt.subplots(figsize=(10, 5))
         fig1.patch.set_facecolor('#0e1117')
         ax1.set_facecolor('#262730')
         ax1.clear()
-        ax1.boxplot(df['original_length'], patch_artist=True, flierprops=dict(
-            markerfacecolor='white', marker='o', markersize=5))
+        parts = ax1.violinplot(filtered_df_1['original_length'], showmedians=True, showextrema=True, showmeans=True)
+        for pc in parts['bodies']:
+            pc.set_facecolor('#1f77b4')
+            pc.set_edgecolor('white')
+            pc.set_alpha(0.75)
         ax1.set_title('Original Length', color='white')
-        ax1.set_ylabel('Length', color='white')
+        ax1.set_ylabel('Length (characters)', color='white')
         ax1.tick_params(axis='x', colors='white')
         ax1.tick_params(axis='y', colors='white')
 
         st.pyplot(fig1, use_container_width=True)
 
     with col2:
+        selected_country_2 = st.selectbox(
+            'Select Country for Cleaned Length',
+            available_countries,
+            format_func=lambda x: country_mapping.get(x, x)
+        )
+
+        # Filter data based on selected country
+        filtered_df_2 = df if selected_country_2 == 'All' else df[df['country_code'] == selected_country_2]
+
         fig2, ax2 = plt.subplots(figsize=(10, 5))
         fig2.patch.set_facecolor('#0e1117')
         ax2.set_facecolor('#262730')
         ax2.clear()
-        ax2.boxplot(df['cleaned_length'], patch_artist=True, flierprops=dict(
-            markerfacecolor='white', marker='o', markersize=5))
+        parts = ax2.violinplot(filtered_df_2['cleaned_length'], showmedians=True, showextrema=True, showmeans=True)
+        for pc in parts['bodies']:
+            pc.set_facecolor('#00c3a5')
+            pc.set_edgecolor('white')
+            pc.set_alpha(0.75)
         ax2.set_title('Cleaned Length', color='white')
-        ax2.set_ylabel('Length', color='white')
+        ax2.set_ylabel('Length (characters)', color='white')
         ax2.tick_params(axis='x', colors='white')
         ax2.tick_params(axis='y', colors='white')
 
         st.pyplot(fig2, use_container_width=True)
 
-    mean_original_length = df['original_length'].mean()
-    mean_cleaned_length = df['cleaned_length'].mean()
-    percent_reduction = (
-        (mean_original_length - mean_cleaned_length) / mean_original_length) * 100
+    # Calculate statistics based on filtered data
+    mean_original_length = filtered_df_1['original_length'].mean()
+    mean_cleaned_length = filtered_df_2['cleaned_length'].mean()
+    percent_reduction = ((mean_original_length - mean_cleaned_length) / mean_original_length) * 100
 
     st.write(f"""\
     ### Understanding Text Length Comparison
 
-    This box plot compares the length of the original text to the cleaned text. Here's what it shows:
+    These violin plots compare the length of the original text to the cleaned text. Here's what they show:
 
-    1. **Box Plot Elements**:
-       - The box represents where 50% of the data falls.
-       - The line in the box is the median length.
-       - The whiskers show the range of typical lengths.
-       - Dots beyond the whiskers are unusual lengths (outliers).
+    1. **Violin Plot Elements**:
+       - The **shape** represents the distribution of the data across different lengths.
+       - The **white dot** in the middle is the **median length**.
+       - The **lines within the plot** indicate the quartiles (25th, 50th, 75th percentiles), and the **outermost lines** show the range of the data (excluding outliers).
+       - The **width** of the plot at different points represents the **density** of the data: wider sections indicate more frequent lengths, while narrower sections indicate less frequent lengths.
 
     2. **Key Findings**:
-       - Average original text length: {mean_original_length:.0f} characters
-       - Average cleaned text length: {mean_cleaned_length:.0f} characters
-       - Text reduction: {percent_reduction:.1f}%
+       - **Original Text** ({country_mapping.get(selected_country_1, 'All Countries')}): Average length is {mean_original_length:.0f} characters.
+       - **Cleaned Text** ({country_mapping.get(selected_country_2, 'All Countries')}): Average length is {mean_cleaned_length:.0f} characters.
+       - **Text Reduction**: There is a {percent_reduction:.1f}% reduction in text length after cleaning.
 
     3. **What This Means**:
        - The cleaning process {'significantly' if percent_reduction > 20 else 'moderately' if percent_reduction > 10 else 'slightly'} reduced the text length.
-       - {'This suggests a lot of unnecessary content was removed' if percent_reduction > 20 else 'Some unnecessary content was removed, but the core message likely remains intact' if percent_reduction > 10 else 'The cleaning process made minimal changes to the text length'}.
+       - {'This suggests that a significant amount of unnecessary content, such as filler words or formatting, was removed, improving clarity and focus.' if percent_reduction > 20 else 'The moderate reduction indicates that the cleaning process refined the text without removing too much valuable content.' if percent_reduction > 10 else 'The minimal reduction suggests that the original text was already concise and well-formatted.'}
 
     4. **Why It Matters**:
-       - Shorter, cleaner text is often easier to analyze.
-       - It helps focus on the most important content.
-       - {'The significant reduction might indicate removal of formatting, common words, or repetitive phrases' if percent_reduction > 20 else 'The moderate reduction suggests some refinement without major content loss' if percent_reduction > 10 else 'The minimal reduction indicates the original text was already quite concise'}.
+       - **Cleaner Text**: Shorter, cleaner text is easier to analyze and interpret.
+       - **Focus on Content**: The reduction highlights the removal of superfluous content, which helps focus on the core message.
+       - **Impact on Analysis**: The changes in text length can affect subsequent analyses, such as sentiment analysis or keyword extraction, by improving the signal-to-noise ratio.
     """)
 
 # Add this line at the end of the file
