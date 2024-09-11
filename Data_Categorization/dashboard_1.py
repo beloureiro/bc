@@ -448,7 +448,7 @@ def run_data_categorization():
         fig3.patch.set_facecolor('#0e1117')  # Cor de fundo da figura
         ax3.set_facecolor('#262730')  # Cor de fundo do eixo
         bars = ax3.barh(country_distribution.index, country_distribution.values, color=[
-                        '#00C3A5', '#FFB900', '#8E44AD'])
+                        '#009079', '#cc9300', '#642f7a'])
 
         for i, (country, v) in enumerate(country_distribution.items()):
             percentage = (v / country_distribution.sum()) * 100
@@ -484,7 +484,7 @@ def run_data_categorization():
         fig4.patch.set_facecolor('#0e1117')  # Cor de fundo da figura
         ax4.set_facecolor('#262730')  # Cor de fundo do eixo
         country_time_distribution_percentage.plot(
-            kind='area', stacked=True, ax=ax4, color=['#00C3A5', '#FFB900', '#8E44AD'])
+            kind='area', stacked=True, ax=ax4, color=['#009079', '#cc9300', '#642f7a'])
 
         ax4.set_title('Country Distribution Over Time',
                       color='white')  # Título em branco
@@ -710,7 +710,7 @@ def run_data_categorization():
         fig1.patch.set_facecolor('#0e1117')  # Cor de fundo da figura
         ax1.set_facecolor('#262730')  # Cor de fundo do eixo
         filtered_df_sentiment_original['original_sentiment'].hist(
-            ax=ax1, bins=50, alpha=0.7, color='#FF5733', label='Original Sentiment')
+            ax=ax1, bins=50, alpha=0.7, color='#1f77b4', label='Original Sentiment')
         ax1.set_xlabel('Sentiment Score', color='white')
         ax1.set_ylabel('Frequency', color='white')
         ax1.set_title('Original Sentiment Distribution', color='white')
@@ -772,7 +772,7 @@ def run_data_categorization():
         fig2.patch.set_facecolor('#0e1117')
         ax2.set_facecolor('#262730')
         filtered_df_sentiment_cleaned['cleaned_sentiment'].hist(
-            ax=ax2, bins=50, alpha=0.7, color='#33FF57', label='Cleaned Sentiment')
+            ax=ax2, bins=50, alpha=0.7, color='#00c3a5', label='Cleaned Sentiment')
         ax2.set_xlabel('Sentiment Score', color='white')
         ax2.set_ylabel('Frequency', color='white')
         ax2.set_title('Cleaned Sentiment Distribution', color='white')
