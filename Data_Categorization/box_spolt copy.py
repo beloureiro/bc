@@ -34,11 +34,6 @@ def display_text_length_comparison(df):
         # Alterar a cor da linha da mediana
         median_line = parts['cmedians']
         median_line.set_color('#FF5733')  # Cor laranja para destaque
-
-        # Alterar a cor da linha da caixa (cbars) e dos limites (cmins, cmaxes)
-        parts['cbars'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o contorno
-        parts['cmins'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o limite inferior
-        parts['cmaxes'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o limite superior
         
         # Alterar a cor do corpo do gráfico
         for pc in parts['bodies']:
@@ -91,11 +86,6 @@ def display_text_length_comparison(df):
         median_line = parts['cmedians']
         median_line.set_color('#FF5733')  # Cor laranja para destaque
         
-        # Alterar a cor da linha da caixa (cbars) e dos limites (cmins, cmaxes)
-        parts['cbars'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o contorno
-        parts['cmins'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o limite inferior
-        parts['cmaxes'].set_edgecolor('#FFFF99')  # Cor amarelo claro para o limite superior
-
         # Alterar a cor do corpo do gráfico
         for pc in parts['bodies']:
             pc.set_facecolor('#00c3a5')
