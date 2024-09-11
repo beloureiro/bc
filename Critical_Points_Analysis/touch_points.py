@@ -35,16 +35,17 @@ def get_patient_lifecycle():
 
     with st.expander("See identified touchpoints"):
         st.markdown("""
-        1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
-        2. **Make Payment Online**: The patient makes the payment for the consultation online through the platform.
-        3. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
-        4. **Check-in Online**: The patient completes an online check-in before the appointment.
-        5. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
-        6. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
-        7. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
-        8. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
-        9. **Follow-up Procedures (e.g., Exams, Surgery)**: The patient follows up with any additional procedures, such as exams or surgeries, as prescribed by the doctor.
-        10. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
+        1. **Search and Evaluate Professional Score**: The patient uses the platform to search for a healthcare professional and evaluate their score.
+        2. **Schedule Appointment**: The patient schedules an appointment through the platform.
+        3. **Make Payment Online**: The patient makes the payment for the consultation online through the platform.
+        4. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
+        5. **Check-in Online**: The patient completes an online check-in before the appointment.
+        6. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
+        7. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
+        8. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
+        9. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
+        10. **Follow-up Procedures (e.g., Exams, Surgery)**: The patient follows up with any additional procedures, such as exams or surgeries, as prescribed by the doctor.
+        11. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
         """)
 
     st.markdown("""
