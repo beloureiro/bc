@@ -469,13 +469,13 @@ def run_data_categorization():
 
         st.write("""
         ### Interpreting Total Distribution by Country
+                 
+        This bar chart illustrates the distribution of records across countries:
 
-        This horizontal bar chart shows the distribution of records across different countries:
-
-        1. **Country Comparison**: Each bar represents a country, allowing easy comparison of record counts.
-        2. **Percentages**: The percentage next to each bar shows the proportion of total records from each country.
-        3. **Dominant Markets**: Longer bars indicate countries with more records, possibly representing larger or more active markets.
-        4. **Market Balance**: The relative sizes of the bars show how balanced or imbalanced the data collection is across countries.
+        1. **Country Distribution**: Each bar represents the total records per country, enabling straightforward comparison.
+        2. **Percentage Representation**: The percentage labels highlight each country's share of the total records.
+        3. **Market Insights**: Longer bars reveal countries with a higher concentration of records, indicating larger or more active markets.
+        4. **Data Balance**: The bar lengths reflect the distribution balance across countries, offering insights into data coverage.
         """)
 
     with row2_col2:
@@ -507,13 +507,13 @@ def run_data_categorization():
         st.write("""
         ### Interpreting Country Distribution Over Time
 
-        This stacked area chart shows how the distribution of records across countries changes over time:
+        This stacked area chart tracks changes in the distribution of records across countries over time:
 
-        1. **Temporal Trends**: We can see how each country's proportion of records changes week by week.
-        2. **Market Shifts**: Any significant changes in a country's area can indicate shifts in market activity or data collection practices.
-        3. **Consistency**: Stable areas suggest consistent data collection across countries over time.
-        4. **Seasonal Patterns**: Look for any recurring patterns that might indicate seasonal trends in different countries.
-        5. **Data Collection Changes**: Sudden changes in proportions might reflect changes in data collection methods or market focus.
+        1. **Temporal Dynamics**: Observe how the share of records for each country evolves week by week.
+        2. **Market Movements**: Significant shifts in the areas may indicate changes in market activity or data collection focus.
+        3. **Consistency Indicators**: Stable areas suggest a consistent approach to data collection across different periods.
+        4. **Seasonal Effects**: Identify recurring patterns that might point to seasonal influences on data distribution.
+        5. **Data Collection Variations**: Notice any abrupt changes that could signal adjustments in data collection methods or shifts in market strategy.
         """)
 
     # Word Cloud Analysis
