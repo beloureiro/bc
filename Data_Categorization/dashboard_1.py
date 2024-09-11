@@ -467,16 +467,15 @@ def run_data_categorization():
         plt.tight_layout()
         st.pyplot(fig3, use_container_width=True)
 
-        st.write("""
-        ### Interpreting Total Distribution by Country
-                 
-        This bar chart illustrates the distribution of records across countries:
-
-        1. **Country Distribution**: Each bar represents the total records per country, enabling straightforward comparison.
-        2. **Percentage Representation**: The percentage labels highlight each country's share of the total records.
-        3. **Market Insights**: Longer bars reveal countries with a higher concentration of records, indicating larger or more active markets.
-        4. **Data Balance**: The bar lengths reflect the distribution balance across countries, offering insights into data coverage.
-        """)
+        st.write("### Interpreting Total Distribution by Country")
+        st.write("This bar chart illustrates the distribution of records across countries:")
+        with st.expander("See explanation"):
+            st.write("""
+            1. **Country Distribution**: Each bar represents the total records per country, enabling straightforward comparison.
+            2. **Percentage Representation**: The percentage labels highlight each country's share of the total records.
+            3. **Market Insights**: Longer bars reveal countries with a higher concentration of records, indicating larger or more active markets.
+            4. **Data Balance**: The bar lengths reflect the distribution balance across countries, offering insights into data coverage.
+            """)
 
     with row2_col2:
         # Country Distribution Over Time
@@ -504,17 +503,24 @@ def run_data_categorization():
         plt.tight_layout()
         st.pyplot(fig4, use_container_width=True)
 
-        st.write("""
-        ### Interpreting Country Distribution Over Time
+        st.write("### Interpreting Country Distribution Over Time")
 
-        This stacked area chart tracks changes in the distribution of records across countries over time:
+        st.write("This stacked area chart tracks changes in the distribution of records across countries over time:")
 
-        1. **Temporal Dynamics**: Observe how the share of records for each country evolves week by week.
-        2. **Market Movements**: Significant shifts in the areas may indicate changes in market activity or data collection focus.
-        3. **Consistency Indicators**: Stable areas suggest a consistent approach to data collection across different periods.
-        4. **Seasonal Effects**: Identify recurring patterns that might point to seasonal influences on data distribution.
-        5. **Data Collection Variations**: Notice any abrupt changes that could signal adjustments in data collection methods or shifts in market strategy.
-        """)
+        with st.expander("See explanation"):
+
+            st.write("""
+
+            1. **Temporal Dynamics**: Observe how the share of records for each country evolves week by week.
+
+            2. **Market Movements**: Significant shifts in the areas may indicate changes in market activity or data collection focus.
+
+            3. **Consistency Indicators**: Stable areas suggest a consistent approach to data collection across different periods.
+            4. **Seasonal Effects**: Identify recurring patterns that might point to seasonal influences on data distribution.
+
+            5. **Data Collection Variations**: Notice any abrupt changes that could signal adjustments in data collection methods or shifts in market strategy.
+
+            """)
 
     # Word Cloud Analysis
     st.header('Word Clouds: Comparing Original and Cleaned Text')
@@ -594,19 +600,17 @@ def run_data_categorization():
         else:
             st.success(f"✅ {audit_result_original}")
 
-        st.write("""
-        ### Interpreting the Original Text Word Cloud
+        st.write("### Interpreting the Original Text Word Cloud")
+        st.write("This word cloud represents the most frequent words in the original, unprocessed text.")
 
-        This word cloud represents the most frequent words in the original, unprocessed text. Here's what it tells us:
+        with st.expander("See explanation"):
 
-        1. **Prominence of Common Words**: Words like 'you', 'the', 'and', 'to' are very prominent. These are typically stopwords that don't carry much meaning on their own.
-        
-        2. **Context Clues**: Words like 'Dr', 'appointment', and 'message' suggest that the text is related to medical or healthcare communications.
-        
-        3. **Potential Noise**: The presence of numbers (e.g., '2024') and short words might indicate dates or other non-contextual information.
-
-        4. **Limited Insight**: While this cloud gives us an overview, it's harder to extract meaningful insights due to the presence of common, less informative words.
-        """)
+            st.write("""
+            1. **Prominence of Common Words**: Words like 'you', 'the', 'and', 'to' are very prominent. These are typically stopwords that don't carry much meaning on their own.
+            2. **Context Clues**: Words like 'Dr', 'appointment', and 'message' suggest that the text is related to medical or healthcare communications.
+            3. **Potential Noise**: The presence of numbers (e.g., '2024') and short words might indicate dates or other non-contextual information.
+            4. **Limited Insight**: While this cloud gives us an overview, it's harder to extract meaningful insights due to the presence of common, less informative words.
+            """)
 
     with col2:
         # Filtro de país para o gráfico de palavras mais comuns no texto limpo
@@ -654,22 +658,21 @@ def run_data_categorization():
         else:
             st.success(f"✅ {audit_result_cleaned}")
 
-        st.write("""
-        ### Interpreting the Cleaned Text Word Cloud
+        st.write("### Interpreting the Cleaned Text Word Cloud")
 
-        This word cloud shows the most frequent words after text cleaning and preprocessing. Notice the differences:
+        st.write("This word cloud shows the most frequent words after text cleaning and preprocessing. Notice the differences:")
 
-        1. **Removal of Stopwords**: Common words like 'the', 'and', 'to' have been removed, allowing more meaningful words to stand out.
-        
-        2. **Emphasis on Key Terms**: Words like 'doctor', 'appointment', 'email', and 'contact' are now more prominent, giving us a clearer picture of the main topics.
-        
-        3. **Emergence of Insights**: We can now see terms like 'unsubscribe', 'opinion', and 'specialist' more clearly, which might indicate user concerns or common actions.
-        
-        4. **Cleaner Representation**: The absence of numbers and short, less meaningful words allows for a more focused analysis of the content.
-        
-        5. **Potential Themes**: Words like 'consultation', 'visit', and 'appointment' suggest that scheduling and medical visits are frequent topics in the feedback.
-        """)
+        with st.expander("See explanation"):
 
+            st.write("""
+
+            1. **Removal of Stopwords**: Common words like 'the', 'and', 'to' have been removed, allowing more meaningful words to stand out.    
+            2. **Emphasis on Key Terms**: Words like 'doctor', 'appointment', 'email', and 'contact' are now more prominent, giving us a clearer picture of the main topics.
+            3. **Emergence of Insights**: We can now see terms like 'unsubscribe', 'opinion', and 'specialist' more clearly, which might indicate user concerns or common actions.
+            4. **Cleaner Representation**: The absence of numbers and short, less meaningful words allows for a more focused analysis of the content.
+            5. **Potential Themes**: Words like 'consultation', 'visit', and 'appointment' suggest that scheduling and medical visits are frequent topics in the feedback.
+            """)
+            
     st.write("""
     ### Comparing the Word Clouds
 
