@@ -83,21 +83,22 @@ def run_data_categorization():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     file_path_part1 = os.path.join(current_dir, 'processed_data_part1.csv')
     file_path_part2 = os.path.join(current_dir, 'processed_data_part2.csv')
-    
+
     if not os.path.exists(file_path_part1) or not os.path.exists(file_path_part2):
-        st.error(f"One or both of the required files are missing: {file_path_part1}, {file_path_part2}")
+        st.error(f"One or both of the required files are missing: {
+                 file_path_part1}, {file_path_part2}")
         st.stop()
-    
+
     df_part1 = pd.read_csv(file_path_part1, encoding='utf-8')
     df_part2 = pd.read_csv(file_path_part2, encoding='utf-8')
     df = pd.concat([df_part1, df_part2], ignore_index=True)
-    
+
     df['created_at'] = pd.to_datetime(df['created_at'])
     df['year_week'] = df['created_at'].dt.to_period('W')
-    
+
     # Add sidebar filters
     st.sidebar.header('Filters')
-    
+
     # Country filter
     country_mapping = {
         'br': 'Brazil',
@@ -107,31 +108,35 @@ def run_data_categorization():
     available_countries = ['All'] + list(country_mapping.keys())
     selected_country = st.sidebar.selectbox(
         'Select Country', available_countries, format_func=lambda x: country_mapping.get(x, x))
-    
+
     # Feedback type filter
     available_types = ['All'] + list(df['type'].unique())
-    selected_type = st.sidebar.selectbox('Select Feedback Type', available_types)
-    
+    selected_type = st.sidebar.selectbox(
+        'Select Feedback Type', available_types)
+
     # Week filter
-    available_weeks = ['All'] + list(df['year_week'].dt.strftime('%Y-W%W').unique())
+    available_weeks = ['All'] + \
+        list(df['year_week'].dt.strftime('%Y-W%W').unique())
     selected_week = st.sidebar.selectbox('Select Week', available_weeks)
-    
+
     # Apply filters
     filtered_df = df.copy()
     if selected_country != 'All':
-        filtered_df = filtered_df[filtered_df['country_code'] == selected_country]
+        filtered_df = filtered_df[filtered_df['country_code']
+                                  == selected_country]
     if selected_type != 'All':
         filtered_df = filtered_df[filtered_df['type'] == selected_type]
     if selected_week != 'All':
-        filtered_df = filtered_df[filtered_df['year_week'].dt.strftime('%Y-W%W') == selected_week]
-    
+        filtered_df = filtered_df[filtered_df['year_week'].dt.strftime(
+            '%Y-W%W') == selected_week]
+
     # Título principal
     st.title('Data Processing and Analysis')
 
     # Título e subtítulo
     st.header('1. ETL Process - Text Analysis and Sentiment Evaluation')
     st.markdown("<h3 style='color: #00c3a5;'>This section covers the ETL process for text analysis and sentiment evaluation.</h3>", unsafe_allow_html=True)
-    
+
     # Add the Python_Algorithms content here
     Python_Algorithms()
 
@@ -289,17 +294,18 @@ def run_data_categorization():
             plt.tight_layout()
             st.pyplot(fig1, use_container_width=True)
 
-            st.write(f"""
-            ### Interpreting Record Count per Week
+            st.write("### Interpreting Record Count per Week")
 
-            This graph illustrates the number of records collected each week:
+            st.write(
+                "This graph illustrates the number of records collected each week:")
 
-            1. **Average Line**: The blue solid line represents the average number of records per week, which is **{mean_value:.0f}**. The coefficient of variation (CV) is **{cv:.2f}**%, indicating **{cv_interpretation}** A **{cv_level}** CV suggests **{stability_level}** in weekly record counts, with **{fluctuation_description}**.
+            with st.expander("See explanation"):
 
-            2. **Trend**: The red dashed line represents the overall trend in record counts over time. The slope of this line is **{slope:.2f}**, meaning that, on average, the number of records **{trend_direction}** by approximately **{slope_value_absolute:.0f}** each week. A **{trend_type}** slope indicates a **{trend_direction_word}** trend, suggesting that **{trend_implication}** as time progresses.
-
-            3. **Peak and Low Periods**: The height of the bars relative to the average line reveals periods of **{"increased" if slope > 0 else "decreased"}** data collection. Bars above the average line indicate peak periods, where more records were collected than usual. Conversely, bars below the average line suggest low periods, which might be influenced by external factors such as holidays, system downtimes, or changes in user engagement patterns.
-            """)
+                st.write(f"""
+                1. **Average Line**: The blue solid line represents the average number of records per week, which is **{mean_value:.0f}**. The coefficient of variation (CV) is **{cv:.2f}**%, indicating **{cv_interpretation}**. A **{cv_level}** CV suggests **{stability_level}** in weekly record counts, with **{fluctuation_description}**.
+                2. **Trend**: The red dashed line represents the overall trend in record counts over time. The slope of this line is **{slope:.2f}**, meaning that, on average, the number of records **{trend_direction}** by approximately **{slope_value_absolute:.0f}** each week. A **{trend_type}** slope indicates a **{trend_direction_word}** trend, suggesting that **{trend_implication}** as time progresses.
+                3. **Peak and Low Periods**: The height of the bars relative to the average line reveals periods of **{"increased" if slope > 0 else "decreased"}** data collection. Bars above the average line indicate peak periods, where more records were collected than usual. Conversely, bars below the average line suggest low periods, which might be influenced by external factors such as holidays, system downtimes, or changes in user engagement patterns.
+                """)
 
     with row1_col2:
         # Filtro de país para o gráfico de análise de sentimento
@@ -421,19 +427,16 @@ def run_data_categorization():
             plt.tight_layout()
             st.pyplot(fig2, use_container_width=True)
 
-            st.write(f"""
-            ### Interpreting Weekly Sentiment Analysis
+            st.write("### Interpreting Weekly Sentiment Analysis")
+            st.write("This graph shows the average sentiment over time:")
+            with st.expander("See explanation"):
 
-            This graph shows the average sentiment over time:
-
-            1. **Trend:** The red dashed line represents the overall trend in sentiment over time. The slope of this line is {slope:.4f}, meaning that the average sentiment {trend_direction} by approximately {abs(slope_percentage):.2f}% each week. This indicates a gradual {sentiment_change} in sentiment, suggesting that {"dissatisfaction" if slope < 0 else "satisfaction"} may be slowly {"increasing" if slope < 0 else "improving"} over the analyzed weeks. If this trend continues, we can expect an approximate {sentiment_change} of {abs(annual_percentage_change):.2f}% in sentiment by the end of the year, assuming no changes are made.
-
-            2. **Weekly Sentiment:** The highest sentiment was {highest_sentiment:.2f} in week {week_highest_sentiment}, and the lowest was {lowest_sentiment:.2f} in week {week_lowest_sentiment}.
-
-            3. **Color and Size:** The color of each point accurately reflects the sentiment score, with red indicating negative sentiment and green indicating positive sentiment. The size of each point represents the number of records for that week, with the largest at week {week_largest_count} ({largest_count} records) and the smallest at week {week_smallest_count} ({smallest_count} records).
-
-            4. **Outliers:** Outliers are identified as weeks where the sentiment score deviates significantly (more than 2 standard deviations) from the expected trend. {"The following outliers were detected:" if not outliers.empty else "No significant outliers were detected."}
-            """)
+                st.write(f"""
+                1. **Trend:** The red dashed line represents the overall trend in sentiment over time. The slope of this line is {slope:.4f}, meaning that the average sentiment {trend_direction} by approximately {abs(slope_percentage):.2f}% each week. This indicates a gradual {sentiment_change} in sentiment, suggesting that {"dissatisfaction" if slope < 0 else "satisfaction"} may be slowly {"increasing" if slope < 0 else "improving"} over the analyzed weeks. If this trend continues, we can expect an approximate {sentiment_change} of {abs(annual_percentage_change):.2f}% in sentiment by the end of the year, assuming no changes are made.
+                2. **Weekly Sentiment:** The highest sentiment was {highest_sentiment:.2f} in week {week_highest_sentiment}, and the lowest was {lowest_sentiment:.2f} in week {week_lowest_sentiment}.
+                3. **Color and Size:** The color of each point accurately reflects the sentiment score, with red indicating negative sentiment and green indicating positive sentiment. The size of each point represents the number of records for that week, with the largest at week {week_largest_count} ({largest_count} records) and the smallest at week {week_smallest_count} ({smallest_count} records).
+                4. **Outliers:** Outliers are identified as weeks where the sentiment score deviates significantly (more than 2 standard deviations) from the expected trend. {"The following outliers were detected:" if not outliers.empty else "No significant outliers were detected."}
+                """)
 
             if not outliers.empty:
                 for _, row in outliers.iterrows():
@@ -468,7 +471,8 @@ def run_data_categorization():
         st.pyplot(fig3, use_container_width=True)
 
         st.write("### Interpreting Total Distribution by Country")
-        st.write("This bar chart illustrates the distribution of records across countries:")
+        st.write(
+            "This bar chart illustrates the distribution of records across countries:")
         with st.expander("See explanation"):
             st.write("""
             1. **Country Distribution**: Each bar represents the total records per country, enabling straightforward comparison.
@@ -505,7 +509,8 @@ def run_data_categorization():
 
         st.write("### Interpreting Country Distribution Over Time")
 
-        st.write("This stacked area chart tracks changes in the distribution of records across countries over time:")
+        st.write(
+            "This stacked area chart tracks changes in the distribution of records across countries over time:")
 
         with st.expander("See explanation"):
 
@@ -532,7 +537,8 @@ def run_data_categorization():
     word_freq = count_words(all_text)
 
     # Gerar nuvem de palavras
-    wordcloud_image = generate_wordcloud(word_freq, 'Cleaned Text Word Cloud', filtered_df)
+    wordcloud_image = generate_wordcloud(
+        word_freq, 'Cleaned Text Word Cloud', filtered_df)
 
     # Criar DataFrame com as palavras mais comuns
     most_common_words = pd.DataFrame(
@@ -601,7 +607,8 @@ def run_data_categorization():
             st.success(f"✅ {audit_result_original}")
 
         st.write("### Interpreting the Original Text Word Cloud")
-        st.write("This word cloud represents the most frequent words in the original, unprocessed text.")
+        st.write(
+            "This word cloud represents the most frequent words in the original, unprocessed text.")
 
         with st.expander("See explanation"):
 
@@ -672,22 +679,6 @@ def run_data_categorization():
             4. **Cleaner Representation**: The absence of numbers and short, less meaningful words allows for a more focused analysis of the content.
             5. **Potential Themes**: Words like 'consultation', 'visit', and 'appointment' suggest that scheduling and medical visits are frequent topics in the feedback.
             """)
-            
-    st.write("""
-    ### Comparing the Word Clouds
-
-    1. **Information Density**: The cleaned word cloud provides more meaningful information at a glance, as it's not cluttered with common words.
-
-    2. **Topic Clarity**: Key themes and topics are much easier to identify in the cleaned version, giving a clearer picture of what users are talking about.
-
-    3. **Sentiment Hints**: Words like 'thank', 'help', and 'sorry' in the cleaned cloud might give hints about user sentiments that were less visible in the original.
-
-    4. **Action Items**: The cleaned cloud highlights potential action items (e.g., 'unsubscribe', 'contact') that might be important for improving user experience.
-
-    5. **Data Quality**: Comparing the two clouds helps us appreciate the value of text preprocessing in extracting meaningful insights from unstructured text data.
-
-    This comparison demonstrates how text cleaning and preprocessing can significantly enhance our ability to extract valuable insights from user feedback, allowing for more focused and effective analysis.
-    """)
 
     # Gráfico de Distribuição de Sentimentos
     st.header('Sentiment Distribution')
@@ -740,24 +731,38 @@ def run_data_categorization():
         balance_opinion = 'There\'s a good balance of opinions' if abs(positive_percent - negative_percent) < 10 else f'There\'s a clear tendency towards {
             "positive" if positive_percent > negative_percent else "negative"} sentiment'
 
-        st.write(f"""
-        ### Interpreting the Original Sentiment Distribution
+        st.write("### Interpreting the Original Sentiment Distribution")
+        st.write(
+            "This histogram displays the distribution of sentiment scores before text cleaning.")
 
-        1. **Key Findings**:
-           - Average (mean) sentiment: {mean_original:.2f}
-           - Middle (median) sentiment: {median_original:.2f}
-           - {positive_percent:.1f}% of texts are positive
-           - {negative_percent:.1f}% of texts are negative
-           - {neutral_percent:.1f}% of texts are neutral
+        with st.expander("See explanation"):
 
-        2. **What This Means**:
-           - {sentiment_meaning}
-           - {balance_opinion}
+            st.write(f"""
 
-        3. **Why It Matters**:
-           - This helps us understand the overall tone of the original texts.
-           - It can indicate how people initially express their feelings about the topic discussed.
-        """)
+            1. **Key Findings**:
+
+               - Average (mean) sentiment: {mean_original:.2f}
+               - Middle (median) sentiment: {median_original:.2f}
+
+               - {positive_percent:.1f}% of texts are positive
+
+               - {negative_percent:.1f}% of texts are negative
+
+               - {neutral_percent:.1f}% of texts are neutral
+
+
+            2. **What This Means**:
+               - {sentiment_meaning}
+               - {balance_opinion}
+
+
+            3. **Why It Matters**:
+
+               - This helps us understand the overall tone of the original texts.
+
+               - It can indicate how people initially express their feelings about the topic discussed.
+
+            """)
 
     with col4:
         selected_country_cleaned_sentiment = st.selectbox(
@@ -798,30 +803,40 @@ def run_data_categorization():
         neutral_percent_cleaned = (
             filtered_df_sentiment_cleaned['cleaned_sentiment'] == 0).mean() * 100
 
-        st.write(f"""\
-        ### Interpreting the Cleaned Sentiment Distribution
+        st.write("### Interpreting the Cleaned Sentiment Distribution")
 
-        This histogram displays the distribution of sentiment scores after text cleaning. Here's what changed:
+        st.write(
+            "This histogram displays the distribution of sentiment scores after text cleaning.")
 
-        1. **Key Findings After Cleaning**:
-           - Average (mean) sentiment: {mean_cleaned:.2f}
-           - Middle (median) sentiment: {median_cleaned:.2f}
-           - {positive_percent_cleaned:.1f}% of texts are positive
-           - {negative_percent_cleaned:.1f}% of texts are negative
-           - {neutral_percent_cleaned:.1f}% of texts are neutral
+        with st.expander("See explanation"):
 
-        2. **What Changed**:
-           - {'The cleaning process has generally made the sentiment more positive' if mean_cleaned > mean_original else 'The cleaning process has generally made the sentiment more negative' if mean_cleaned < mean_original else 'The cleaning process has not significantly changed the overall sentiment'}.
-           - The percentage of {'positive' if positive_percent_cleaned > positive_percent else 'negative' if negative_percent_cleaned > negative_percent else 'neutral'} texts has increased after cleaning.
+            st.write(f"""\
 
-        3. **Why It Matters**:
-           - Cleaning the text can reveal underlying sentiments that might be obscured by noise or common phrases.
-           - The difference between original and cleaned sentiment can show how much the non-essential parts of the text were influencing the sentiment analysis.
-        """)
+            1. **Key Findings After Cleaning**:
+
+               - Average (mean) sentiment: {mean_cleaned:.2f}
+
+               - Middle (median) sentiment: {median_cleaned:.2f}
+
+               - {positive_percent_cleaned:.1f}% of texts are positive
+               - {negative_percent_cleaned:.1f}% of texts are negative
+
+               - {neutral_percent_cleaned:.1f}% of texts are neutral
+
+
+            2. **What Changed**:
+
+               - {'The cleaning process has generally made the sentiment more positive' if mean_cleaned > mean_original else 'The cleaning process has generally made the sentiment more negative' if mean_cleaned < mean_original else 'The cleaning process has not significantly changed the overall sentiment'}.
+               - The percentage of {'positive' if positive_percent_cleaned > positive_percent else 'negative' if negative_percent_cleaned > negative_percent else 'neutral'} texts has increased after cleaning.
+
+            3. **Why It Matters**:
+               - Cleaning the text can reveal underlying sentiments that might be obscured by noise or common phrases.
+               - The difference between original and cleaned sentiment can show how much the non-essential parts of the text were influencing the sentiment analysis.
+            """)
 
     # Add this line where you want to display the text length comparison
     display_text_length_comparison(df)
-    
+
     # Nova seção no final do arquivo
     st.header('2. Data Categorization - Structured Data Analysis')
     st.markdown("<h3 style='color: #00c3a5;'>This section will cover the structured data analysis process.</h3>",
