@@ -13,37 +13,44 @@ def get_patient_lifecycle():
     ### **Compact Version**
 
     The compact version of the process serves as an introduction, focusing on the essential steps to convey the core concept. It simplifies the patient journey, making it easier to grasp the key touchpoints that contribute to patient satisfaction.
+    """
 
-    **Identified touchpoints in the process:**
+    st.markdown(content, unsafe_allow_html=True)
+    
+    with st.expander("See identified touchpoints"):
+        st.markdown("""
+        1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
+        2. **Make Payment**: The patient makes the payment for the consultation, either online through the platform or in person at the reception.
+        3. **Attend Consultation**: The patient attends the consultation, either online through the platform or in person at the clinic.
+        4. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
+        """)
 
-    1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
-    2. **Make Payment**: The patient makes the payment for the consultation, either online through the platform or in person at the reception.
-    3. **Attend Consultation**: The patient attends the consultation, either online through the platform or in person at the clinic.
-    4. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
-
+    st.markdown("""
     The diagram below illustrates the compact version, highlighting these key touchpoints. This simplified view helps introduce the patient lifecycle concept, emphasizing the importance of each interaction in shaping the overall experience.
 
     ### **Full Version**
 
     The full version provides a more detailed and technical perspective, showcasing the complete set of touchpoints that should be managed to ensure optimal patient satisfaction. It covers additional steps, such as online and offline check-ins, accessing the consultation platform, and follow-up procedures.
+    """)
 
-    **Identified touchpoints in the process:**
+    with st.expander("See identified touchpoints"):
+        st.markdown("""
+        1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
+        2. **Make Payment Online**: The patient makes the payment for the consultation online through the platform.
+        3. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
+        4. **Check-in Online**: The patient completes an online check-in before the appointment.
+        5. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
+        6. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
+        7. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
+        8. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
+        9. **Follow-up Procedures (e.g., Exams, Surgery)**: The patient follows up with any additional procedures, such as exams or surgeries, as prescribed by the doctor.
+        10. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
+        """)
 
-    1. **Search and Schedule Appointment**: The patient interacts with the system to search for and schedule an appointment via Web/App.
-    2. **Make Payment Online**: The patient makes the payment for the consultation online through the platform.
-    3. **Make Payment at Reception**: The patient makes the payment at the reception after the offline consultation.
-    4. **Check-in Online**: The patient completes an online check-in before the appointment.
-    5. **Check-in at Reception**: The patient checks in at the reception upon arriving at the clinic or hospital.
-    6. **Access Platform for Online Consultation**: The patient accesses the online platform to connect with the doctor for the consultation.
-    7. **Attend Online Consultation**: The patient attends the online consultation, where the doctor conducts the session through the platform.
-    8. **Attend Offline Consultation**: The patient attends an in-person consultation with the doctor at the clinic or hospital.
-    9. **Follow-up Procedures (e.g., Exams, Surgery)**: The patient follows up with any additional procedures, such as exams or surgeries, as prescribed by the doctor.
-    10. **Leave Review and Feedback**: The patient leaves a review and provides feedback about their overall experience.
-
+    st.markdown("""
     By clicking the "Show Full Version" button below, the diagram will switch to this more technical view, providing a deeper understanding of the process and illustrating how to effectively manage each touchpoint to improve patient satisfaction.
-    """
+    """, unsafe_allow_html=True)
     
-    st.markdown(content, unsafe_allow_html=True)
     st.markdown("<hr style='border: 1px solid #00c3a5;'>", unsafe_allow_html=True)
     
 
