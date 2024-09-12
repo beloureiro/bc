@@ -6,6 +6,7 @@ import sys
 import streamlit as st
 import warnings
 import base64
+from bcframework import run_bcframework
 
 warnings.filterwarnings("ignore")
 
@@ -32,7 +33,8 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 # Barra lateral de navegação
 st.sidebar.markdown("<h2 style='text-align: left;'>Navigation</h2>", unsafe_allow_html=True)
 page = st.sidebar.radio("Select a Step:", 
-                        ("Data Categorization", 
+                        ("Business Case Framework",
+                         "Data Categorization", 
                          "Critical Points Analysis", 
                          "Root Cause Hypothesis", 
                          "Action Plan Development"), 
@@ -73,7 +75,9 @@ for logo, label, value, link in contact_info:
         st.sidebar.warning(f"Logo not found: {logo_path}")
 
 # Chamar a função correspondente à página selecionada
-if page == "Data Categorization":
+if page == "Business Case Framework":
+    run_bcframework()
+elif page == "Data Categorization":
     import sys
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from Data_Categorization import dashboard_1
