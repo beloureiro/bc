@@ -1,4 +1,8 @@
 import streamlit as st
+from fase1 import model_patient_lifecycle
+from fase2 import develop_nlp_algorithm
+from fase3 import prioritize_breakdown_causes
+from fase4 import develop_actions
 
 def run_bcframework():
     st.title("Business Case Framework")
@@ -41,13 +45,26 @@ def run_bcframework():
         Output: **Root Cause Analysis & Dashboard** – Actionable insights and a visual dashboard to drive process improvements and support growth.
         """)
     
-    st.write("___")  # Linha de separação
-    
     st.write("""
     Below, you will find more detailed information on each of the four stages of the framework. This will help you understand the processes involved and how each step contributes to the overall goal of improving patient care.
     """)
+    st.write("___")  # Linha de separação
     
-    # Add more content as needed
+
+    # Chamada das funções para as quatro etapas
+    model_patient_lifecycle()
+    
+    st.write("___")  # Linha de separação
+    
+    develop_nlp_algorithm()
+    
+    st.write("___")  # Linha de separação
+    
+    prioritize_breakdown_causes()
+    
+    st.write("___")  # Linha de separação
+    
+    develop_actions()
 
 if __name__ == "__main__":
     run_bcframework()
