@@ -13,7 +13,7 @@ def Python_Algorithms():
 
     with col1:
         st.markdown("""
-        ### 1 - Advanced Text Processing and Sentiment Analysis
+        ### 1 - Text Processing and Sentiment Analysis
         """)
         with st.expander("See algorithm details"):
             st.write('''
@@ -22,11 +22,11 @@ def Python_Algorithms():
 
     with col2:
         st.markdown("""
-        ### 2 - Automated Text Categorization and Entity Extraction
+        ### 2 - Text Categorization and Touchpoint Extraction
         """)
         with st.expander("See algorithm details"):
             st.write('''
-            This algorithm leverages **spaCy** (natural language processing), **BERT** (text classification), and **Pandas** (data manipulation) to automatically categorize user feedback and extract named entities, such as doctor names and locations. By combining specific keywords with BERT classification and utilizing parallel processing via **ThreadPoolExecutor** (efficiency), the algorithm achieves a detailed and customized analysis of each review. While robust, it can be further improved to enhance accuracy, particularly in dealing with complex and nuanced text.
+            This algorithm leverages **spaCy** (natural language processing), **BERT** (text classification), and **Pandas** (data manipulation) to automatically categorize user feedback and extract touchpoints. By combining specific keywords with BERT classification and utilizing parallel processing via **ThreadPoolExecutor** (efficiency), the algorithm offers a targeted analysis of each review. While robust, it can be further improved to enhance accuracy, particularly in dealing with complex and nuanced text.
             ''')
 
     st.markdown("<hr style='border: 1px solid #00c3a5;'>", unsafe_allow_html=True)
