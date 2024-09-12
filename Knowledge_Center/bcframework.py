@@ -41,6 +41,12 @@ def run_bcframework():
         Output: **Root Cause Analysis & Dashboard** – Actionable insights and a visual dashboard to drive process improvements and support growth.
         """)
     
+    st.write("___")  # Linha de separação
+    
+    st.write("""
+    Below, you will find more detailed information on each of the four stages of the framework. This will help you understand the processes involved and how each step contributes to the overall goal of improving patient care.
+    """)
+    
     # Add more content as needed
 
 if __name__ == "__main__":
