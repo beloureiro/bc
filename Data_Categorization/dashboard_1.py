@@ -135,7 +135,7 @@ def run_data_categorization():
 
     # Título e subtítulo
     st.header('1. ETL Process - Text Analysis and Sentiment Evaluation')
-    st.markdown("<h3 style='color: #00c3a5;'>This section covers the ETL process for text analysis and sentiment evaluation.</h3>", unsafe_allow_html=True)
+    # st.markdown("<h3 style='color: #00c3a5;'>This section covers the ETL process for text analysis and sentiment evaluation.</h3>", unsafe_allow_html=True)
 
     # Add the Python_Algorithms content here
     Python_Algorithms()
