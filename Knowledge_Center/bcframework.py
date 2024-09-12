@@ -3,7 +3,7 @@ import streamlit as st
 def run_bcframework():
     st.title("Business Case Framework")
     st.write("Welcome to the Business Case Framework!")
-    
+    st.image("logo/bc_framework.png")  # Caminho da imagem
     st.header("Framework Overview")
     st.write("""
     The Business Case Framework consists of four main steps:
@@ -13,6 +13,7 @@ def run_bcframework():
     4. Develop Actions Based on Identified Causes
     """)
     
+   
     # Add more content as needed
 
 if __name__ == "__main__":
