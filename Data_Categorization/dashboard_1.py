@@ -19,7 +19,7 @@ from wordcloud import WordCloud
 import numpy as np
 import pandas as pd
 
-from Critical_Points_Analysis.Diagram import display_diagram  # Importar a função
+
 from Data_Categorization.python_based_algorithms import Python_Algorithms  # Add this import
 from Data_Categorization.box_spolt import display_text_length_comparison
 from Data_Categorization.Categorized_data import display_categorized_data
@@ -955,8 +955,8 @@ def run_data_categorization():
     # Call the display_categorized_data function
     display_categorized_data(df, country_options, country_mapping)
 
-    # Chama a função para exibir o diagrama
-    display_diagram()  # Chamada da função
+    # # Chama a função para exibir o diagrama
+    # display_diagram()  # Chamada da função
 
 # Adicione esta linha no final do arquivo
 __all__ = ['run_data_categorization']
