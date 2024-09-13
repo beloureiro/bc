@@ -86,7 +86,11 @@ elif page == "Critical Points Analysis":
     dashboard_2 = importlib.import_module('Critical_Points_Analysis.dashboard_2')
     dashboard_2.run_critical_points_analysis()
 elif page == "Root Cause Hypothesis":
-    dashboard_3 = importlib.import_module('Root_Cause_Hypothesis.dashboard_3')
+    # Adicione o diretório pai ao caminho do Python
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    sys.path.append(parent_dir)
+    from Root_Cause_Hypothesis import dashboard_3
     dashboard_3.run_root_cause_hypothesis()
 elif page == "Action Plan Development":
     dashboard_4 = importlib.import_module('Action_Plan_Development.dashboard_4')

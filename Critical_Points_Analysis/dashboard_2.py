@@ -3,7 +3,7 @@ from .mermaid_full_lifecycle import full_lifecycle_sequence_diagram  # Remove th
 from .mermaid_compact_lifecycle import compact_lifecycle_sequence_diagram  # Removido o 'm' extra no final
 from .touch_points import get_patient_lifecycle  # Importando a função
 from .switch_mermaid import toggle_diagram
-from Critical_Points_Analysis.Diagram import display_diagram  # Importar a função
+
 
 def run_critical_points_analysis():
     import streamlit as st
@@ -18,6 +18,4 @@ def run_critical_points_analysis():
     # Chama a função que foi definida no 'critical_points.py'
     critical_points_function()
 
-    # Chama a função para exibir o diagrama
-    display_diagram()  # Chamada da função
-
+ 
