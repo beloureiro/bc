@@ -7,6 +7,8 @@ import matplotlib.ticker as ticker
 
 def display_categorized_data(df, country_options, country_mapping):
     st.header('Feedback Source Analysis')
+    st.markdown("<hr style='border: 1px solid #00c3a5;'>",
+                unsafe_allow_html=True)
     st.markdown("""
     This section presents an analysis of feedback sources based on the dataset. The dataset categorizes feedback into five sources: case, opinion, CSAT, Promoter Ninja, and AppFollow.
     """)
@@ -150,8 +152,70 @@ def display_categorized_data(df, country_options, country_mapping):
             hide_index=True,
             use_container_width=True,
         )
+    
+    st.write("___")  # Linha de separação
 
     st.header('2. Data Categorization - Structured Data Analysis')
     st.markdown("<h3 style='color: #00c3a5;'>This section will cover the structured data analysis process.</h3>",
                 unsafe_allow_html=True)
+
+    st.markdown("# Categorization Process Overview")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("""
+        The categorization process outlined below is structured into 8 distinct levels of analysis. At the first level, all received feedback is grouped together, forming the primary dataset. Moving to the second level, this feedback is segmented by country. At the third level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The fourth level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
+
+        At the fifth level, the analysis delves deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
+        """)
+
+    with col2:
+        st.markdown("""
+        Next, at the sixth level, we look at the process touchpoints, particularly within the Mental Health area in this example, highlighting the 11 touchpoints in the patient journey and pinpointing specific opportunities for operational improvement at DocPlanner. The seventh level assesses interactions based on three levels of urgency: low, medium, and high. Finally, at the eighth level, within the high-urgency category, we consider the limited capacity for action but with strong influence; through this "mass strategy," we can enhance positive persuasion to drive improvements in medical best practices using real data from DocPlanner, thus completing the analysis framework and providing a strategic overview of the operation.
+
+        In this context, "mass solutions" refers to implementing targeted interventions for large groups of professionals within a medical specialty. Because these solutions are designed to address recurring behaviors, their impact is magnified, leading to significant improvements in patient experience and increasing engagement on the platform.
+        """)
+
+    st.markdown("Below is a tree diagram that visually unfolds the categories for a clearer representation.")
+
+    # Add the code block here
+    st.code('''
+1. Total Reviews/
+├── 1.1 Country/
+│   ├── 1.1.1 Sentiment/
+│   │   ├── 1.1.1.1 Positive
+│   │   ├── 1.1.1.2 Neutral
+│   │   └── 1.1.1.3 Negative/
+│   │       ├── 1.1.1.3.1 Practice Area/
+│   │       │   ├── 1.1.1.3.1.1 Clinical Medicine/
+│   │       │   │   ├── 1.1.1.3.1.1.1 Cardiologist
+│   │       │   │   ├── 1.1.1.3.1.1.2 Endocrinologist
+│   │       │   │   ├── 1.1.1.3.1.1.3 Gastroenterologist
+│   │       │   │   └── 1.1.1.3.1.1.4 Pulmonologist
+│   │       │   ├── 1.1.1.3.1.2 Surgery/
+│   │       │   │   ├── 1.1.1.3.1.2.1 General Surgeon
+│   │       │   │   ├── 1.1.1.3.1.2.2 Plastic Surgeon
+│   │       │   │   └── 1.1.1.3.1.2.3 Orthopedist
+│   │       │   ├── 1.1.1.3.1.3 Mental Health/
+│   │       │   │   ├── 1.1.1.3.1.3.1 Psychologist
+│   │       │   │   └── 1.1.1.3.1.3.2 Psychiatrist/
+│   │       │   │       └── 1.1.1.3.1.3.2.1 Touchpoints/
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.1 Search and Evaluate Professional Score
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.2 Schedule Appointment
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.3 Make Payment Online
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.4 Make Payment at Reception
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.5 Check-in Online
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.6 Check-in at Reception
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.7 Access Platform for Online Consultation
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.8 Attend Online Consultation
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.9 Attend Offline Consultation/
+│   │       │   │           │   └── 1.1.1.3.1.3.2.1.9.1 Urgency Levels/
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.1 Low
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.2 Medium
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.3 High/
+│   │       │   │           │       │   └── 1.1.1.3.1.3.2.1.9.1.3.1 🚫 No Autonomy to Act 
+│   │       │   │           └── 1.1.1.3.1.3.2.1.10 Follow-up Procedures (e.g., Exams, Surgery)
+│   │       │   │           └── 1.1.1.3.1.3.2.1.11 Leave Review and Feedback
+    ''', language='text')
 
