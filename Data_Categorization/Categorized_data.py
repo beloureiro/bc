@@ -56,7 +56,6 @@ def display_categorized_data(df, country_options, country_mapping):
         for text in legend.get_texts():
             text.set_color('white')
 
-        st.write("### Feedback Type Analysis Across Weekly Intervals")
         st.pyplot(fig)
 
         st.write("### Interpreting the Feedback Source Analysis")
@@ -156,16 +155,14 @@ def display_categorized_data(df, country_options, country_mapping):
     st.write("___")  # Linha de separação
 
     st.header('2. Data Categorization - Structured Data Analysis')
-    st.markdown("<h3 style='color: #00c3a5;'>This section will cover the structured data analysis process.</h3>",
+    st.markdown("<h3 style='color: #00c3a5;'>This section provides an overview of the structured data analysis and categorization process.</h3>",
                 unsafe_allow_html=True)
-
-    st.markdown("# Categorization Process Overview")
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("""
-        The categorization process outlined below is structured into 8 distinct levels of analysis. At the first level, all received feedback is grouped together, forming the primary dataset. Moving to the second level, this feedback is segmented by country. At the third level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The fourth level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
+        The categorization process outlined below is structured into 8️⃣ distinct levels of analysis. At the first level, all received feedback is grouped together, forming the primary dataset. Moving to the second level, this feedback is segmented by country. At the third level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The fourth level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
 
         At the fifth level, the analysis delves deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
         """)
@@ -176,6 +173,8 @@ def display_categorized_data(df, country_options, country_mapping):
 
         In this context, "mass solutions" refers to implementing targeted interventions for large groups of professionals within a medical specialty. Because these solutions are designed to address recurring behaviors, their impact is magnified, leading to significant improvements in patient experience and increasing engagement on the platform.
         """)
+
+    st.write("___")  # Linha de separação
 
     st.markdown("Below is a tree diagram that visually unfolds the categories for a clearer representation.")
 
@@ -214,8 +213,12 @@ def display_categorized_data(df, country_options, country_mapping):
 │   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.1 Low
 │   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.2 Medium
 │   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.3 High/
-│   │       │   │           │       │   └── 1.1.1.3.1.3.2.1.9.1.3.1 🚫 No Autonomy to Act 
+│   │       │   │           │       │   └── 1.1.1.3.1.3.2.1.9.1.3.1 🚫 Influence without autonomy to act 
 │   │       │   │           └── 1.1.1.3.1.3.2.1.10 Follow-up Procedures (e.g., Exams, Surgery)
 │   │       │   │           └── 1.1.1.3.1.3.2.1.11 Leave Review and Feedback
     ''', language='text')
 
+    st.markdown("In the next section, Critical Points Analysis, accessible from the sidebar on your left (⬅️), you'll gain deeper insights into how the touchpoints of the process were developed and mapped, providing a comprehensive understanding of their role within the overall framework.")
+
+    st.markdown("<hr style='border: 1px solid #00c3a5;'>", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
