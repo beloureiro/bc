@@ -7,6 +7,7 @@ import streamlit as st
 import warnings
 import base64
 from bcframework import run_bcframework
+from pathlib import Path
 
 warnings.filterwarnings("ignore")
 
@@ -83,7 +84,11 @@ elif page == "Data Categorization":
     from Data_Categorization import dashboard_1
     dashboard_1.run_data_categorization()
 elif page == "Critical Points Analysis":
-    dashboard_2 = importlib.import_module('Critical_Points_Analysis.dashboard_2')
+    # Adicione o diretório pai ao sys.path
+    current_dir = Path(__file__).resolve().parent
+    parent_dir = current_dir.parent
+    sys.path.append(str(parent_dir))
+    from Critical_Points_Analysis import dashboard_2
     dashboard_2.run_critical_points_analysis()
 elif page == "Root Cause Hypothesis":
     # Adicione o diretório pai ao caminho do Python
@@ -93,8 +98,8 @@ elif page == "Root Cause Hypothesis":
     from Root_Cause_Hypothesis import dashboard_3
     dashboard_3.run_root_cause_hypothesis()
 elif page == "Action Plan Development":
-    dashboard_4 = importlib.import_module('Action_Plan_Development.dashboard_4')
-    dashboard_4.run_action_plan_development()
+    from Action_Plan_Development.dashboard_4 import run_action_plan_development
+    run_action_plan_development()
 
 # to run the app on gitbash
 # source venv/Scripts/activate

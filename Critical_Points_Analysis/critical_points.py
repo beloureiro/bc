@@ -21,6 +21,9 @@ def critical_points_function():
         st.error("One or both of the files 'processed_data_part1.csv' and 'processed_data_part2.csv' were not found. Please verify the path and try again.")
         return
 
+    # Título principal
+    st.title("Breakdown by Country")
+
     # Dicionário para mapear países
     country_mapping = {
         'br': 'Brazil',
@@ -47,101 +50,50 @@ def critical_points_function():
         country_data = df[df['country_code'] == selected_country]
         selected_country = selected_country_name  # Usar o nome do país para exibição
 
-    # Função para classificar o sentimento
-    def classify_sentiment(score):
-        if score < 0:
-            return 'Negative'
-        elif score == 0:
-            return 'Neutral'
-        else:
-            return 'Positive'
-
-    # Aplicar a classificação de sentimento
-    country_data['sentiment_classification'] = country_data['cleaned_sentiment'].apply(classify_sentiment)
-
-    # Calculate metrics
+    # Subtítulo com o país selecionado
+    st.subheader(f"Analysis for: {selected_country}")
+    
+    # Calcular métricas
     total_reviews = int(country_data.shape[0])
     average_sentiment = float(country_data['cleaned_sentiment'].mean())
-    dominant_category = country_data['category_bert'].mode()[0]
-    urgency_level = float((country_data['issue_type'] == 'Critical').mean() * 100)
+    
+    # Calcular a porcentagem de casos de alta urgência
+    high_urgency_percentage = float((country_data['urgency_level'] == 'High').mean() * 100)
 
-    # Display KPIs at the top
-    st.title(f"Country Analysis: {selected_country}")
+    # Criar três colunas para os KPIs principais
     kpi1, kpi2, kpi3 = st.columns(3)
-    kpi1.metric("Total Reviews", total_reviews)
-    kpi2.metric("Average Sentiment", f"{average_sentiment:.2f}")
-    kpi3.metric("Dominant Category", dominant_category)
+    
+    with kpi1:
+        st.metric("Total Reviews", f"{total_reviews:,}")
+    with kpi2:
+        st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
+    with kpi3:
+        st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
 
-    kpi4, kpi5 = st.columns(2)
-    kpi4.metric("Urgency Level", f"{urgency_level:.1f}%")
+    # Adicionar uma linha para separar os KPIs das informações adicionais
+    st.markdown("---")
 
-    # Function to create a progress column
+    # Função para criar colunas de progresso
     def create_progress_column(dataframe, column_name):
         max_value = dataframe[column_name].sum()
-        return dataframe[column_name].apply(
-            lambda x: (x / max_value) * 100  # calculate percentage
-        ), dataframe[column_name].cumsum().apply(
-            lambda x: (x / max_value) * 100  # calculate cumulative percentage
-        )
+        percentage = dataframe[column_name].apply(lambda x: (x / max_value) * 100)
+        cumulative = dataframe[column_name].cumsum().apply(lambda x: (x / max_value) * 100)
+        return percentage, cumulative
 
-    # Table for Categories (without Count column)
-    category_counts = country_data['category_bert'].value_counts(
-    ).reset_index()  # Changed from 'category' to 'category_bert'
-    category_counts.columns = ['Category', 'Count']
-    category_counts['Category'] = category_counts['Category'].astype(str)
-    category_counts['Percentage'], category_counts['Cumulative'] = create_progress_column(
-        category_counts, 'Count')
-    category_counts = category_counts.drop(columns=['Count'])
+    # Criar duas colunas principais para BERT e Keywords Touchpoints
+    col_bert, col_keywords = st.columns(2)
 
-    # Table for Sentiments
-    sentiment_counts = country_data['sentiment_classification'].value_counts(
-    ).reset_index()
-    sentiment_counts.columns = ['Sentiment', 'Count']
-    sentiment_counts['Sentiment'] = sentiment_counts['Sentiment'].astype(str)
-    sentiment_counts['Percentage'], sentiment_counts['Cumulative'] = create_progress_column(
-        sentiment_counts, 'Count')
+    with col_bert:
+        st.subheader("BERT Touchpoints Ranking")
+        category_counts_bert = country_data['category_bert'].value_counts().reset_index()
+        category_counts_bert.columns = ['Touchpoint', 'Count']
+        category_counts_bert['Touchpoint'] = category_counts_bert['Touchpoint'].astype(str)
+        category_counts_bert['Percentage'], category_counts_bert['Cumulative'] = create_progress_column(category_counts_bert, 'Count')
 
-    # Display the tables in a grid
-    st.subheader("Feedback Type Distribution")
-
-    # Criar duas colunas principais
-    col_left, col_right = st.columns(2)
-
-    with col_left:
-        # Coluna da esquerda para Category
-        st.subheader("Category")
-
-        # Tabela de Categorias (sem a coluna Count)
-        st.data_editor(
-            category_counts,
+        st.dataframe(
+            category_counts_bert,
             column_config={
-                "Category": st.column_config.TextColumn("Category"),
-                "Percentage": st.column_config.ProgressColumn(
-                    "Percentage",
-                    format="%0.2f%%",
-                    min_value=0,
-                    max_value=100
-                ),
-                "Cumulative": st.column_config.ProgressColumn(
-                    "Cumulative",
-                    format="%0.2f%%",
-                    min_value=0,
-                    max_value=100
-                ),
-            },
-            hide_index=True,
-            disabled=True,
-        )
-
-    with col_right:
-        # Coluna da direita para Sentiment
-        st.subheader("Sentiment")
-
-        # Tabela de Sentimentos
-        st.data_editor(
-            sentiment_counts,
-            column_config={
-                "Sentiment": st.column_config.TextColumn("Sentiment"),
+                "Touchpoint": st.column_config.TextColumn("Touchpoint"),
                 "Count": st.column_config.NumberColumn("Count"),
                 "Percentage": st.column_config.ProgressColumn(
                     "Percentage",
@@ -157,16 +109,79 @@ def critical_points_function():
                 ),
             },
             hide_index=True,
-            disabled=True,
+            use_container_width=True
         )
 
-        # Aqui você pode adicionar outra tabela relevante, se necessário
+    with col_keywords:
+        st.subheader("Keywords Touchpoints Ranking")
+        category_counts_keywords = country_data['category_keywords'].value_counts().reset_index()
+        category_counts_keywords.columns = ['Touchpoint', 'Count']
+        category_counts_keywords['Touchpoint'] = category_counts_keywords['Touchpoint'].astype(str)
+        category_counts_keywords['Percentage'], category_counts_keywords['Cumulative'] = create_progress_column(category_counts_keywords, 'Count')
 
-    # Após as tabelas de Category e Sentiment
+        st.dataframe(
+            category_counts_keywords,
+            column_config={
+                "Touchpoint": st.column_config.TextColumn("Touchpoint"),
+                "Count": st.column_config.NumberColumn("Count"),
+                "Percentage": st.column_config.ProgressColumn(
+                    "Percentage",
+                    format="%0.2f%%",
+                    min_value=0,
+                    max_value=100
+                ),
+                "Cumulative": st.column_config.ProgressColumn(
+                    "Cumulative",
+                    format="%0.2f%%",
+                    min_value=0,
+                    max_value=100
+                ),
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+
+    # Adicionar outra linha separadora
+    st.markdown("---")
+
+    # Tabela para Sentimentos
+    st.subheader("Sentiment Distribution")
+    # Criar uma classificação de sentimento baseada em cleaned_sentiment
+    country_data['sentiment_classification'] = country_data['cleaned_sentiment'].apply(
+        lambda x: 'Positive' if x > 0 else ('Negative' if x < 0 else 'Neutral')
+    )
+    sentiment_counts = country_data['sentiment_classification'].value_counts().reset_index()
+    sentiment_counts.columns = ['Sentiment', 'Count']
+    sentiment_counts['Sentiment'] = sentiment_counts['Sentiment'].astype(str)
+    sentiment_counts['Percentage'], sentiment_counts['Cumulative'] = create_progress_column(sentiment_counts, 'Count')
+
+    st.dataframe(
+        sentiment_counts,
+        column_config={
+            "Sentiment": st.column_config.TextColumn("Sentiment"),
+            "Count": st.column_config.NumberColumn("Count"),
+            "Percentage": st.column_config.ProgressColumn(
+                "Percentage",
+                format="%0.2f%%",
+                min_value=0,
+                max_value=100
+            ),
+            "Cumulative": st.column_config.ProgressColumn(
+                "Cumulative",
+                format="%0.2f%%",
+                min_value=0,
+                max_value=100
+            ),
+        },
+        hide_index=True,
+        use_container_width=True
+    )
+
+    st.markdown("---")
 
     st.subheader("Filters and Detailed Data")
 
-    # Criando filtros
+    # Criando filtros em uma única linha
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -178,14 +193,14 @@ def critical_points_function():
 
     with col2:
         selected_categories = st.multiselect(
-            "Patient Experience Issues (BERT)",
+            "BERT Touchpoints Classification",
             options=country_data['category_bert'].unique(),
             default=[]
         )
 
     with col3:
         selected_types = st.multiselect(
-            "Category keywords Issues",
+            "Keywords Touchpoints Classification",
             options=country_data['category_keywords'].unique(),
             default=[]
         )
@@ -193,26 +208,37 @@ def critical_points_function():
     # Aplicando filtros
     filtered_data = country_data
     if selected_sentiments:
-        filtered_data = filtered_data[filtered_data['sentiment_classification'].isin(
-            selected_sentiments)]
+        filtered_data = filtered_data[filtered_data['sentiment_classification'].isin(selected_sentiments)]
     if selected_categories:
-        filtered_data = filtered_data[filtered_data['category_bert'].isin(
-            selected_categories)]
+        filtered_data = filtered_data[filtered_data['category_bert'].isin(selected_categories)]
     if selected_types:
-        filtered_data = filtered_data[filtered_data['category_keywords'].isin(
-            selected_types)]
+        filtered_data = filtered_data[filtered_data['category_keywords'].isin(selected_types)]
 
-    # Exibindo a tabela filtrada
+    # Exibindo a tabela filtrada em toda a largura da página
     st.subheader("Detailed Feedback Data")
     st.dataframe(
-        # Removida a coluna 'cleaned_content'
-        filtered_data[['content_en', 'cleaned_sentiment']],
-        hide_index=True,
+        filtered_data[[
+            'content_en', 
+            'cleaned_sentiment', 
+            'sentiment_classification', 
+            'category_bert', 
+            'category_keywords', 
+            'issue_type',
+            'created_at',
+            'resolution_suggestion'
+        ]],
         column_config={
             "content_en": st.column_config.TextColumn("English Content"),
-            "cleaned_sentiment": st.column_config.NumberColumn("Sentiment Score", format="%.4f")
+            "cleaned_sentiment": st.column_config.NumberColumn("Sentiment Score", format="%.4f"),
+            "sentiment_classification": st.column_config.TextColumn("Sentiment"),
+            "category_bert": st.column_config.TextColumn("BERT Category"),
+            "category_keywords": st.column_config.TextColumn("Keywords Category"),
+            "issue_type": st.column_config.TextColumn("Issue Type"),
+            "created_at": st.column_config.DatetimeColumn("Date", format="DD/MM/YYYY"),
+            "resolution_suggestion": st.column_config.TextColumn("Resolution Suggestion")
         },
+        hide_index=True,
+        use_container_width=True,
         height=400  # Você pode ajustar a altura conforme necessário
     )
 
-    # The rest of the tables can follow in subsequent sections
