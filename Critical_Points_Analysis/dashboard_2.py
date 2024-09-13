@@ -3,11 +3,34 @@ from .mermaid_full_lifecycle import full_lifecycle_sequence_diagram  # Remove th
 from .mermaid_compact_lifecycle import compact_lifecycle_sequence_diagram  # Removido o 'm' extra no final
 from .touch_points import get_patient_lifecycle  # Importando a função
 from .switch_mermaid import toggle_diagram
+from .meta_chart import grafico_meta  # Atualizado para o novo nome da função
 
+import os
+import pandas as pd
+import streamlit as st
+
+@st.cache_data
+def load_data():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    file_path_part1 = os.path.join(parent_dir, 'Data_Categorization', 'processed_data_part1.csv')
+    file_path_part2 = os.path.join(parent_dir, 'Data_Categorization', 'processed_data_part2.csv')
+
+    if not os.path.exists(file_path_part1) or not os.path.exists(file_path_part2):
+        st.error(f"One or both of the required files are missing: {file_path_part1}, {file_path_part2}")
+        return None
+
+    df_part1 = pd.read_csv(file_path_part1)
+    df_part2 = pd.read_csv(file_path_part2)
+    df = pd.concat([df_part1, df_part2], ignore_index=True)
+    return df
 
 def run_critical_points_analysis():
-    import streamlit as st
     st.title("Critical Points Analysis")
+    
+    df = load_data()
+    if df is None:
+        return
     
     # Chama a função para obter o ciclo de vida do paciente
     get_patient_lifecycle()
@@ -18,4 +41,9 @@ def run_critical_points_analysis():
     # Chama a função que foi definida no 'critical_points.py'
     critical_points_function()
 
- 
+    # Chama a função grafico_meta do arquivo meta_chart.py
+    grafico_meta(df)  # Passando df como argumento
+
+if __name__ == "__main__":
+    run_critical_points_analysis()
+
