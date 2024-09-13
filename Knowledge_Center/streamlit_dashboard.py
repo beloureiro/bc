@@ -98,7 +98,14 @@ elif page == "Root Cause Hypothesis":
     from Root_Cause_Hypothesis import dashboard_3
     dashboard_3.run_root_cause_hypothesis()
 elif page == "Action Plan Development":
-    from Action_Plan_Development.dashboard_4 import run_action_plan_development
+    # Get the current file's directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Get the parent directory
+    parent_dir = os.path.dirname(current_dir)
+    # Add the Action_Plan_Development directory to the Python path
+    sys.path.append(os.path.join(parent_dir, 'Action_Plan_Development'))
+    # Now import the run_action_plan_development function
+    from dashboard_4 import run_action_plan_development
     run_action_plan_development()
 
 # to run the app on gitbash

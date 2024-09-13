@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 
 def root_cause_analysis_panel():
-    st.title("Touchpoints Mapping and Root Cause Analysis Dashboard")
+    
+    st.markdown("⚠️ Premise: The data presented here has been curated to enable the creation of an actionable plan")
+
+    st.write("___")  # Linha de separação
+
+    # st.title("Touchpoints Mapping and Root Cause Analysis Dashboard")
 
     # Load data from CSV
     df = pd.read_csv('Root_Cause_Hypothesis/Touchpoints_Final_Sorted.csv')
@@ -27,9 +32,9 @@ def root_cause_analysis_panel():
     col1, col2 = st.columns(2)
 
     with col2:
-        touchpoint = st.multiselect("Touchpoint", options=df['Touchpoint'].unique())
-        stakeholder = st.multiselect("Process Owner (Stakeholder)", options=df['Stakeholder'].unique())
-        possible_causes = st.multiselect("Possible Causes", options=df['Possible Causes'].unique())
+        touchpoint = st.multiselect("Touchpoint", options=df['Touchpoint'].unique(), key="touchpoint_rootdash")
+        stakeholder = st.multiselect("Process Owner (Stakeholder)", options=df['Stakeholder'].unique(), key="stakeholder_rootdash")
+        possible_causes = st.multiselect("Possible Causes", options=df['Possible Causes'].unique(), key="possible_causes_rootdash")
 
     # Apply filters
     if touchpoint:
