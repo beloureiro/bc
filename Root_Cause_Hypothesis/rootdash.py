@@ -7,6 +7,18 @@ def root_cause_analysis_panel():
     # Load data from CSV
     df = pd.read_csv('Root_Cause_Hypothesis/Touchpoints_Final_Sorted.csv')
 
+    # Reorder columns
+    column_order = [
+        'Touchpoint',
+        'Possible Process Issues',
+        'Symptoms',
+        'Effect of Symptom',
+        'Possible Causes',
+        'Reasons',  # This is assumed to be 'Root Causes'
+        'Stakeholder'  # This is assumed to be 'Process Owner'
+    ]
+    df = df[column_order]
+
     st.markdown("""
     This dashboard is designed to present the method for identifying, analyzing, and eliminating issues in the patient lifecycle. It focuses on definitively resolving failures, enhancing process efficiency, and improving patient satisfaction. The process owner is responsible for implementing the necessary corrections.
     """)
