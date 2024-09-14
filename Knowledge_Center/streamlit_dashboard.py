@@ -102,10 +102,12 @@ elif page == "Action Plan Development":
     current_dir = os.path.dirname(os.path.abspath(__file__))
     # Get the parent directory
     parent_dir = os.path.dirname(current_dir)
-    # Add the Action_Plan_Development directory to the Python path
-    sys.path.append(os.path.join(parent_dir, 'Action_Plan_Development'))
+    # Add the parent directory to the Python path
+    sys.path.append(parent_dir)
     # Now import the run_action_plan_development function
-    from dashboard_4 import run_action_plan_development
+    from Action_Plan_Development.dashboard_4 import run_action_plan_development
+    
+    # Run the function
     run_action_plan_development()
 
 # to run the app on gitbash

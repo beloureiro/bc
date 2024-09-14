@@ -24,10 +24,9 @@ def generate_action_plan():
     """
     st.title("Action Plan")
     
-    st.header("Identified Key Issues and Improvement Opportunities:")
+    #st.header("Identified Key Issues and Improvement Opportunities:")
 
     st.markdown("""
-    ## ⚠️ Assumption:
 
     After analyzing the data, stratifying, and prioritizing the causes, the following areas in the process were identified as needing improvement. The causes are listed below, and the points highlighted in the red light are those that demand the most attention for improvements.
 
