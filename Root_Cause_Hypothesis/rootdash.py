@@ -3,8 +3,6 @@ import pandas as pd
 
 def root_cause_analysis_panel():
     
-    st.markdown("⚠️ Premise: The data presented here has been curated to enable the creation of an actionable plan")
-
     st.write("___")  # Linha de separação
 
     # st.title("Touchpoints Mapping and Root Cause Analysis Dashboard")

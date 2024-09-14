@@ -5,6 +5,7 @@ from Root_Cause_Hypothesis.rootdash import root_cause_analysis_panel
 
 def run_root_cause_hypothesis():
     
+    st.title("Root Cause Hypothesis Panel")
     # Chama a função do painel de análise de causas raízes
     root_cause_analysis_panel()
     
