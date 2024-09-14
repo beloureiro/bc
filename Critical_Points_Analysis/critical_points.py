@@ -1,7 +1,8 @@
+import streamlit as st
+import pandas as pd
+import os
+
 def critical_points_function():
-    import streamlit as st
-    import pandas as pd
-    import os
 
     # Get the current file's directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -91,8 +92,14 @@ def critical_points_function():
     category_counts_bert['Coefficient of Variation'] = cv_list
     category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(interpret_cv)
 
-    # Reorder columns
-    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
+    # Calculate average sentiment for each category
+    category_avg_sentiment = df.groupby('category_bert')['cleaned_sentiment'].mean()
+
+    # Add Avg Sentiment column to category_counts_bert
+    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(category_avg_sentiment)
+
+    # Reorder columns, moving 'Rank' to the first position
+    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
 
     # Create filters
     col1, col2, col3, col4 = st.columns(4)
@@ -121,7 +128,6 @@ def critical_points_function():
             default=[]
         )
 
-    st.markdown("---")
 
     # Apply filters
     filtered_df = df.copy()
@@ -131,30 +137,6 @@ def critical_points_function():
         filtered_df = filtered_df[filtered_df['sentiment_classification'].isin(selected_sentiments)]
     if selected_urgency:
         filtered_df = filtered_df[filtered_df['urgency_level'].isin(selected_urgency)]
-
-    # Recalculate metrics based on filtered data
-    total_reviews = int(filtered_df.shape[0])
-    average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
-    high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
-    positive_percentage = float((filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
-    negative_percentage = float((filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
-    neutral_percentage = float((filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
-
-    # Display KPIs
-    kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns(6)
-    
-    with kpi1:
-        st.metric("Total Reviews", f"{total_reviews:,}")
-    with kpi2:
-        st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
-    with kpi3:
-        st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
-    with kpi4:
-        st.metric("Positive Sentiment", f"{positive_percentage:.1f}%")
-    with kpi5:
-        st.metric("Negative Sentiment", f"{negative_percentage:.1f}%")
-    with kpi6:
-        st.metric("Neutral Sentiment", f"{neutral_percentage:.1f}%")
 
     # Recalculate category_counts_bert based on filtered data
     category_counts_bert = filtered_df['category_bert'].value_counts().reset_index()
@@ -169,9 +151,47 @@ def critical_points_function():
     category_counts_bert['Coefficient of Variation'] = cv_list
     category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(interpret_cv)
 
+    # Calculate average sentiment for each category
+    category_avg_sentiment = filtered_df.groupby('category_bert')['cleaned_sentiment'].mean()
+
+    # Add Avg Sentiment column to category_counts_bert
+    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(category_avg_sentiment)
+
+    # Reorder columns, ensuring 'Rank' is first
+    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
+
     # Filter category_counts_bert based on CV Interpretation if selected
     if selected_cv_interpretation:
         category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(selected_cv_interpretation)]
+        filtered_df = filtered_df[filtered_df['category_bert'].isin(category_counts_bert['Touchpoint'])]
+
+    # Recalculate metrics based on final filtered data
+    total_reviews = int(filtered_df.shape[0])
+    average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
+    high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
+    positive_percentage = float((filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
+    negative_percentage = float((filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
+    neutral_percentage = float((filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
+
+    # Display KPIs
+    st.markdown("---")  # Linha horizontal antes dos KPIs
+    
+    kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns(6)
+    
+    with kpi1:
+        st.metric("Total Reviews", f"{total_reviews:,}")
+    with kpi2:
+        st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
+    with kpi3:
+        st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
+    with kpi4:
+        st.metric("Positive Sentiment", f"{positive_percentage:.1f}%")
+    with kpi5:
+        st.metric("Negative Sentiment", f"{negative_percentage:.1f}%")
+    with kpi6:
+        st.metric("Neutral Sentiment", f"{neutral_percentage:.1f}%")
+    
+    st.markdown("---")  # Linha horizontal após os KPIs
 
     # Display the filtered dataframe
     st.dataframe(
@@ -191,6 +211,10 @@ def critical_points_function():
                 format="%0.2f%%",
                 min_value=0,
                 max_value=100
+            ),
+            "Avg Sentiment": st.column_config.NumberColumn(
+                "Avg Sentiment (-1 to 1)",
+                format="%.2f"
             ),
             "Weekly Average Sentiment": st.column_config.AreaChartColumn(
                 "Weekly Average Sentiment",
@@ -242,4 +266,3 @@ def critical_points_function():
     )
 
     # End of the function
-
