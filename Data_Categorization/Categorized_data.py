@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 
-
 def display_categorized_data(df, country_options, country_mapping):
     st.header('Feedback Source Analysis')
     st.markdown("<hr style='border: 1px solid #00c3a5;'>",
@@ -27,7 +26,8 @@ def display_categorized_data(df, country_options, country_mapping):
             filtered_df = df[df['country_code'] == selected_country_code]
 
         filtered_df['created_at'] = pd.to_datetime(filtered_df['created_at'])
-        filtered_df['year_week'] = filtered_df['created_at'].dt.strftime('%Y-%U')
+        filtered_df['year_week'] = filtered_df['created_at'].dt.strftime(
+            '%Y-%U')
         filtered_df['week'] = filtered_df['created_at'].dt.isocalendar().week
 
         weekly_data = filtered_df.groupby(
@@ -47,7 +47,7 @@ def display_categorized_data(df, country_options, country_mapping):
 
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.set_xticklabels(weekly_data.index, rotation=45,
-                        ha='right', color='white')
+                           ha='right', color='white')
 
         legend = ax.legend(title="Feedback Type", loc="upper center", bbox_to_anchor=(
             0.5, -0.15), ncol=len(weekly_data.columns))
@@ -62,7 +62,7 @@ def display_categorized_data(df, country_options, country_mapping):
 
         with st.expander("See explanation"):
             st.write("""
-            1. **Distribution Table (Right)**:
+            1. **Distribution Tables (Right)**:
             - This table shows the count, percentage, and cumulative percentage of each feedback source.
             - The progress bars visually represent the percentage and cumulative percentage, making it easy to compare the prevalence of different feedback sources.
             - The Pareto principle can be observed through the cumulative percentage column.
@@ -98,10 +98,11 @@ def display_categorized_data(df, country_options, country_mapping):
             'Percentage': type_percentages,
             'Cumulative %': cumulative_percentage
         })
-        
+
         type_analysis.index.name = "Source"
 
-        st.markdown("### Feedback Source Distribution")
+        st.markdown(
+            "<p style='font-size: 1rem;'>Feedback Source Distribution</p>", unsafe_allow_html=True)
 
         st.dataframe(type_analysis.reset_index(), column_config={
             "Source": st.column_config.TextColumn("Source"),
@@ -121,12 +122,16 @@ def display_categorized_data(df, country_options, country_mapping):
             )
         }, hide_index=True, use_container_width=True)
 
-        st.write("### Feedback Source Distribution by Country")
+        st.markdown(
+            "<p style='font-size: 1rem;'>Feedback Source Distribution by Country</p>", unsafe_allow_html=True)
 
-        country_distribution = filtered_df.groupby(['country_code', 'type']).size().unstack(fill_value=0)
-        country_distribution_pct = country_distribution.div(country_distribution.sum(axis=1), axis=0) * 100
+        country_distribution = filtered_df.groupby(
+            ['country_code', 'type']).size().unstack(fill_value=0)
+        country_distribution_pct = country_distribution.div(
+            country_distribution.sum(axis=1), axis=0) * 100
 
-        country_distribution_pct.index = country_distribution_pct.index.map(country_mapping)
+        country_distribution_pct.index = country_distribution_pct.index.map(
+            country_mapping)
 
         country_distribution_pct = country_distribution_pct.T
 
@@ -151,32 +156,33 @@ def display_categorized_data(df, country_options, country_mapping):
             hide_index=True,
             use_container_width=True,
         )
-    
+
     st.write("___")  # Linha de separação
 
-    st.header('2. Data Categorization - Structured Data Analysis')
-    st.markdown("<h3 style='color: #00c3a5;'>This section provides an overview of the structured data analysis and categorization process.</h3>",
+    st.header('Data Categorization')
+    st.markdown("<h3 style='color: #00c3a5;'>This section provides an overview of the categorization process.</h3>",
                 unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.markdown("""
-        The categorization process outlined below is structured into 8️⃣ distinct levels of analysis. At the first level, all received feedback is grouped together, forming the primary dataset. Moving to the second level, this feedback is segmented by country. At the third level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The fourth level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
+        The categorization process outlined below is structured into <span style='color: #00c3a5;'>8 distinct levels</span> of analysis. At the <span style='color: #00c3a5;'>first</span> level, all received feedback is grouped together, forming the primary dataset. Moving to the <span style='color: #00c3a5;'>second</span> level, this feedback is segmented by country. At the <span style='color: #00c3a5;'>third</span> level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The <span style='color: #00c3a5;'>fourth</span> level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
 
-        At the fifth level, the analysis delves deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
-        """)
+        At the <span style='color: #00c3a5;'>fifth</span> level, the analysis delves deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
+        """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        Next, at the sixth level, we look at the process touchpoints, particularly within the Mental Health area in this example, highlighting the 11 touchpoints in the patient journey and pinpointing specific opportunities for operational improvement at DocPlanner. The seventh level assesses interactions based on three levels of urgency: low, medium, and high. Finally, at the eighth level, within the high-urgency category, we consider the limited capacity for action but with strong influence; through this "mass strategy," we can enhance positive persuasion to drive improvements in medical best practices using real data from DocPlanner, thus completing the analysis framework and providing a strategic overview of the operation.
+        Next, at the <span style='color: #00c3a5;'>sixth</span> level, we look at the process touchpoints, particularly within the Mental Health area in this example, highlighting the 11 touchpoints in the patient journey and pinpointing specific opportunities for operational improvement at DocPlanner. The <span style='color: #00c3a5;'>seventh</span> level assesses interactions based on three levels of urgency: low, medium, and high. Finally, at the <span style='color: #00c3a5;'>eighth</span> level, within the high-urgency category, we consider the limited capacity for action but with strong influence; through this "mass strategy," we can enhance positive persuasion to drive improvements in medical best practices using real data from DocPlanner, thus completing the analysis framework and providing a strategic overview of the operation.
 
         In this context, "mass solutions" refers to implementing targeted interventions for large groups of professionals within a medical specialty. Because these solutions are designed to address recurring behaviors, their impact is magnified, leading to significant improvements in patient experience and increasing engagement on the platform.
-        """)
+        """, unsafe_allow_html=True)
 
     st.write("___")  # Linha de separação
 
-    st.markdown("Below is a tree diagram that visually unfolds the categories for a clearer representation.")
+    st.markdown(
+        "Below is a tree diagram that visually breaks down the categories for a clearer representation.")
 
     # Add the code block here
     st.code('''
@@ -218,7 +224,8 @@ def display_categorized_data(df, country_options, country_mapping):
 │   │       │   │           └── 1.1.1.3.1.3.2.1.11 Leave Review and Feedback
     ''', language='text')
 
-    st.markdown("In the next section, Critical Points Analysis, accessible from the sidebar on your left (⬅️), you'll gain deeper insights into how the touchpoints of the process were developed and mapped, providing a comprehensive understanding of their role within the overall framework.")
+    st.markdown("In the next section, <span style='color: #00c3a5;'><strong>Critical Points Analysis</strong></span>, accessible from the sidebar on your left (⬅️), you'll gain deeper insights into how the touchpoints of the process were developed and mapped, providing a comprehensive understanding of their role within the overall framework.", unsafe_allow_html=True)
 
-    st.markdown("<hr style='border: 1px solid #00c3a5;'>", unsafe_allow_html=True)
+    st.markdown("<hr style='border: 1px solid #00c3a5;'>",
+                unsafe_allow_html=True)
     col1, col2 = st.columns(2)

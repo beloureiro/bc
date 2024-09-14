@@ -132,16 +132,13 @@ def run_data_categorization():
             '%Y-W%W') == selected_week]
 
     # Título principal
-    st.title('Data Processing and Analysis')
+    st.title('Data Processing, Analysis, and Categorization')
 
-    # Título e subtítulo
-    st.header('1. ETL Process - Text Analysis and Sentiment Evaluation')
     # st.markdown("<h3 style='color: #00c3a5;'>This section covers the ETL process for text analysis and sentiment evaluation.</h3>", unsafe_allow_html=True)
 
     # Add the Python_Algorithms content here
     Python_Algorithms()
 
-    st.write('Integrated Analysis Dashboard for User Feedback Processing')
     st.write(
         "Note: The table above displays only the first 5 rows from the full dataset.")
 
