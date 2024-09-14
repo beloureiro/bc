@@ -595,8 +595,7 @@ def run_data_categorization():
 
         st.dataframe(format_table(most_common_words_original),
                      use_container_width=True)
-
-        st.write("### Data Audit (Original Text)")
+        
         audit_result_original = audit_data(
             original_word_freq, most_common_words_original)
         if "Inconsistency detected" in audit_result_original:
@@ -654,8 +653,7 @@ def run_data_categorization():
 
         st.dataframe(format_table(most_common_words_cleaned),
                      use_container_width=True)
-
-        st.write("### Data Audit (Cleaned Text)")
+        
         audit_result_cleaned = audit_data(
             word_freq_cleaned, most_common_words_cleaned)
         if "Inconsistency detected" in audit_result_cleaned:

@@ -31,40 +31,10 @@ def run_bcframework():
     """)
 
     st.write("___")  # Linha de separação
-    st.header("Web App Overview")
 
     st.markdown("""
     <span style='color: #00c3a5;'><strong>Use the navigation menu on the left (⬅️) to explore each stage of the web app in detail.</strong></span>
     """, unsafe_allow_html=True)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("1. Model the Patient Lifecycle and Touchpoints")
-        st.write("""
-        Mapping the patient lifecycle and identifying critical touchpoints within the process.
-        Output: **Touchpoint Mapping & Diagram** – A comprehensive diagram highlighting key touchpoints to optimize patient care.
-        """)
-
-        st.subheader(
-            "2. Develop and Test a Natural Language Processing Algorithm")
-        st.write("""
-        A Python-based NLP algorithm is developed and conceptually tested to categorize and analyze patient feedback.
-        Output: **Sentiment Analysis** – Detailed sentiment analysis, providing insights into patient emotions.
-        """)
-
-    with col2:
-        st.subheader("3. Prioritize and Breakdown Causes")
-        st.write("""
-        Correlates the sentiment data with specific processes to identify key pain points in the patient journey.
-        Output: **Sentiment-Process Correlation Status** – A status report on the correlation between sentiments and processes, identifying areas for improvement.
-        """)
-
-        st.subheader("4. Develop Actions Based on Identified Causes")
-        st.write("""
-        Focuses on conducting a root cause analysis and creating a strategic dashboard.
-        Output: **Root Cause Analysis & Dashboard** – Actionable insights and a visual dashboard to drive process improvements and support growth.
-        """)
 
     # # Chamada das funções para as quatro etapas
     # model_patient_lifecycle()
