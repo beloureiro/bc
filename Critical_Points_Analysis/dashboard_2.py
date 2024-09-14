@@ -1,6 +1,4 @@
 from Critical_Points_Analysis.critical_points import critical_points_function  # Certifique-se de que o nome da função está correto
-from .mermaid_full_lifecycle import full_lifecycle_sequence_diagram  # Remove the extra 'm'
-from .mermaid_compact_lifecycle import compact_lifecycle_sequence_diagram  # Removido o 'm' extra no final
 from .touch_points import get_patient_lifecycle  # Importando a função
 from .switch_mermaid import toggle_diagram
 
