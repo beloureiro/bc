@@ -6,7 +6,24 @@ import pandas as pd
 
 def grafico_meta(df):
     # Adicionando o título em inglês acima de todos os gráficos
-    st.write("## Defining the Process Goal")
+    st.write("""
+        ## Internal Benchmark-Based Goal Setting Tool
+
+        This tool was developed to help set performance goals based on internal process benchmarks. The aim is to provide a clear and objective reference, allowing users to compare current performance against the highest internal standards, with the goal set based on the best historical process performance.
+
+        ### How It Works
+
+        1. **Touchpoint Selection:** Choose a specific touchpoint or view all of them together.
+
+        2. **Graphical Visualization:** The graphs display the weekly average sentiment, highlighting sentiment intensity and data volume.
+
+        3. **Benchmark:** The highest recorded value (benchmark) indicates the best historical performance, which is used to set the goal. The percentage difference from the current average is shown for quick analysis.
+
+        4. **Trend:** A trend line illustrates the overall direction of performance over time.
+
+        Below, you will find three graphs for performance comparison, making it easier to visualize trends and benchmarks. In the future, improvements will be made to handle outliers and ensure even greater accuracy in goal setting.
+        """)
+
     
     # Criando três colunas para os gráficos
     col1, col2, col3 = st.columns(3)
@@ -115,8 +132,7 @@ def create_sentiment_chart(df, metric, title):
                {"increased" if slope > 0 else "decreased"} by approximately {abs(slope_percentage):.2f}% each week.
             2. **Weekly Sentiment:** Each point represents the average cleaned sentiment for a specific week.
             3. **Data Volume:** Larger points indicate more data for that week.
-            4. **Year Comparison:** Different colors represent different years for easy comparison.
-            5. **Highest Value:** The green line represents the highest sentiment value.
+            4. **Highest Value:** The green line represents the highest sentiment value.
             """)
 
 if __name__ == "__main__":
