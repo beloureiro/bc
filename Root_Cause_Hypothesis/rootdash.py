@@ -3,6 +3,14 @@ import pandas as pd
 
 def root_cause_analysis_panel():
     
+    st.markdown("""
+    Now that we have identified the **prioritized touchpoints**, this dashboard serves as a **reference base** for internal brainstorming sessions aimed at validating **38 possible improvement opportunities** within the patient lifecycle. It organizes these opportunities into specific touchpoints, allowing you to explore the relationships between these touchpoints and stakeholders. By using the filters, you can dive deeper into the data, facilitating discussions on **process inefficiencies** and driving strategies to enhance **performance** and **patient satisfaction**.
+
+    Now that the critical points have been identified, select the **critical point - touchpoint** in the filter to navigate through the root causes.
+    """)
+
+
+    
     st.write("___")  # Linha de separação
 
     # st.title("Touchpoints Mapping and Root Cause Analysis Dashboard")
@@ -22,9 +30,6 @@ def root_cause_analysis_panel():
     ]
     df = df[column_order]
 
-    st.markdown("""
-    This dashboard is designed to present the method for identifying, analyzing, and eliminating issues in the patient lifecycle. It focuses on definitively resolving failures, enhancing process efficiency, and improving patient satisfaction. The process owner is responsible for implementing the necessary corrections.
-    """)
 
     # Create two columns
     col1, col2 = st.columns(2)
@@ -59,6 +64,8 @@ def root_cause_analysis_panel():
     st.subheader("Root Causes Details")
     st.dataframe(df)
 
+    st.write("___")  # Linha de separação
+    
 # This line allows the function to be imported in other files
 if __name__ == "__main__":
     root_cause_analysis_panel()

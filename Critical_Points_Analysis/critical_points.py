@@ -24,6 +24,13 @@ def critical_points_function():
     # Título principal
     st.title("Breakdown by Country")
 
+    st.markdown("""
+        Below are the **critical points**, which should be seen as **prioritized touchpoints**. These are identified based on their **frequency within the complaint database**, reflecting the areas of the process that most often impact patient experience. This stage supports the next one, which is focused on identifying the **root causes** of these prioritized results. You can explore customer feedback by country, viewing the total number of reviews, average sentiment, and urgent cases, as well as using filters to gain detailed insights into the areas that need the most attention.
+        """)
+
+
+
+
     # Dicionário para mapear países
     country_mapping = {
         'br': 'Brazil',
