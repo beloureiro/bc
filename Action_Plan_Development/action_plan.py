@@ -29,8 +29,6 @@ def generate_action_plan():
     st.markdown("""
 
     After analyzing the data, stratifying, and prioritizing the causes, the following areas in the process were identified as needing improvement. The causes are listed below, and the points highlighted in the red light are those that demand the most attention for improvements.
-
-    ## Identified Key Issues and Improvement Opportunities:
     """)
 
     col1, col2 = st.columns(2)

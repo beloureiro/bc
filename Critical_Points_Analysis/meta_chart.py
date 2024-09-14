@@ -36,6 +36,29 @@ def grafico_meta(df):
         with col:
             create_sentiment_chart(df, metric, title)
 
+    # Add the new text at the end with green titles and numbers, and emphasized introduction
+    st.markdown("""
+    <h3 style="color: #00c3a5; border: 2px solid #00c3a5; padding: 10px; border-radius: 5px; text-align: center;">
+    The goals below were defined to guide the improvement process over the next 6 months:
+    </h3>
+
+    ---
+
+    <span style="color: #00c3a5;">**Online Consultation:**</span>  
+    For the Online Consultation process, the benchmark is <span style="color: #00c3a5;">**0.17**</span>, with a current difference of <span style="color: #00c3a5;">**22.01%**</span>. The goal is to achieve a <span style="color: #00c3a5;">**20%**</span> improvement, increasing the average sentiment score from <span style="color: #00c3a5;">**0.14**</span> within the next 6 months.
+
+    ---
+
+    <span style="color: #00c3a5;">**Leaving Reviews and Feedback:**</span>  
+    For the Leaving Reviews and Feedback process, the benchmark is <span style="color: #00c3a5;">**0.22**</span>, with a current difference of <span style="color: #00c3a5;">**21.56%**</span>. The goal is to achieve a <span style="color: #00c3a5;">**20%**</span> improvement, increasing the average sentiment score from <span style="color: #00c3a5;">**0.18**</span> within the next 6 months.
+
+    ---
+
+    <span style="color: #00c3a5;">**Searching and Evaluating Professional Scores:**</span>  
+    For the Searching and Evaluating Professional Scores process, the benchmark is currently under review. The goal is to achieve a <span style="color: #00c3a5;">**20%**</span> improvement within the next 6 months.
+    """, unsafe_allow_html=True)
+
+
 def create_sentiment_chart(df, metric, title):
     # Adicionando filtro para category_bert com uma chave única
     categories = ['All'] + sorted(df['category_bert'].unique().tolist())
@@ -134,6 +157,7 @@ def create_sentiment_chart(df, metric, title):
             3. **Data Volume:** Larger points indicate more data for that week.
             4. **Highest Value:** The green line represents the highest sentiment value.
             """)
+
 
 if __name__ == "__main__":
     # Este bloco só será executado se o script for executado diretamente
