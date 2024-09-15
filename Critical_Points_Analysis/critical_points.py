@@ -136,8 +136,11 @@ def critical_points_function():
         filtered_df = filtered_df[filtered_df['sentiment_classification'].isin(selected_sentiments)]
     if selected_urgency:
         filtered_df = filtered_df[filtered_df['urgency_level'].isin(selected_urgency)]
+    if selected_cv_interpretation:
+        category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(selected_cv_interpretation)]
+        filtered_df = filtered_df[filtered_df['category_bert'].isin(category_counts_bert['Touchpoint'])]
 
-    # Calcular métricas
+    # Recalculate metrics based on final filtered data
     total_reviews = int(filtered_df.shape[0])
     average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
     high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
@@ -220,11 +223,6 @@ def critical_points_function():
 
     # Reorder columns, ensuring 'Rank' is first
     category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
-
-    # Filter category_counts_bert based on CV Interpretation if selected
-    if selected_cv_interpretation:
-        category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(selected_cv_interpretation)]
-        filtered_df = filtered_df[filtered_df['category_bert'].isin(category_counts_bert['Touchpoint'])]
 
     # Display the filtered dataframe
     st.dataframe(
