@@ -190,29 +190,12 @@ def run_data_categorization():
         selected_country_1 = st.selectbox(
             'Select Country for Record Count', available_countries, format_func=lambda x: country_mapping.get(x, x))
 
-        # Filtro adicional para o tipo de feedback
-        selected_feedback_type_1 = st.selectbox('Select Feedback Type for Analysis', [
-                                                'All'] + list(type_mapping.values()))
-
-        # Filtrar o DataFrame original com base no país e tipo de feedback selecionados
+        # Filtrar o DataFrame original com base no país selecionado
         filtered_df_1 = filtered_df.copy()
         if selected_country_1 != 'All':
-            filtered_df_1 = filtered_df_1[filtered_df_1['country_code']
-                                          == selected_country_1]
+            filtered_df_1 = filtered_df_1[filtered_df_1['country_code'] == selected_country_1]
 
-        if selected_feedback_type_1 != 'All':
-            selected_feedback_type_abbr = next(
-                (abbr for abbr, name in type_mapping.items() if name == selected_feedback_type_1), None)
-            if selected_feedback_type_abbr is not None:
-                filtered_df_1 = filtered_df_1[filtered_df_1['type']
-                                              == selected_feedback_type_abbr]
-            else:
-                st.warning(f"No data available for the selected feedback type: {
-                           selected_feedback_type_1}")
-                return
-
-        filtered_weekly_counts = filtered_df_1.groupby(
-            'year_week').size().reset_index(name='count')
+        filtered_weekly_counts = filtered_df_1.groupby('year_week').size().reset_index(name='count')
         filtered_weekly_counts['week_number'] = filtered_weekly_counts['year_week'].dt.week
 
         # Check if filtered_weekly_counts is empty
@@ -310,26 +293,10 @@ def run_data_categorization():
         selected_country_2 = st.selectbox('Select Country for Sentiment Analysis',
                                           available_countries, format_func=lambda x: country_mapping.get(x, x))
 
-        # Filtro adicional para o tipo de feedback
-        selected_feedback_type_2 = st.selectbox('Select Feedback Type for Sentiment Analysis', [
-                                                'All'] + list(type_mapping.values()))
-
-        # Filtrar o DataFrame original com base no país e tipo de feedback selecionados
+        # Filtrar o DataFrame original com base no país selecionado
         filtered_df_2 = filtered_df.copy()
         if selected_country_2 != 'All':
-            filtered_df_2 = filtered_df_2[filtered_df_2['country_code']
-                                          == selected_country_2]
-
-        if selected_feedback_type_2 != 'All':
-            selected_feedback_type_abbr = next(
-                (abbr for abbr, name in type_mapping.items() if name == selected_feedback_type_2), None)
-            if selected_feedback_type_abbr is not None:
-                filtered_df_2 = filtered_df_2[filtered_df_2['type']
-                                              == selected_feedback_type_abbr]
-            else:
-                st.warning(f"No data available for the selected feedback type: {
-                           selected_feedback_type_2}")
-                return
+            filtered_df_2 = filtered_df_2[filtered_df_2['country_code'] == selected_country_2]
 
         filtered_sentiment_counts = filtered_df_2.groupby(
             'year_week')['original_sentiment'].agg(['mean', 'count']).reset_index()
