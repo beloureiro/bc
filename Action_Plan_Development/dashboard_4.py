@@ -32,6 +32,7 @@ def run_action_plan_development():
     if df is None:
         return
 
+    st.title("Action Plan")
 
     # Chama a função grafico_meta do arquivo meta_chart.py
     grafico_meta(df)  # Passando df como argumento

@@ -22,7 +22,6 @@ def generate_action_plan():
     """
     Generate an action plan based on the given problem statement, goals, and resources.
     """
-    st.title("Action Plan")
     
     #st.header("Identified Key Issues and Improvement Opportunities:")
 
