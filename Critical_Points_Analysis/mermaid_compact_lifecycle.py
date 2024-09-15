@@ -4,7 +4,7 @@ import streamlit.components.v1 as components  # Importando o componente
 
 def compact_lifecycle_sequence_diagram():
     # Adiciona a mensagem antes do diagrama
-    st.markdown("<div style='text-align: center;'>⚠️ <strong>Note</strong>: This is the compact version of the process. Since there was no opportunity to validate the process steps, there may be some margin for error in modeling this process.</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'>⚠️ <strong>Note</strong>: This is the compact view of the process. Since there was no opportunity to validate the process steps, there may be some margin for error in modeling this process.</div>", unsafe_allow_html=True)
 
     # Código Mermaid
     mermaid_code = """

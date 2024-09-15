@@ -29,7 +29,7 @@ def critical_points_function():
     st.markdown("""
         **The table below ranks the critical touchpoints. This ranking was generated after processing the database, establishing a direct connection between the feedback, process stages, and sentiment level. With the touchpoints now prioritized in the cumulative column, it's easier to identify where to focus improvements, as this relationship clearly highlights the areas most in need of attention.**
 
-        **Instructions:**
+        ➡️**Instructions:**
         To explore further details, use the filters below, and view the behavior broken down by country in the diagram.
         To focus the panel view on negative sentiment, filter by "Negative" in the "Select Sentiments" dropdown.
         The second table below displays the feedback entries from the database.
