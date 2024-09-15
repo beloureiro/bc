@@ -26,35 +26,50 @@ def generate_action_plan():
     #st.header("Identified Key Issues and Improvement Opportunities:")
 
     st.markdown("""
+        <span style="color: #00c3a5; font-size: 20px;">**Summary of Key Processes Needing Improvement**</span>
 
-    After analyzing the data, stratifying, and prioritizing the causes, the following areas in the process were identified as needing improvement. The causes are listed below, and the points highlighted in the red light are those that demand the most attention for improvements.
-    """)
+        The following processes were identified as areas requiring attention, representing almost 90% of the opportunities for improvement. Below each process, the potential root causes are listed. The diagram visually represents the stages where the red light 🔴 indicates the need for the most urgent enhancements.
+        """, unsafe_allow_html=True)
+
+
+
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("1. Online Consultation:")
         st.markdown("""
-        - Poor audio/video quality
-        - Difficulty accessing prescriptions
-        - Lack of immediate post-consultation support
-        - Poor communication between doctor and patient
-        - Lack of empathy or attentiveness from the doctor
-        """)
+        <style>
+        .compact-text {
+            line-height: 1.2;  /* Ajuste o valor conforme necessário para compactar */
+        }
+        </style>
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">1. Online Consultation:</span>
+        <ul class="compact-text">
+            <li><em>Poor audio/video quality</em></li>
+            <li><em>Difficulty accessing prescriptions</em></li>
+            <li><em>Lack of immediate post-consultation support</em></li>
+            <li><em>Poor communication between doctor and patient</em></li>
+            <li><em>Lack of empathy or attentiveness from the doctor</em></li>
+        </ul>
+        """, unsafe_allow_html=True)
 
-        st.subheader("2. Leaving Reviews and Feedback:")
         st.markdown("""
-        - Complicated review process
-        - Lack of incentives to leave feedback
-        - Unclear feedback impact
-        """)
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">2. Leaving Reviews and Feedback:</span>
+        <ul class="compact-text">
+            <li><em>Complicated review process</em></li>
+            <li><em>Lack of incentives to leave feedback</em></li>
+            <li><em>Unclear feedback impact</em></li>
+        </ul>
+        """, unsafe_allow_html=True)
 
-        st.subheader("3. Searching and Evaluating Professional Scores:")
         st.markdown("""
-        - Inadequate or outdated professional scores
-        - Inconsistent or missing reviews
-        - Difficult search interface
-        """)
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">3. Searching and Evaluating Professional Scores:</span>
+        <ul class="compact-text">
+            <li><em>Inadequate or outdated professional scores</em></li>
+            <li><em>Inconsistent or missing reviews</em></li>
+            <li><em>Difficult search interface</em></li>
+        </ul>
+        """, unsafe_allow_html=True)
 
     with col2:
         # Tentativa de localizar e exibir a imagem
