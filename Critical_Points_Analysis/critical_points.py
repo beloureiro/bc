@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import streamlit.components.v1 as components
 
+
 def critical_points_function():
     # Get the current file's directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,13 +24,19 @@ def critical_points_function():
         return
 
     # Título principal
-    st.title("Breakdown by Country: Critical Points")
+    st.title("Breakdown by Country")
 
     st.markdown("""
-        Below are the <span style='color: #00c3a5;'><strong>critical points</strong></span>, which should be seen as <span style='color: #00c3a5;'><strong>prioritized touchpoints</strong></span>. These are identified based on their **frequency within the complaint database**, reflecting the areas of the process that most often impact patient experience. This stage supports the next one, which is focused on identifying the **root causes** of these prioritized results. You can explore customer feedback by country, viewing the total number of reviews, average sentiment, and urgent cases, as well as using filters to gain detailed insights into the areas that need the most attention.
+        **The table below ranks the critical touchpoints. This ranking was generated after processing the database, establishing a direct connection between the feedback, process stages, and sentiment level. With the touchpoints now prioritized in the cumulative column, it's easier to identify where to focus improvements, as this relationship clearly highlights the areas most in need of attention.**
+
+        **Instructions:**
+        To explore further details, use the filters below, and view the behavior broken down by country in the diagram.
+        To focus the panel view on negative sentiment, filter by "Negative" in the "Select Sentiments" dropdown.
+        The second table below displays the feedback entries from the database.
         """, unsafe_allow_html=True)
 
-    st.markdown("<h2 style='color: #00c3a5;'>Critical Touchpoints Analysis</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #00c3a5;'>Critical Touchpoints Analysis</h2>",
+                unsafe_allow_html=True)
 
     # Define country options
     country_column = 'country_code'
@@ -43,27 +50,30 @@ def critical_points_function():
     country_options = ['All'] + sorted(country_names.values())
 
     # Create sentiment_classification column
-    df['sentiment_classification'] = pd.cut(df['cleaned_sentiment'], 
-                                            bins=[-1, -0.1, 0.1, 1], 
+    df['sentiment_classification'] = pd.cut(df['cleaned_sentiment'],
+                                            bins=[-1, -0.1, 0.1, 1],
                                             labels=['Negative', 'Neutral', 'Positive'])
 
     # Function to create progress columns
     def create_progress_column(dataframe, column_name):
         max_value = dataframe[column_name].sum()
-        percentage = dataframe[column_name].apply(lambda x: (x / max_value) * 100)
-        cumulative = dataframe[column_name].cumsum().apply(lambda x: (x / max_value) * 100)
+        percentage = dataframe[column_name].apply(
+            lambda x: (x / max_value) * 100)
+        cumulative = dataframe[column_name].cumsum().apply(
+            lambda x: (x / max_value) * 100)
         return percentage, cumulative
 
     # Function to calculate weekly averages and coefficient of variation for each category
     def calculate_weekly_stats(df, category_column):
         df['week'] = pd.to_datetime(df['created_at']).dt.to_period('W')
-        weekly_avg = df.groupby(['week', category_column])['cleaned_sentiment'].mean().unstack(fill_value=0)
+        weekly_avg = df.groupby(['week', category_column])[
+            'cleaned_sentiment'].mean().unstack(fill_value=0)
         weekly_avg_list = weekly_avg.values.T.tolist()
-        
+
         # Calculate coefficient of variation as a percentage
         cv = (weekly_avg.std() / weekly_avg.abs().mean()) * 100
         cv_list = cv.tolist()
-        
+
         return weekly_avg_list, cv_list
 
     # Function to interpret Coefficient of Variation
@@ -81,87 +91,104 @@ def critical_points_function():
     # Create a single column for Critical Touchpoints Analysis
     category_counts_bert = df['category_bert'].value_counts().reset_index()
     category_counts_bert.columns = ['Touchpoint', 'Count']
-    category_counts_bert['Touchpoint'] = category_counts_bert['Touchpoint'].astype(str)
-    category_counts_bert['Percentage'], category_counts_bert['Cumulative'] = create_progress_column(category_counts_bert, 'Count')
-    
+    category_counts_bert['Touchpoint'] = category_counts_bert['Touchpoint'].astype(
+        str)
+    category_counts_bert['Percentage'], category_counts_bert['Cumulative'] = create_progress_column(
+        category_counts_bert, 'Count')
+
     # Add Rank column
     category_counts_bert['Rank'] = range(1, len(category_counts_bert) + 1)
-    
+
     # Add Weekly Average Sentiment, Coefficient of Variation, and CV Interpretation columns
     category_counts_bert['Weekly Average Sentiment'] = weekly_averages
     category_counts_bert['Coefficient of Variation'] = cv_list
-    category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(interpret_cv)
+    category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(
+        interpret_cv)
 
     # Calculate average sentiment for each category
-    category_avg_sentiment = df.groupby('category_bert')['cleaned_sentiment'].mean()
+    category_avg_sentiment = df.groupby('category_bert')[
+        'cleaned_sentiment'].mean()
 
     # Add Avg Sentiment column to category_counts_bert
-    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(category_avg_sentiment)
+    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(
+        category_avg_sentiment)
 
     # Reorder columns, moving 'Rank' to the first position
-    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
+    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative',
+                                                 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
 
     # Filtros em linha
     col1, col2, col3, col4 = st.columns(4)
-    
+
     with col1:
-        selected_country_name = st.selectbox("Select a country", country_options, index=0)
-    
+        selected_country_name = st.selectbox(
+            "Select a country", country_options, index=0)
+
     with col2:
         selected_sentiments = st.multiselect(
             "Select Sentiments",
             options=['Positive', 'Neutral', 'Negative'],
             default=[]
         )
-    
+
     with col3:
         selected_urgency = st.multiselect(
             "Select Urgency Level",
             options=sorted(df['urgency_level'].unique()),
             default=[]
         )
-    
+
     with col4:
         selected_cv_interpretation = st.multiselect(
             "Select CV Interpretation",
-            options=['Low variability', 'Moderate variability', 'High variability'],
+            options=['Low variability',
+                     'Moderate variability', 'High variability'],
             default=[]
         )
 
     # Aplicar filtros
     filtered_df = df.copy()
     if selected_country_name != 'All':
-        filtered_df = filtered_df[filtered_df['country_name'] == selected_country_name]
+        filtered_df = filtered_df[filtered_df['country_name']
+                                  == selected_country_name]
     if selected_sentiments:
-        filtered_df = filtered_df[filtered_df['sentiment_classification'].isin(selected_sentiments)]
+        filtered_df = filtered_df[filtered_df['sentiment_classification'].isin(
+            selected_sentiments)]
     if selected_urgency:
-        filtered_df = filtered_df[filtered_df['urgency_level'].isin(selected_urgency)]
+        filtered_df = filtered_df[filtered_df['urgency_level'].isin(
+            selected_urgency)]
     if selected_cv_interpretation:
-        category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(selected_cv_interpretation)]
-        filtered_df = filtered_df[filtered_df['category_bert'].isin(category_counts_bert['Touchpoint'])]
+        category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(
+            selected_cv_interpretation)]
+        filtered_df = filtered_df[filtered_df['category_bert'].isin(
+            category_counts_bert['Touchpoint'])]
 
     # Recalculate metrics based on final filtered data
     total_reviews = int(filtered_df.shape[0])
     average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
-    high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
-    positive_percentage = float((filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
-    negative_percentage = float((filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
-    neutral_percentage = float((filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
+    high_urgency_percentage = float(
+        (filtered_df['urgency_level'] == 'High').mean() * 100)
+    positive_percentage = float(
+        (filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
+    negative_percentage = float(
+        (filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
+    neutral_percentage = float(
+        (filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
 
     # Três colunas para KPIs e diagrama
     with st.container():
         kpi_col1, kpi_col2, diagram_col = st.columns([1, 1, 1])
-        
+
         with kpi_col1:
             st.metric("Total Reviews", f"{total_reviews:,}")
             st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
             st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
-        
+
         with kpi_col2:
             st.metric("Positive Sentiment", f"{positive_percentage:.1f}%")
             st.metric("Negative Sentiment", f"{negative_percentage:.1f}%")
             st.metric("Neutral Sentiment", f"{neutral_percentage:.1f}%")
-        
+
         with diagram_col:
             # Calcular a contagem de reviews por país
             country_counts = filtered_df['country_name'].value_counts()
@@ -203,26 +230,34 @@ def critical_points_function():
             components.html(html, height=300, scrolling=False)
 
     # Recalculate category_counts_bert based on filtered data
-    category_counts_bert = filtered_df['category_bert'].value_counts().reset_index()
+    category_counts_bert = filtered_df['category_bert'].value_counts(
+    ).reset_index()
     category_counts_bert.columns = ['Touchpoint', 'Count']
-    category_counts_bert['Touchpoint'] = category_counts_bert['Touchpoint'].astype(str)
-    category_counts_bert['Percentage'], category_counts_bert['Cumulative'] = create_progress_column(category_counts_bert, 'Count')
+    category_counts_bert['Touchpoint'] = category_counts_bert['Touchpoint'].astype(
+        str)
+    category_counts_bert['Percentage'], category_counts_bert['Cumulative'] = create_progress_column(
+        category_counts_bert, 'Count')
     category_counts_bert['Rank'] = range(1, len(category_counts_bert) + 1)
 
     # Recalculate weekly averages and CV for categories
-    weekly_averages, cv_list = calculate_weekly_stats(filtered_df, 'category_bert')
+    weekly_averages, cv_list = calculate_weekly_stats(
+        filtered_df, 'category_bert')
     category_counts_bert['Weekly Average Sentiment'] = weekly_averages
     category_counts_bert['Coefficient of Variation'] = cv_list
-    category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(interpret_cv)
+    category_counts_bert['CV Interpretation'] = category_counts_bert['Coefficient of Variation'].apply(
+        interpret_cv)
 
     # Calculate average sentiment for each category
-    category_avg_sentiment = filtered_df.groupby('category_bert')['cleaned_sentiment'].mean()
+    category_avg_sentiment = filtered_df.groupby(
+        'category_bert')['cleaned_sentiment'].mean()
 
     # Add Avg Sentiment column to category_counts_bert
-    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(category_avg_sentiment)
+    category_counts_bert['Avg Sentiment'] = category_counts_bert['Touchpoint'].map(
+        category_avg_sentiment)
 
     # Reorder columns, ensuring 'Rank' is first
-    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
+    category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative',
+                                                 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
 
     # Display the filtered dataframe
     st.dataframe(
@@ -272,10 +307,10 @@ def critical_points_function():
     # Display the detailed filtered dataframe
     st.dataframe(
         filtered_df[[
-            'content_en', 
-            'cleaned_sentiment', 
-            'sentiment_classification', 
-            'category_bert', 
+            'content_en',
+            'cleaned_sentiment',
+            'sentiment_classification',
+            'category_bert',
             'urgency_level',
             'issue_type',
             'created_at',
