@@ -299,7 +299,7 @@ def run_data_categorization():
             filtered_df_2 = filtered_df_2[filtered_df_2['country_code'] == selected_country_2]
 
         filtered_sentiment_counts = filtered_df_2.groupby(
-            'year_week')['original_sentiment'].agg(['mean', 'count']).reset_index()
+            'year_week')['cleaned_sentiment'].agg(['mean', 'count']).reset_index()
         filtered_sentiment_counts['week_number'] = filtered_sentiment_counts['year_week'].dt.week
 
         # Check if filtered_sentiment_counts is empty
