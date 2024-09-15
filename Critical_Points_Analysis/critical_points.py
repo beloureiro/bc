@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+import streamlit.components.v1 as components
 
 def critical_points_function():
-
     # Get the current file's directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
@@ -101,26 +101,26 @@ def critical_points_function():
     # Reorder columns, moving 'Rank' to the first position
     category_counts_bert = category_counts_bert[['Rank', 'Touchpoint', 'Count', 'Percentage', 'Cumulative', 'Avg Sentiment', 'Weekly Average Sentiment', 'Coefficient of Variation', 'CV Interpretation']]
 
-    # Create filters
+    # Filtros em linha
     col1, col2, col3, col4 = st.columns(4)
-
+    
     with col1:
         selected_country_name = st.selectbox("Select a country", country_options, index=0)
-
+    
     with col2:
         selected_sentiments = st.multiselect(
             "Select Sentiments",
             options=['Positive', 'Neutral', 'Negative'],
             default=[]
         )
-
+    
     with col3:
         selected_urgency = st.multiselect(
             "Select Urgency Level",
             options=sorted(df['urgency_level'].unique()),
             default=[]
         )
-
+    
     with col4:
         selected_cv_interpretation = st.multiselect(
             "Select CV Interpretation",
@@ -128,8 +128,7 @@ def critical_points_function():
             default=[]
         )
 
-
-    # Apply filters
+    # Aplicar filtros
     filtered_df = df.copy()
     if selected_country_name != 'All':
         filtered_df = filtered_df[filtered_df['country_name'] == selected_country_name]
@@ -137,6 +136,68 @@ def critical_points_function():
         filtered_df = filtered_df[filtered_df['sentiment_classification'].isin(selected_sentiments)]
     if selected_urgency:
         filtered_df = filtered_df[filtered_df['urgency_level'].isin(selected_urgency)]
+
+    # Calcular métricas
+    total_reviews = int(filtered_df.shape[0])
+    average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
+    high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
+    positive_percentage = float((filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
+    negative_percentage = float((filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
+    neutral_percentage = float((filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
+
+    # Três colunas para KPIs e diagrama
+    with st.container():
+        kpi_col1, kpi_col2, diagram_col = st.columns([1, 1, 1])
+        
+        with kpi_col1:
+            st.metric("Total Reviews", f"{total_reviews:,}")
+            st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
+            st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
+        
+        with kpi_col2:
+            st.metric("Positive Sentiment", f"{positive_percentage:.1f}%")
+            st.metric("Negative Sentiment", f"{negative_percentage:.1f}%")
+            st.metric("Neutral Sentiment", f"{neutral_percentage:.1f}%")
+        
+        with diagram_col:
+            # Calcular a contagem de reviews por país
+            country_counts = filtered_df['country_name'].value_counts()
+            total_reviews = country_counts.sum()
+
+            # Criar o código Mermaid
+            mermaid_code = f"""
+            %%{{init: {{'theme': 'dark'}}}}%%
+            stateDiagram-v2
+                direction LR
+                [*] --> Total_Reviews
+                Total_Reviews : {total_reviews:,} (100%)
+            """
+
+            for country, count in country_counts.items():
+                percentage = (count / total_reviews) * 100
+                mermaid_code += f"""
+                Total_Reviews --> {country}: {country}
+                {country} : {count:,} ({percentage:.1f}%)
+                """
+
+            # HTML com o script Mermaid e o diagrama
+            html = f"""
+            <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+            <script>
+                mermaid.initialize({{
+                    startOnLoad: true,
+                    theme: 'dark',
+                    securityLevel: 'loose',
+                    fontFamily: 'Arial',
+                }});
+            </script>
+            <div class="mermaid" style="height:300px;">
+            {mermaid_code}
+            </div>
+            """
+
+            # Renderizar o HTML
+            components.html(html, height=300, scrolling=False)
 
     # Recalculate category_counts_bert based on filtered data
     category_counts_bert = filtered_df['category_bert'].value_counts().reset_index()
@@ -164,34 +225,6 @@ def critical_points_function():
     if selected_cv_interpretation:
         category_counts_bert = category_counts_bert[category_counts_bert['CV Interpretation'].isin(selected_cv_interpretation)]
         filtered_df = filtered_df[filtered_df['category_bert'].isin(category_counts_bert['Touchpoint'])]
-
-    # Recalculate metrics based on final filtered data
-    total_reviews = int(filtered_df.shape[0])
-    average_sentiment = float(filtered_df['cleaned_sentiment'].mean())
-    high_urgency_percentage = float((filtered_df['urgency_level'] == 'High').mean() * 100)
-    positive_percentage = float((filtered_df['sentiment_classification'] == 'Positive').mean() * 100)
-    negative_percentage = float((filtered_df['sentiment_classification'] == 'Negative').mean() * 100)
-    neutral_percentage = float((filtered_df['sentiment_classification'] == 'Neutral').mean() * 100)
-
-    # Display KPIs
-    st.markdown("---")  # Linha horizontal antes dos KPIs
-    
-    kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns(6)
-    
-    with kpi1:
-        st.metric("Total Reviews", f"{total_reviews:,}")
-    with kpi2:
-        st.metric("Avg Sentiment (-1 to 1)", f"{average_sentiment:.2f}")
-    with kpi3:
-        st.metric("High Urgency Cases", f"{high_urgency_percentage:.1f}%")
-    with kpi4:
-        st.metric("Positive Sentiment", f"{positive_percentage:.1f}%")
-    with kpi5:
-        st.metric("Negative Sentiment", f"{negative_percentage:.1f}%")
-    with kpi6:
-        st.metric("Neutral Sentiment", f"{neutral_percentage:.1f}%")
-    
-    st.markdown("---")  # Linha horizontal após os KPIs
 
     # Display the filtered dataframe
     st.dataframe(
@@ -264,5 +297,7 @@ def critical_points_function():
         use_container_width=True,
         height=400  # Você pode ajustar a altura conforme necessário
     )
+
+    st.markdown("---")
 
     # End of the function
