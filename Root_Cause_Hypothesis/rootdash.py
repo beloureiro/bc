@@ -4,14 +4,23 @@ import pandas as pd
 def root_cause_analysis_panel():
     
     st.markdown(
-        "Now that we have identified the <span style='color: #00c3a5;'><strong>prioritized touchpoints</strong></span>, this dashboard serves as a <strong>reference base</strong> for internal brainstorming sessions aimed at validating <span style='color: #00c3a5;'><strong>39</strong></span> potential <span style='color: #00c3a5;'><strong>root causes</strong></span> already mapped within the patient lifecycle. It organizes these causes into specific touchpoints, allowing you to explore the relationships between these touchpoints and stakeholders. The dashboard also features a dynamic table, making it easier to visualize and analyze the data in real-time. By using the filters, you can dive deeper into the data, facilitating discussions on <strong>process inefficiencies</strong> and driving strategies to enhance <strong>performance</strong> and <strong>patient satisfaction</strong>.",
-        unsafe_allow_html=True
+    "Now that we have identified the <span style='color: #00c3a5;'><strong>prioritized touchpoints</strong></span>, this tool serves as a <strong>reference base</strong> for internal brainstorming sessions aimed at validating <span style='color: #00c3a5;'><strong>39</strong></span> potential <span style='color: #00c3a5;'><strong>root causes</strong></span> that have already been mapped across the 11 touchpoints of the process. It organizes these causes into specific touchpoints, allowing you to explore the relationships between these touchpoints and stakeholders. By using a dynamic table, it makes it easier to visualize and analyze all the possible root causes.",
+    unsafe_allow_html=True
     )
 
-    st.markdown(
-        "Now that the critical points have been identified, select the <strong>critical point - touchpoint</strong> in the filter to navigate through the root causes.",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    ➡️**Instructions:**
+    The panel is currently filtered to the top priority touchpoints identified in the previous session, which together account for approximately <span style='color:#00c3a5;'>90% </span><span style='color:#ffffff;'>of the</span><span style='color:#00c3a5;'> root causes</span>:
+
+    - <span style='color:#00c3a5;'><strong>1 - Attend Online Consultation</strong></span> (62.3%)
+    - <span style='color:#00c3a5;'><strong>2 - Leave Review and Feedback</strong></span> (25.08%)
+    - <span style='color:#00c3a5;'><strong>3 - Search and Evaluate Professional Score</strong></span> (1.65%)
+
+    *Note: The "Search and Evaluate Professional Score" touchpoint represents a strategic action designed to exert influence and improve overall engagement on the platform.*
+
+    These were flagged as the most critical areas. To explore different root causes, simply adjust the filters below.
+    """, unsafe_allow_html=True)
+
 
 
     
@@ -39,7 +48,17 @@ def root_cause_analysis_panel():
     col1, col2 = st.columns(2)
 
     with col2:
-        touchpoint = st.multiselect("Touchpoint", options=df['Touchpoint'].unique(), key="touchpoint_rootdash")
+        default_touchpoints = [
+            "Attend Online Consultation",
+            "Leave Review and Feedback",
+            "Search and Evaluate Professional Score"
+        ]
+        touchpoint = st.multiselect(
+            "Touchpoint", 
+            options=df['Touchpoint'].unique(), 
+            default=default_touchpoints,
+            key="touchpoint_rootdash"
+        )
         stakeholder = st.multiselect("Process Owner (Stakeholder)", options=df['Stakeholder'].unique(), key="stakeholder_rootdash")
         possible_causes = st.multiselect("Possible Causes", options=df['Possible Causes'].unique(), key="possible_causes_rootdash")
 
