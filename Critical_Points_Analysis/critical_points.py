@@ -61,7 +61,7 @@ def critical_points_function():
         weekly_avg_list = weekly_avg.values.T.tolist()
         
         # Calculate coefficient of variation as a percentage
-        cv = (weekly_avg.std() / weekly_avg.mean()) * 100
+        cv = (weekly_avg.std() / weekly_avg.abs().mean()) * 100
         cv_list = cv.tolist()
         
         return weekly_avg_list, cv_list
