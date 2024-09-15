@@ -129,7 +129,12 @@ def create_sentiment_chart(df, metric, default_touchpoint, index):
             # Ambos são positivos ou ambos são negativos - exibe o percentual
             if current_mean != 0:
                 percentage_difference = ((benchmark_value - current_mean) / abs(current_mean)) * 100
-                st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {percentage_difference:.2f}%</p>", unsafe_allow_html=True)
+                if percentage_difference < 0:
+                    # Se a diferença percentual for negativa, exibe o valor absoluto
+                    absolute_difference = abs(benchmark_value - current_mean)
+                    st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {absolute_difference:.2f} (absolute)</p>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {percentage_difference:.2f}%</p>", unsafe_allow_html=True)
             else:
                 st.markdown(f"<p style='color: #ff4b4b;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: Not Calculable (Zero Average)</p>", unsafe_allow_html=True)
         else:
