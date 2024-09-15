@@ -29,7 +29,7 @@ def grafico_meta(df):
     with col3:
         st.markdown("""
         <span style="color: #00c3a5;">**Searching and Evaluating Professional Scores:**</span>  
-        For the Searching and Evaluating Professional Scores process, the benchmark is currently under review. The goal is to achieve a <span style="color: #00c3a5;">**20%**</span> improvement within the next 6 months.
+        For the Searching and Evaluating Professional Scores process, the benchmark is <span style="color: #00c3a5;">**0.15**</span>, with a current absolute difference of <span style="color: #00c3a5;">**0.15**</span>. The goal is to reduce this difference by <span style="color: #00c3a5;">**20%**</span>, achieving an average sentiment score of approximately <span style="color: #00c3a5;">**0.03**</span> within the next 6 months. (Note: The benchmark may indicate an outlier.)
         """, unsafe_allow_html=True)
 
     # Criando três colunas para os gráficos
