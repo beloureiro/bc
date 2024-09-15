@@ -25,16 +25,20 @@ def critical_points_function():
 
     # Título principal
     st.title("Breakdown by Country")
-
     st.markdown("""
-        **The table below ranks the critical touchpoints. This ranking was generated after processing the database, establishing a direct connection between the feedback, process stages, and sentiment level. With the touchpoints now prioritized in the cumulative column, it's easier to identify where to focus improvements, as this relationship clearly highlights the areas most in need of attention.**
-        
-        ➡️**Instructions:**
-        The default view focuses on negative sentiment to help identify the most critical touchpoints. However, you can adjust this by using the filters below. Additionally, view the behavior broken down by country in the diagram. The second table below displays the feedback entries from the database.
-        """, unsafe_allow_html=True)
+    **The table below ranks the critical touchpoints. This ranking was generated after processing the database, establishing a direct connection between the feedback, process stages, and sentiment level. With the touchpoints now prioritized in the cumulative column, it's easier to identify where to focus improvements, as this relationship clearly highlights the areas most in need of attention.**
 
-    st.markdown("<h2 style='color: #00c3a5;'>Critical Touchpoints Analysis</h2>",
-                unsafe_allow_html=True)
+    ➡️**Instructions:**
+    The default view focuses on negative sentiment to help identify the most critical touchpoints. However, you can adjust this by using the filters below. Additionally, view the behavior broken down by country in the diagram. The second table below displays the feedback entries from the database.
+    """, unsafe_allow_html=True)
+
+    st.markdown("<h2 style='color: #00c3a5;'>Critical Touchpoints Analysis</h2>", unsafe_allow_html=True)
+
+    # Add your note here
+    st.markdown("""
+    *Note: Due to the absence of more data in the business case database, it was not possible to increase the level of detail in the analysis. However, this session provides a practical demonstration of the methodology to reach root causes. With more data, the methodology itself would remain unchanged, but the identification of root causes would become more realistic, thereby enhancing the effectiveness of the proposed actions.*
+    """, unsafe_allow_html=True)
+
 
     # Define country options
     country_column = 'country_code'
