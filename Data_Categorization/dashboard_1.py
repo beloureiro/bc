@@ -395,19 +395,28 @@ def run_data_categorization():
             st.write("### Interpreting Weekly Sentiment Analysis")
             st.write("This graph shows the average sentiment over time:")
             with st.expander("See explanation"):
-
                 st.write(f"""
-                1. **Trend:** The red dashed line represents the overall trend in sentiment over time. The slope of this line is {slope:.4f}, meaning that the average sentiment {trend_direction} by approximately {abs(slope_percentage):.2f}% each week. This indicates a gradual {sentiment_change} in sentiment, suggesting that {"dissatisfaction" if slope < 0 else "satisfaction"} may be slowly {"increasing" if slope < 0 else "improving"} over the analyzed weeks. If this trend continues, we can expect an approximate {sentiment_change} of {abs(annual_percentage_change):.2f}% in sentiment by the end of the year, assuming no changes are made.
-                2. **Weekly Sentiment:** The highest sentiment was {highest_sentiment:.2f} in week {week_highest_sentiment}, and the lowest was {lowest_sentiment:.2f} in week {week_lowest_sentiment}.
-                3. **Color and Size:** The color of each point accurately reflects the sentiment score, with red indicating negative sentiment and green indicating positive sentiment. The size of each point represents the number of records for that week, with the largest at week {week_largest_count} ({largest_count} records) and the smallest at week {week_smallest_count} ({smallest_count} records).
-                4. **Outliers:** Outliers are identified as weeks where the sentiment score deviates significantly (more than 2 standard deviations) from the expected trend. {"The following outliers were detected:" if not outliers.empty else "No significant outliers were detected."}
+                1. **Trend**: The red dashed line shows the overall trend in sentiment. The sentiment has {trend_direction} over time, with a slope of {slope:.4f}, indicating an approximate {abs(slope_percentage):.2f}% {sentiment_change} in sentiment per week. This suggests an annual {sentiment_change} of about {abs(annual_percentage_change):.2f}%.
+
+                2. **Highest and Lowest Points**: 
+                   - The highest average sentiment ({highest_sentiment:.2f}) was observed in week {week_highest_sentiment}.
+                   - The lowest average sentiment ({lowest_sentiment:.2f}) was observed in week {week_lowest_sentiment}.
+
+                3. **Data Volume**: 
+                   - The largest number of records ({largest_count}) was collected in week {week_largest_count}.
+                   - The smallest number of records ({smallest_count}) was collected in week {week_smallest_count}.
+
+                4. **Color Coding**: The color of each point represents the sentiment score, with red indicating negative sentiment, yellow neutral, and green positive sentiment.
+
+                5. **Point Size**: The size of each point represents the number of records for that week, with larger points indicating more data.
                 """)
 
-            if not outliers.empty:
-                for _, row in outliers.iterrows():
-                    st.write(
-                        f"   - Week {row['week_number']}: Sentiment score of {row['mean']:.2f}")
-                st.write("These deviations could indicate external factors or events that influenced sentiment significantly, such as market changes, policy shifts, or social events.")
+                # Add outlier information inside the expander
+                if not outliers.empty:
+                    st.write("**Outliers:**")
+                    for _, outlier in outliers.iterrows():
+                        st.write(f"Week {outlier['week_number']}: Sentiment score of {outlier['mean']:.2f}")
+                    st.write("These deviations could indicate external factors or events that influenced sentiment significantly, such as market changes, policy shifts, or social events.")
 
     with row2_col1:
         # Total Distribution by Country
