@@ -124,11 +124,18 @@ def create_sentiment_chart(df, metric, default_touchpoint, index):
         plt.tight_layout()
         st.pyplot(fig)
 
-        # Calculando a diferença percentual entre a média e o benchmark
-        percentage_difference = ((benchmark_value - current_mean) / current_mean) * 100
-
-        # Exibindo a média, o benchmark e a diferença percentual
-        st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {percentage_difference:.2f}%</p>", unsafe_allow_html=True)
+        # Cálculo da diferença com tratamento dinâmico
+        if (current_mean >= 0 and benchmark_value >= 0) or (current_mean < 0 and benchmark_value < 0):
+            # Ambos são positivos ou ambos são negativos - exibe o percentual
+            if current_mean != 0:
+                percentage_difference = ((benchmark_value - current_mean) / abs(current_mean)) * 100
+                st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {percentage_difference:.2f}%</p>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<p style='color: #ff4b4b;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: Not Calculable (Zero Average)</p>", unsafe_allow_html=True)
+        else:
+            # Sinais diferentes - exibe a diferença absoluta
+            absolute_difference = abs(benchmark_value - current_mean)
+            st.markdown(f"<p style='color: #00c3a5;'>Average: {current_mean:.2f} | Benchmark: {benchmark_value:.2f} | Difference: {absolute_difference:.2f} (absolute)</p>", unsafe_allow_html=True)
 
         with st.expander("See explanation"):
             st.write(f"""
