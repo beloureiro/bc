@@ -43,7 +43,16 @@ def generate_action_plan():
             line-height: 1.2;  /* Ajuste o valor conforme necessário para compactar */
         }
         </style>
-        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">1. Online Consultation:</span>
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">1. Searching and Evaluating Professional Scores:</span>
+        <ul class="compact-text">
+            <li><em>Inadequate or outdated professional scores</em></li>
+            <li><em>Inconsistent or missing reviews</em></li>
+            <li><em>Difficult search interface</em></li>
+        </ul>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">2. Online Consultation:</span>
         <ul class="compact-text">
             <li><em>Poor audio/video quality</em></li>
             <li><em>Difficulty accessing prescriptions</em></li>
@@ -54,20 +63,11 @@ def generate_action_plan():
         """, unsafe_allow_html=True)
 
         st.markdown("""
-        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">2. Leaving Reviews and Feedback:</span>
+        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">3. Leaving Reviews and Feedback:</span>
         <ul class="compact-text">
             <li><em>Complicated review process</em></li>
             <li><em>Lack of incentives to leave feedback</em></li>
             <li><em>Unclear feedback impact</em></li>
-        </ul>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <span style="color: #00c3a5; font-size: 18px;" class="compact-text">3. Searching and Evaluating Professional Scores:</span>
-        <ul class="compact-text">
-            <li><em>Inadequate or outdated professional scores</em></li>
-            <li><em>Inconsistent or missing reviews</em></li>
-            <li><em>Difficult search interface</em></li>
         </ul>
         """, unsafe_allow_html=True)
 

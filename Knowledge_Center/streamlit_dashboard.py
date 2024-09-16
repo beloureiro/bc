@@ -35,10 +35,11 @@ st.sidebar.markdown("<hr>", unsafe_allow_html=True)
 st.sidebar.markdown("<h2 style='text-align: left;'>Navigation</h2>", unsafe_allow_html=True)
 page = st.sidebar.radio("Select a Step:", 
                         ("Business Case Framework",
-                         "Data Categorization", 
-                         "Critical Points Analysis", 
-                         "Root Cause Hypothesis", 
-                         "Action Plan Development"), 
+                         "Data Categorization",  # Alterado
+                         "Critical Points Analysis",  # Alterado
+                         "Root Cause Hypothesis",  # Alterado
+                         "Action Plan Development",  # Alterado
+                         "Strategic Goals"),  
                         index=0)
 
 # Informações do candidato
@@ -109,6 +110,9 @@ elif page == "Action Plan Development":
     
     # Run the function
     run_action_plan_development()
+elif page == "Strategic Goals":  # Adicione a lógica para a nova página
+    from Strategic_Goals import run_strategic_goals
+    run_strategic_goals()
 
 # to run the app on gitbash
 # source venv/Scripts/activate
