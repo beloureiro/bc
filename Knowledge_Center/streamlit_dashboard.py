@@ -39,7 +39,7 @@ page = st.sidebar.radio("Select a Step:",
                          "Critical Points Analysis",  # Alterado
                          "Root Cause Hypothesis",  # Alterado
                          "Action Plan Development",  # Alterado
-                         "Strategic Goals"),  
+                         "Beyond the Scope"),  # Alterado
                         index=0)
 
 # Informações do candidato
@@ -110,7 +110,7 @@ elif page == "Action Plan Development":
     
     # Run the function
     run_action_plan_development()
-elif page == "Strategic Goals":  # Adicione a lógica para a nova página
+elif page == "Beyond the Scope":  # Adicione a lógica para a nova página
     from Strategic_Goals import run_strategic_goals
     run_strategic_goals()
 
