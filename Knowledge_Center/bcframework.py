@@ -1,9 +1,4 @@
 import streamlit as st
-from fase1 import model_patient_lifecycle
-from fase2 import develop_nlp_algorithm
-from fase3 import prioritize_breakdown_causes
-from fase4 import develop_actions
-
 
 def run_bcframework():
     st.title("Business Case Web App")
@@ -34,20 +29,6 @@ def run_bcframework():
     <span style='color: #00c3a5;'><strong>Use the navigation menu on the left (⬅️) to explore each stage of the web app in detail.</strong></span>
     """, unsafe_allow_html=True)
 
-    # # Chamada das funções para as quatro etapas
-    # model_patient_lifecycle()
-
-    # st.write("___")  # Linha de separação
-
-    # develop_nlp_algorithm()
-
-    # st.write("___")  # Linha de separação
-
-    # prioritize_breakdown_causes()
-
-    # st.write("___")  # Linha de separação
-
-    # develop_actions()
 
 
 if __name__ == "__main__":

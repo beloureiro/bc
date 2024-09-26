@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from news_strategies import display_news_strategies  # Importando a função
 
 def run_strategic_goals():
 
@@ -75,4 +76,7 @@ def run_strategic_goals():
     # Display the dataframe
     st.write("### Actions and Opportunities")
     st.dataframe(actions_df)
+    st.write("___")  # Linha de separação
+    # Chamar a função para exibir as estratégias de notícias
+    display_news_strategies()  # Invocando a função aqui
 
