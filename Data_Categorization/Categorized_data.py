@@ -163,21 +163,15 @@ def display_categorized_data(df, country_options, country_mapping):
     st.markdown("<h3 style='color: #00c3a5;'>This section provides an overview of the categorization process.</h3>",
                 unsafe_allow_html=True)
 
-    col1, col2 = st.columns(2)
+    st.markdown("""
+    The categorization process outlined below is structured into <span style='color: #00c3a5;'>8 distinct levels</span> of analysis. At the <span style='color: #00c3a5;'>first</span> level, all received feedback is grouped together, forming the primary dataset. Moving to the <span style='color: #00c3a5;'>second</span> level, this feedback is segmented by country. At the <span style='color: #00c3a5;'>third</span> level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The <span style='color: #00c3a5;'>fourth</span> level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
 
-    with col1:
-        st.markdown("""
-        The categorization process outlined below is structured into <span style='color: #00c3a5;'>8 distinct levels</span> of analysis. At the <span style='color: #00c3a5;'>first</span> level, all received feedback is grouped together, forming the primary dataset. Moving to the <span style='color: #00c3a5;'>second</span> level, this feedback is segmented by country. At the <span style='color: #00c3a5;'>third</span> level, within each country, the feedback is sorted into three categories: positive, neutral, and negative. The <span style='color: #00c3a5;'>fourth</span> level focuses on negative feedback, which is prioritized in the context of "Patient Care." This feedback is further broken down by medical practice areas, specifically highlighting three key areas in this example: Clinical Medicine, Surgery, and Mental Health.
+    At the <span style='color: #00c3a5;'>fifth</span> level, I delve deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
 
-        At the <span style='color: #00c3a5;'>fifth</span> level, the analysis delves deeper within each practice area to include medical specialties, such as Cardiology and Endocrinology within the Clinical Medicine group. This approach by specialty aims to identify behavioral patterns within professional groups, enabling the development of broad-scale solutions.
-        """, unsafe_allow_html=True)
+    Moving to the <span style='color: #00c3a5;'>sixth</span> level, I focus on the process touchpoints, particularly within the Mental Health area in this example, highlighting the 11 touchpoints in the patient journey and identifying specific opportunities for operational improvement at DocPlanner. The <span style='color: #00c3a5;'>seventh</span> level assesses interactions based on three levels of urgency: low, medium, and high. Finally, at the <span style='color: #00c3a5;'>eighth</span> level, within the high-urgency category, I consider the limited capacity for action but with strong influence; through this "mass strategy," it is possible to enhance positive persuasion and drive improvements in medical best practices using real data from DocPlanner, thus completing the analysis framework and providing a strategic overview of the operation.
 
-    with col2:
-        st.markdown("""
-        Next, at the <span style='color: #00c3a5;'>sixth</span> level, we look at the process touchpoints, particularly within the Mental Health area in this example, highlighting the 11 touchpoints in the patient journey and pinpointing specific opportunities for operational improvement at DocPlanner. The <span style='color: #00c3a5;'>seventh</span> level assesses interactions based on three levels of urgency: low, medium, and high. Finally, at the <span style='color: #00c3a5;'>eighth</span> level, within the high-urgency category, we consider the limited capacity for action but with strong influence; through this "mass strategy," we can enhance positive persuasion to drive improvements in medical best practices using real data from DocPlanner, thus completing the analysis framework and providing a strategic overview of the operation.
-
-        In this context, "mass solutions" refers to implementing targeted interventions for large groups of professionals within a medical specialty. Because these solutions are designed to address recurring behaviors, their impact is magnified, leading to significant improvements in patient experience and increasing engagement on the platform.
-        """, unsafe_allow_html=True)
+    In this context, "mass solutions" refers to implementing targeted interventions for large groups of professionals within a medical specialty. Since these solutions are designed to address recurring behaviors, their impact is magnified, leading to significant improvements in patient experience and increased engagement on the platform.
+    """, unsafe_allow_html=True)
 
     st.write("___")  # Linha de separação
 
