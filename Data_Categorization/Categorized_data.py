@@ -212,16 +212,15 @@ def display_categorized_data(df, country_options, country_mapping):
 │   │       │   │           ├── 1.1.1.3.1.3.2.1.4 Make Payment at Reception
 │   │       │   │           ├── 1.1.1.3.1.3.2.1.5 Check-in Online
 │   │       │   │           ├── 1.1.1.3.1.3.2.1.6 Check-in at Reception
-│   │       │   │           ├── 1.1.1.3.1.3.2.1.7 Access Platform for Online Consultation
-│   │       │   │           ├── 1.1.1.3.1.3.2.1.8 Attend Online Consultation
-│   │       │   │           ├── 1.1.1.3.1.3.2.1.9 Attend Offline Consultation/
-│   │       │   │           │   └── 1.1.1.3.1.3.2.1.9.1 Urgency Levels/
-│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.1 Low
-│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.2 Medium
-│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.9.1.3 High/
-│   │       │   │           │       │   └── 1.1.1.3.1.3.2.1.9.1.3.1 🚫 Influence without autonomy to act 
-│   │       │   │           └── 1.1.1.3.1.3.2.1.10 Follow-up Procedures (e.g., Exams, Surgery)
-│   │       │   │           └── 1.1.1.3.1.3.2.1.11 Leave Review and Feedback
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.7 Attend Online Consultation
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.8 Attend Offline Consultation/
+│   │       │   │           │   └── 1.1.1.3.1.3.2.1.8.1 Urgency Levels/
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.8.1.1 Low
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.8.1.2 Medium
+│   │       │   │           │       ├── 1.1.1.3.1.3.2.1.8.1.3 High/
+│   │       │   │           │       │   └── 1.1.1.3.1.3.2.1.8.1.3.1 🚫 Influence without autonomy to act 
+│   │       │   │           ├── 1.1.1.3.1.3.2.1.9 Follow-up Procedures (e.g., Exams, Surgery)
+│   │       │   │           └── 1.1.1.3.1.3.2.1.10 Leave Review and Feedback
     ''', language='text')
 
     st.markdown("In the next section, <span style='color: #00c3a5;'><strong>Critical Points Analysis</strong></span>, accessible from the sidebar on your left (⬅️), you'll gain deeper insights into how the touchpoints of the process were developed and mapped, providing a comprehensive understanding of their role within the overall framework.", unsafe_allow_html=True)
