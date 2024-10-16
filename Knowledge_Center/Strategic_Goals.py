@@ -3,18 +3,31 @@ import pandas as pd
 from news_strategies import display_news_strategies  # Importando a função
 
 def run_strategic_goals():
+    st.markdown("<h1><span style='color: #00c3a5;'>Beyond the Scope:</span> Strategic Actions for Enhancing Patient Satisfaction, Engagement, and Expectation Management</h1>", unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        After an extensive analysis of a dataset comprising approximately 50,000 customer reviews across three countries, 
+        and considering the sentiment indicators tied to specific processes, I identified potential opportunities that extend beyond the initial scope of the business case. 
+        As a result, I developed a strategic action plan aimed at supporting patient satisfaction, fostering loyalty, and potentially contributing to growth for DocPlanner.
 
-    st.title("Beyond the Scope: Strategic Actions for Enhancing Patient Satisfaction and Engagement")
-    st.markdown("""
-    After an extensive analysis of a dataset comprising approximately 50,000 customer reviews across three countries, 
-    and considering the sentiment indicators tied to specific processes, I identified potential opportunities that extend beyond the initial scope of the business case. 
-    As a result, I developed a strategic action plan aimed at supporting patient satisfaction, fostering loyalty, and potentially contributing to growth for DocPlanner.
+        It's important to note that, due to the lack of direct validation with the DocPlanner team, some of the proposed actions might not align with the current strategies or may already be in place. However, I believe these suggestions could still offer value and serve as a starting point for further discussion and refinement.
 
-    It's important to note that, due to the lack of direct validation with the DocPlanner team, some of the proposed actions might not align with the current strategies or may already be in place. However, I believe these suggestions could still offer value and serve as a starting point for further discussion and refinement.
+        **I trust this additional insight will be valuable:)**
+        """)
+    with col2:
+        st.markdown("""
+        The strategic action plan is structured into 10 actions organized across 8 categories as follows:
 
-    **I trust this additional insight will be valuable:)**
-    """)
-    st.write("___")  # Linha de separação
+        - <span style='color: #00c3a5;'>Expectation Management and Transparency</span> (EMT)
+        - <span style='color: #00c3a5;'>Enhancing Patient Satisfaction Post-Consultation</span> (EPS)
+        - <span style='color: #00c3a5;'>Direct Monetization</span> (DM)
+        - <span style='color: #00c3a5;'>User Engagement</span> (UE)
+        - <span style='color: #00c3a5;'>Partnerships and Service Expansion</span> (PSE)
+        - <span style='color: #00c3a5;'>Platform and Tool Improvement</span> (PTI)
+        - <span style='color: #00c3a5;'>Marketing and Communication</span> (MC)
+        - <span style='color: #00c3a5;'>Data Analysis and Insights</span> (DAI)
+        """, unsafe_allow_html=True)
 
     # Load the CSV data
     df = pd.read_csv("Knowledge_Center/Actions_strategic.csv")
@@ -35,28 +48,15 @@ def run_strategic_goals():
     # Remove rows with empty opportunities and reset index
     melted_df = melted_df[melted_df['Opportunity'].notna() & (melted_df['Opportunity'] != '')].reset_index(drop=True)
 
+    st.markdown("<h2 style='color: #00c3a5;'>Analysis of the Value Proposition</h2>", unsafe_allow_html=True)
+    st.markdown("The current value proposition is:")
     st.markdown("""
-    The strategic action plan is structured into 10 actions organized across 8 categories as follows:
-
-    - Expectation Management and Transparency (EMT)
-    - Enhancing Patient Satisfaction Post-Consultation (EPS)
-    - Direct Monetization (DM)
-    - User Engagement (UE)
-    - Partnerships and Service Expansion (PSE)
-    - Platform and Tool Improvement (PTI)
-    - Marketing and Communication (MC)
-    - Data Analysis and Insights (DAI)
-    """)
-    st.write("___")  # Linha de separação
-    st.subheader("Beyond the Current Value Proposition")
+    <div style='background-color: #262730; border-radius: 10px; padding: 20px; text-align: center; font-size: 24px;'>
+        <strong>Patient get to know you <span style='color: #00c3a5; font-size: 26px;'>+</span> Patients get to trust you (opinions, online reputation) <span style='color: #00c3a5; font-size: 26px;'>=</span> Patients get to book with you</strong>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("""
-    **Analysis of the Value Proposition**
-
-    The current value proposition is:
-
-    "**Patient get to know you (visibility) + Patients get to trust you (opinions, online reputation) = Patients get to book with you**"
-
     **Flaws and Opportunities for Improvement:**
 
     - **Limited Focus on Pre-Consultation:** The value proposition concentrates only on the steps leading to booking, neglecting the patient's experience during and after the consultation.
@@ -79,4 +79,3 @@ def run_strategic_goals():
     st.write("___")  # Linha de separação
     # Chamar a função para exibir as estratégias de notícias
     display_news_strategies()  # Invocando a função aqui
-
