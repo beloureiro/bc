@@ -96,8 +96,31 @@ def display_news_strategies():
         """)
 
     with tab4:
-        st.write("Content for Growth & Mentorship Ecosystem will be added here.")
+        st.write("### Growth & Mentorship Ecosystem")
 
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.image("Knowledge_Center/assets/AIcrew.png", use_column_width=True, caption="AI Crew Overview")
+
+        with col2:
+            st.image("Knowledge_Center/assets/AIcrew2.png", use_column_width=True, caption="AI Crew Detailed View")
+
+        st.write("""
+        The Growth & Mentorship Ecosystem is designed to support healthcare professionals in their continuous development and improvement. This system leverages AI and data-driven insights to provide personalized guidance and mentorship opportunities.
+
+        Key features of the ecosystem include:
+        1. Personalized learning paths based on individual strengths and areas for improvement
+        2. AI-powered mentorship matching, connecting professionals with experienced mentors in their field
+        3. Real-time feedback and performance analytics to track progress
+        4. Collaborative learning opportunities through virtual peer groups
+        5. Access to a vast knowledge base of best practices and latest medical research
+
+        This ecosystem aims to foster a culture of continuous improvement and excellence in healthcare delivery, ultimately benefiting both healthcare professionals and their patients.
+        """)
+        st.markdown("""
+                <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
+            """, unsafe_allow_html=True)
     with tab5:
         st.write("### 24/7 Chatbot")
         

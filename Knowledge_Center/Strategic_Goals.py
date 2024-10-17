@@ -68,12 +68,6 @@ def run_strategic_goals():
 
     st.subheader("Strategic Actions")   
 
-    # Initialize session state if not already done
-    if 'category_multiselect' not in st.session_state:
-        st.session_state.category_multiselect = ['All']
-    if 'selected_rows' not in st.session_state:
-        st.session_state.selected_rows = []
-
     # Function to handle multiselect changes
     def handle_multiselect():
         current_selection = st.session_state.category_multiselect
@@ -91,7 +85,7 @@ def run_strategic_goals():
         selected_categories = st.multiselect(
             "Select categories to filter:",
             list(categories.values()),
-            default=st.session_state.category_multiselect,
+            default=['All'],  # Define o valor padrão aqui
             key='category_multiselect',
             on_change=handle_multiselect
         )
@@ -129,5 +123,6 @@ def run_strategic_goals():
     
     # Chamar a função para exibir as estratégias de notícias
     display_news_strategies()  # Invocando a função aqui
+
 
 
