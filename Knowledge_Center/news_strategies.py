@@ -2,49 +2,129 @@ import streamlit as st
 import os
 
 def display_news_strategies():
-    st.title("AI: Fine-Tuning and Advisory Solutions")
-    st.markdown("Below are two advanced AI platforms designed to enhance healthcare: the AI-Powered Healthcare Sentiment Trainer, which fine-tunes models for analyzing patient feedback, and the AI Clinical Advisory Crew framework, which not only provides technical analyses but also serves as a strategic driver for managerial decisions across various operational areas.")
+    st.title("Key Strategic Initiatives")
 
-    # Caminho para as imagens
-    image_path_1 = os.path.join(os.getcwd(), "logo/rsz_AI_train.png")
-    image_path_2 = os.path.join(os.getcwd(), "logo/rsz_cac.png")
+    # Criando as 5 abas com o nome atualizado para a primeira
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "New Value Proposition",
+        "Enhanced Review System",
+        "Current Review System",
+        "Growth & Mentorship Ecosystem",
+        "24/7 AI-Skills Advisor"
+    ])
 
-    # Criação de duas colunas
-    col1, col2 = st.columns(2)
+    # Conteúdo da primeira aba (New Value Proposition)
+    with tab1:
 
-    with col1:
-        st.write(f"""
-        <span style='color:#3dd56d;'><strong>AI-Powered Healthcare Sentiment Trainer</strong></span> is an advanced platform for fine-tuning AI models like BERT, RoBERTa, and VADER to analyze patient feedback in the healthcare sector, focusing on sentiment analysis tailored to healthcare data.
+        # Título da Análise
+        st.markdown("<h2 style='color: #00c3a5;'>Analysis of the New Value Proposition</h2>", unsafe_allow_html=True)
 
-        **Fine-Tuning Features:**
-        - **Healthcare-Specific Sentiment Analysis:** Fine-tunes AI models like BERT, RoBERTa, and VADER to analyze patient feedback with multilingual support.
-        - **Adaptable and Updatable Models:** Enables continuous fine-tuning to improve performance as new data is added.
-        - **Real-Time Dashboard:** Offers an intuitive interface for input, sentiment results, and performance tracking.
-        - **GPU-Enhanced Processing:** Boosts processing speed and efficiency using GPU resources.
-        """, unsafe_allow_html=True)
+        # Exibindo a Proposta de Valor Atualizada
+        st.markdown("The New Value Proposition is:")
         st.markdown("""
-        **Check out the AI-Powered Healthcare Sentiment Trainer on GitHub:** <a href="https://github.com/beloureiro/AI-Powered-Healthcare-Sentiment-Trainer" target="_blank">Visit here</a>.
-        """, unsafe_allow_html=True)
-        st.image(image_path_1, caption="AI fine-tuning")
-
-    with col2:
-        st.write(f"""
-        The <span style='color:#3dd56d;'><strong>AI Clinical Advisory Crew</strong></span> is an advanced and flexible system designed to transform the patient experience in healthcare. 
-        With a team of specialized AI agents, the project analyzes patient feedback, improves workflows, assesses emotional states, 
-        and provides recommendations for operational improvements.
-        
-        **Key Benefits:**
-        - **Improve Patient Experience:** Specialized AI agents analyze feedback, assess emotions, and offer actionable improvements for communication and workflows.
-        - **Flexible AI Models:** Dynamically selects the best AI configuration for each task, optimizing performance based on healthcare needs.
-        - **Data Security:** Uses local LLMs, ensuring internal data processing and complete privacy without relying on third-party APIs.
-        - **Cost Savings:** Eliminates the need for external APIs, reducing operational costs while maintaining high performance and privacy.
+        <div style='background-color: #262730; border-radius: 10px; padding: 20px; text-align: center; font-size: 24px;'>
+            <strong>Patient get to know you <span style='color: #00c3a5; font-size: 26px;'>+</span> Patients get to trust you <span style='color: #00c3a5; font-size: 26px;'>=</span> Patients get to book with you <span style='color: #00c3a5; font-size: 26px;'>+</span> Patients' expectations are met <span style='color: #00c3a5; font-size: 26px;'>=</span> Patients become loyal and recommend you to others</strong>
+        </div>
         """, unsafe_allow_html=True)
 
-        # Adicionando o link abaixo da lista
+        # Abordando os problemas da proposta de valor anterior
         st.markdown("""
-        <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
-        """, unsafe_allow_html=True)
+        **How the New Value Proposition Addresses Previous Issues:**
+
+        - **Expanded Focus Beyond Booking:** The New Value Proposition goes beyond the booking phase. It emphasizes that meeting patients' expectations is crucial for fostering loyalty and recommendation.
+
+        - **Expectation Management and Quality Assurance:** By focusing on meeting patient expectations, it helps ensure that patients receive the level of care they anticipate, reducing dissatisfaction and aligning with the services provided.
+
+        - **Post-Consultation Support and Loyalty Building:** The New Value Proposition highlights that fulfilling expectations naturally leads to loyalty and recommendations, encouraging a long-term relationship with patients.
+        """)
+
+
+    # Conteúdo das outras abas (vazias por enquanto)
+    with tab2:
+        st.write("### Enhanced Review System")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.image("D:/OneDrive - InMotion - Consulting/DocPlanner/Bc/Knowledge_Center/assets/Revew_app1.png", use_column_width=True, caption="Review App - Professional List")
         
-        st.image(image_path_2, caption="AI Clinical Advisory Crew")
+        with col2:
+            st.image("D:/OneDrive - InMotion - Consulting/DocPlanner/Bc/Knowledge_Center/assets/Revew_app2.png", use_column_width=True, caption="Review App - Detailed Ratings")
+
+        st.write("""
+        The Enhanced Review System offers patients a structured and insightful way to assess healthcare professionals. Through this updated system, patients benefit from a more organized categorization of review criteria and detailed professional profiles. Key benefits include:
+
+        1. **Structured Review System**: Patients can rate multiple aspects of their care experience, including waiting time, communication quality, value perception, and support staff attentiveness. This structured approach provides a more comprehensive and balanced view of the professional's care quality.
+        2. **Detailed Profile View**: Each professional's profile includes an overall rating, availability, and in-depth ratings on specific aspects of care. The "Style of Care" section visually represents the doctor's approach, helping patients choose a provider that aligns with their expectations and personal preferences.
+        3. **Patient Feedback Survey**: The interactive feedback survey allows patients to provide nuanced feedback on various care aspects. Patients rate experiences using a sliding scale, covering areas like environment satisfaction and interaction style, thereby enabling a tailored care alignment that benefits future patients.
+        4. **Enhanced Patient Insights**: The categorized feedback enables patients to make well-informed choices based on detailed reviews, reducing uncertainty and promoting confidence before scheduling an appointment.
+        5. **Transparency and Trust**: This system fosters transparency by showcasing authentic feedback, allowing healthcare providers to align their service with patient expectations effectively.
+
+        Overall, this app enhances the decision-making process for both patients and healthcare providers by offering a clearer view of care experiences and aligning patient needs with professional care styles. 
+
+        You can access the published version of the app here: [Care Review App](https://beloureiro.github.io/carereview/)
+        """)
+
+
+    with tab3:
+        st.write("### Current Review System")
+        
+        st.write("""
+        The current review system allows patients to provide feedback on their healthcare experiences. This system has some limitations compared to more advanced review systems.
+
+        Key points about the current review system:
+        1. Simple star rating: Patients can rate their overall experience using a 5-star scale.
+        2. Text-based feedback: There's an option for patients to leave written comments about their experience.
+        3. Limited categorization: The system doesn't break down ratings into specific aspects of care.
+        4. Basic display: The interface shows an average rating and individual reviews without detailed analytics.
+
+        While this system provides valuable feedback, it has potential for improvement to offer more detailed insights and a better user experience for both patients and healthcare providers.
+        """)
+        
+        st.image("Knowledge_Center/assets/Current_review.png", use_column_width=True, caption="Current Review System")
+        
+        st.write("""
+        The image above illustrates our current review system. This system allows patients to provide feedback on their healthcare experiences, but it has some limitations compared to the enhanced review system we're developing.
+
+        Key points about the current review system:
+        1. Simple star rating: Patients can rate their overall experience using a 5-star scale.
+        2. Text-based feedback: There's an option for patients to leave written comments about their experience.
+        3. Limited categorization: The current system doesn't break down ratings into specific aspects of care.
+        4. Basic display: The interface shows an average rating and individual reviews without detailed analytics.
+
+        While this system provides valuable feedback, we're working on enhancing it to offer more detailed insights and a better user experience for both patients and healthcare providers.
+        """)
+
+    with tab4:
+        st.write("Content for Growth & Mentorship Ecosystem will be added here.")
+
+    with tab5:
+        st.write("### 24/7 Chatbot")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write("""
+            The AI-Skills Advisor is a key component of the AI Clinical Advisory Crew. It provides continuous, data-driven support to healthcare professionals. The advisor offers the following capabilities:
+
+            1. Analyze patient feedback and generate insights to improve care quality.
+            2. Identify opportunities to enhance workflows and processes in healthcare delivery.
+            3. Offer communication strategies to improve patient-provider interactions.
+            4. Provide psychological insights for better post-consultation patient care.
+            5. Deliver managerial overviews and summaries of patient feedback.
+            6. Offer personalized recommendations for professional development.
+            7. Provide instant, 24/7 access to AI-driven guidance and support.
+
+            This tool aims to help healthcare professionals excel in their practice by leveraging AI-powered insights and continuous learning.
+            """)
+        with col2:
+            st.markdown("""
+                <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
+            """, unsafe_allow_html=True)
+            st.image("Knowledge_Center/assets/bot.png", use_column_width=True, caption="AI-Skills Advisor Interface")
 
 # Esta função pode ser chamada em outra página
+
+            # st.markdown("""
+            # <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
+            # """, unsafe_allow_html=True)

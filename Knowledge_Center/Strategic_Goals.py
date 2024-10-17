@@ -22,15 +22,22 @@ def run_strategic_goals():
         st.markdown("""
         The strategic action plan is structured into 10 actions organized across 8 categories as follows:
 
-        - <span style='color: #00c3a5;'>Expectation Management and Transparency</span> (EMT)
-        - <span style='color: #00c3a5;'>Enhancing Patient Satisfaction Post-Consultation</span> (EPS)
-        - <span style='color: #00c3a5;'>Direct Monetization</span> (DM)
-        - <span style='color: #00c3a5;'>User Engagement</span> (UE)
-        - <span style='color: #00c3a5;'>Partnerships and Service Expansion</span> (PSE)
-        - <span style='color: #00c3a5;'>Platform and Tool Improvement</span> (PTI)
-        - <span style='color: #00c3a5;'>Marketing and Communication</span> (MC)
-        - <span style='color: #00c3a5;'>Data Analysis and Insights</span> (DAI)
+        1. <span style='color: #00c3a5;'>User Engagement</span> (UE)
+        2. <span style='color: #00c3a5;'>Direct Monetization</span> (DM)
+        3. <span style='color: #00c3a5;'>Data Analysis and Insights</span> (DAI)
+        4. <span style='color: #00c3a5;'>Marketing and Communication</span> (MC)
+        5. <span style='color: #00c3a5;'>Platform and Tool Improvement</span> (PTI)
+        6. <span style='color: #00c3a5;'>Partnerships and Service Expansion</span> (PSE)
+        7. <span style='color: #00c3a5;'>Expectation Management and Transparency</span> (EMT)
         """, unsafe_allow_html=True)
+
+    st.markdown("<h2 style='color: #00c3a5;'>Analysis of the Value Proposition</h2>", unsafe_allow_html=True)
+    st.markdown("The current value proposition is:")
+    st.markdown("""
+    <div style='background-color: #262730; border-radius: 10px; padding: 20px; text-align: center; font-size: 24px;'>
+        <strong>Patient get to know you <span style='color: #00c3a5; font-size: 26px;'>+</span> Patients get to trust you (opinions, online reputation) <span style='color: #00c3a5; font-size: 26px;'>=</span> Patients get to book with you</strong>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("""
     **Flaws and Opportunities for Improvement:**
@@ -49,38 +56,17 @@ def run_strategic_goals():
     # Create a dictionary of categories
     categories = {
         'All': 'All',
-        'EMT': 'Expectation Management and Transparency (EMT)',
-        'EPS': 'Enhancing Patient Satisfaction Post-Consultation (EPS)',
-        'DM': 'Direct Monetization (DM)',
         'UE': 'User Engagement (UE)',
-        'PSE': 'Partnerships and Service Expansion (PSE)',
-        'PTI': 'Platform and Tool Improvement (PTI)',
+        'DM': 'Direct Monetization (DM)',
         'MC': 'Marketing and Communication (MC)',
-        'DAI': 'Data Analysis and Insights (DAI)'
+        'DAI': 'Data Analysis and Insights (DAI)',
+        'PTI': 'Platform and Tool Improvement (PTI)',
+        'PSE': 'Partnerships and Service Expansion (PSE)',
+        'EMT': 'Expectation Management and Transparency (EMT)'
     }
 
 
-    st.markdown("<h2 style='color: #00c3a5;'>Analysis of the Value Proposition</h2>", unsafe_allow_html=True)
-    st.markdown("The current value proposition is:")
-    st.markdown("""
-    <div style='background-color: #262730; border-radius: 10px; padding: 20px; text-align: center; font-size: 24px;'>
-        <strong>Patient get to know you <span style='color: #00c3a5; font-size: 26px;'>+</span> Patients get to trust you (opinions, online reputation) <span style='color: #00c3a5; font-size: 26px;'>=</span> Patients get to book with you</strong>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    **Flaws and Opportunities for Improvement:**
-
-    - **Limited Focus on Pre-Consultation:** The value proposition concentrates only on the steps leading to booking, neglecting the patient's experience during and after the consultation.
-    - **Shared Responsibility:** When expectations are not met, the platform is held accountable alongside the doctor, affecting its reputation and user trust.
-
-    **Opportunities for Improvement:**
-
-    - **Expand the Value Proposition:** Include elements that ensure patient satisfaction throughout the entire care cycle, not just up to the booking.
-    - **Expectation Management:** Provide more detailed and accurate information about doctors' services and practices to align patient expectations.
-    - **Post-Consultation Support:** Implement post-care support to handle possible dissatisfaction, preventing complaints directed at the platform.
-    """)
-
+    st.subheader("Strategic Actions")   
 
     # Initialize session state if not already done
     if 'category_multiselect' not in st.session_state:
@@ -143,3 +129,5 @@ def run_strategic_goals():
     
     # Chamar a função para exibir as estratégias de notícias
     display_news_strategies()  # Invocando a função aqui
+
+
