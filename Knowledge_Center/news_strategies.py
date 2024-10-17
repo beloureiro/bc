@@ -2,6 +2,10 @@ import streamlit as st
 import os
 
 def display_news_strategies():
+    # Obter o caminho absoluto para a pasta de assets
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    assets_dir = os.path.join(current_dir, 'assets')
+
     st.title("Key Strategic Initiatives")
 
     # Criando as 5 abas com o nome atualizado para a primeira
@@ -46,10 +50,18 @@ def display_news_strategies():
         col1, col2 = st.columns(2)
 
         with col1:
-            st.image("D:/OneDrive - InMotion - Consulting/DocPlanner/Bc/Knowledge_Center/assets/Revew_app1.png", use_column_width=True, caption="Review App - Professional List")
+            image_path = os.path.join(assets_dir, 'Revew_app1.png')
+            try:
+                st.image(image_path, use_column_width=True, caption="Review App - Professional List")
+            except Exception as e:
+                st.error(f"Error loading image: {image_path}. Error: {str(e)}")
         
         with col2:
-            st.image("D:/OneDrive - InMotion - Consulting/DocPlanner/Bc/Knowledge_Center/assets/Revew_app2.png", use_column_width=True, caption="Review App - Detailed Ratings")
+            image_path = os.path.join(assets_dir, 'Revew_app2.png')
+            try:
+                st.image(image_path, use_column_width=True, caption="Review App - Detailed Ratings")
+            except Exception as e:
+                st.error(f"Error loading image: {image_path}. Error: {str(e)}")
 
         st.write("""
         The Enhanced Review System offers patients a structured and insightful way to assess healthcare professionals. Through this updated system, patients benefit from a more organized categorization of review criteria and detailed professional profiles. Key benefits include:
@@ -80,8 +92,12 @@ def display_news_strategies():
 
         While this system provides valuable feedback, it has potential for improvement to offer more detailed insights and a better user experience for both patients and healthcare providers.
         """)
-        
-        st.image("Knowledge_Center/assets/Current_review.png", use_column_width=True, caption="Current Review System")
+
+        image_path = os.path.join(assets_dir, 'Current_review.png')
+        try:
+            st.image(image_path, use_column_width=True, caption="Current Review System")
+        except Exception as e:
+            st.error(f"Error loading image: {image_path}. Error: {str(e)}")
         
         st.write("""
         The image above illustrates our current review system. This system allows patients to provide feedback on their healthcare experiences, but it has some limitations compared to the enhanced review system we're developing.
@@ -101,10 +117,18 @@ def display_news_strategies():
         col1, col2 = st.columns(2)
 
         with col1:
-            st.image("Knowledge_Center/assets/AIcrew.png", use_column_width=True, caption="AI Crew Overview")
+            image_path = os.path.join(assets_dir, 'AIcrew.png')
+            try:
+                st.image(image_path, use_column_width=True, caption="AI Crew Overview")
+            except Exception as e:
+                st.error(f"Error loading image: {image_path}. Error: {str(e)}")
 
         with col2:
-            st.image("Knowledge_Center/assets/AIcrew2.png", use_column_width=True, caption="AI Crew Detailed View")
+            image_path = os.path.join(assets_dir, 'AIcrew2.png')
+            try:
+                st.image(image_path, use_column_width=True, caption="AI Crew Detailed View")
+            except Exception as e:
+                st.error(f"Error loading image: {image_path}. Error: {str(e)}")
 
         st.write("""
         The Growth & Mentorship Ecosystem is designed to support healthcare professionals in their continuous development and improvement. This system leverages AI and data-driven insights to provide personalized guidance and mentorship opportunities.
@@ -121,6 +145,7 @@ def display_news_strategies():
         st.markdown("""
                 <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
             """, unsafe_allow_html=True)
+
     with tab5:
         st.write("### 24/7 Chatbot")
         
@@ -144,10 +169,9 @@ def display_news_strategies():
             st.markdown("""
                 <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
             """, unsafe_allow_html=True)
-            st.image("Knowledge_Center/assets/bot.png", use_column_width=True, caption="AI-Skills Advisor Interface")
 
-# Esta função pode ser chamada em outra página
-
-            # st.markdown("""
-            # <p><strong>Explore the AI Clinical Advisory Crew Framework:</strong> <a href="https://ai-cac.streamlit.app/">Click here</a> to access the platform.</p>
-            # """, unsafe_allow_html=True)
+            image_path = os.path.join(assets_dir, 'bot.png')
+            try:
+                st.image(image_path, use_column_width=True, caption="AI-Skills Advisor Interface")
+            except Exception as e:
+                st.error(f"Error loading image: {image_path}. Error: {str(e)}")

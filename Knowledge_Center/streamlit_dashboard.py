@@ -1,6 +1,5 @@
 # Desabilita todos os avisos
 from PIL import Image
-import importlib
 import os
 import sys
 import streamlit as st
