@@ -85,39 +85,59 @@ def run_strategic_goals():
     # Initialize session state if not already done
     if 'category_multiselect' not in st.session_state:
         st.session_state.category_multiselect = ['All']
+    if 'selected_rows' not in st.session_state:
+        st.session_state.selected_rows = []
 
     # Function to handle multiselect changes
     def handle_multiselect():
         current_selection = st.session_state.category_multiselect
         if 'All' in current_selection and len(current_selection) > 1:
-            # Remove 'All' if other options are selected
             current_selection.remove('All')
         elif len(current_selection) == 0:
-            # If nothing is selected, default to 'All'
             current_selection = ['All']
-        st.session_state.category_multiselect = current_selection  # Atualiza o estado da sessão
+        st.session_state.category_multiselect = current_selection
 
-    # Create a multiselect dropdown
-    selected_categories = st.multiselect(
-        "Select categories to filter:",
-        list(categories.values()),
-        default=st.session_state.category_multiselect,
-        key='category_multiselect',
-        on_change=handle_multiselect
-    )
+    # Create tabs
+    select_tab, view_tab = st.tabs(["Select Actions", "View Selected Actions"])
 
-    # Load the CSV data for actions
-    actions_df = pd.read_csv("Knowledge_Center/Updated_Strategic_Actions.csv")
+    with select_tab:
+        # Create a multiselect dropdown
+        selected_categories = st.multiselect(
+            "Select categories to filter:",
+            list(categories.values()),
+            default=st.session_state.category_multiselect,
+            key='category_multiselect',
+            on_change=handle_multiselect
+        )
 
-    # Filter the DataFrame based on the selected categories
-    if 'All' not in selected_categories:
-        selected_abbrs = [cat.split('(')[-1].strip(')') for cat in selected_categories]
-        filtered_df = actions_df[actions_df['Category'].apply(lambda x: any(abbr in x for abbr in selected_abbrs))]
-    else:
-        filtered_df = actions_df
+        # Load the CSV data for actions
+        actions_df = pd.read_csv("Knowledge_Center/Updated_Strategic_Actions.csv")
 
-    # Display the filtered DataFrame
-    st.dataframe(filtered_df)  # Exibe o DataFrame filtrado
+        # Filter the DataFrame based on the selected categories
+        if 'All' not in selected_categories:
+            selected_abbrs = [cat.split('(')[-1].strip(')') for cat in selected_categories]
+            filtered_df = actions_df[actions_df['Category'].apply(lambda x: any(abbr in x for abbr in selected_abbrs))]
+        else:
+            filtered_df = actions_df
+
+        # Display the filtered DataFrame with row selection
+        event = st.dataframe(
+            filtered_df,
+            use_container_width=True,
+            hide_index=True,
+            on_select="rerun",
+            selection_mode="multi-row",
+        )
+
+        # Update session state with selected rows
+        st.session_state.selected_rows = event.selection.rows
+
+    with view_tab:
+        if st.session_state.selected_rows:
+            selected_df = filtered_df.iloc[st.session_state.selected_rows]
+            st.dataframe(selected_df, use_container_width=True)
+        else:
+            st.write("No actions selected. Please go to the 'Select Actions' tab to choose actions.")
 
     st.write("___")  # Linha de separação
     
